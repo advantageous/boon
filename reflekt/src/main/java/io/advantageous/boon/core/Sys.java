@@ -30,7 +30,6 @@ package io.advantageous.boon.core;
 
 
 import com.sun.management.UnixOperatingSystemMXBean;
-import io.advantageous.boon.Exceptions;
 import io.advantageous.boon.IO;
 import io.advantageous.boon.Str;
 import io.advantageous.boon.core.reflection.Annotations;
@@ -38,7 +37,6 @@ import io.advantageous.boon.core.timer.TimeKeeper;
 import io.advantageous.boon.core.timer.TimeKeeperBasic;
 import io.advantageous.boon.Lists;
 import io.advantageous.boon.core.reflection.Reflection;
-import io.advantageous.boon.json.JsonParserFactory;
 
 import java.io.File;
 import java.lang.management.GarbageCollectorMXBean;
@@ -773,28 +771,5 @@ public class Sys {
     public static int threadDaemonCount() {
 
         return ManagementFactory.getThreadMXBean().getDaemonThreadCount();
-    }
-
-    public static <T> T loadFromFileLocation(Class<T> clazz, String... fileLocations) {
-        for (String fileLocation : fileLocations) {
-            if (fileLocation != null && IO.exists(fileLocation)) {
-                try {
-                    return new JsonParserFactory().create().parseFile(clazz, fileLocation);
-                }
-                catch (Exception ex) {
-                    ex.printStackTrace();
-                    Exceptions.handle(ex, "Unable to read file from ", fileLocation);
-                    return null;
-                }
-            }
-        }
-
-        try {
-            return clazz.newInstance();
-        }
-        catch (InstantiationException | IllegalAccessException e) {
-            Exceptions.handle(e, "Unable to create instance of " + clazz.getName());
-            return null;
-        }
     }
 }

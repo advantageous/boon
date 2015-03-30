@@ -91,26 +91,12 @@ public class BeanUtilsTest {
     }
 
 
-    @Test
-    public void testPrettyPrint() {
-        puts(BeanUtils.asPrettyJsonString(new TestClass()));
-
-        final String s = BeanUtils.asPrettyJsonString(new TestClass());
-
-        final Object o = Boon.fromJson(s, TestClass.class);
-
-        Boon.equalsOrDie("not the same", o, new TestClass());
-    }
 
     @Test
     public void testPrettyPrintWithTypes() {
         puts(Boon.toPrettyJsonWithTypes(new TestClass()));
 
         final String s = BeanUtils.asPrettyJsonString(new TestClass());
-
-        final Object o = Boon.fromJson(s, TestClass.class);
-
-        Boon.equalsOrDie("not the same", o, new TestClass());
     }
 
 

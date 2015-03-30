@@ -31,13 +31,12 @@ package io.advantageous.boon.core.value;
 import io.advantageous.boon.Exceptions;
 import io.advantageous.boon.core.Value;
 import io.advantageous.boon.core.reflection.FastStringUtils;
-import io.advantageous.boon.json.JsonException;
-import io.advantageous.boon.json.implementation.JsonStringDecoder;
 import io.advantageous.boon.primitive.CharScanner;
 import io.advantageous.boon.core.Conversions;
 import io.advantageous.boon.core.Dates;
 import io.advantageous.boon.core.TypeType;
 import io.advantageous.boon.primitive.CharBuf;
+import io.advantageous.boon.primitive.Chr;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -211,9 +210,30 @@ public class CharSequenceValue implements Value, CharSequence {
         return new BigInteger ( toString () );
     }
 
+
+
+    private static String decodeForSure( char[] chars, int start, int to ) {
+
+        CharBuf builder = CharBuf.create( to - start );
+        builder.decodeJsonString(chars, start, to);
+        return builder.toString();
+
+    }
+
+
+    private static String decodeForSure( CharBuf charBuf, char[] chars, int start, int to ) {
+
+        charBuf.recycle();
+
+        charBuf.decodeJsonString(chars, start, to);
+        return charBuf.toString();
+
+    }
+
+
     public String stringValue () {
         if ( this.decodeStrings ) {
-            return JsonStringDecoder.decodeForSure(buffer, startIndex, endIndex);
+            return decodeForSure(buffer, startIndex, endIndex);
         } else {
             return toString ();
         }
@@ -222,15 +242,24 @@ public class CharSequenceValue implements Value, CharSequence {
     @Override
     public String stringValue(CharBuf charBuf) {
         if ( this.decodeStrings ) {
-            return JsonStringDecoder.decodeForSure ( charBuf, buffer, startIndex, endIndex );
+            return decodeForSure(charBuf, buffer, startIndex, endIndex);
         } else {
             return toString ();
         }
     }
 
+
+    private static String decode( char[] chars, int start, int to ) {
+
+        if ( !Chr.contains(chars, '\\', start, to - start) ) {
+            return new String( chars, start, to - start );
+        }
+        return decodeForSure( chars, start, to );
+    }
+
     @Override
     public String stringValueEncoded () {
-        return JsonStringDecoder.decode ( buffer, startIndex, endIndex );
+        return decode(buffer, startIndex, endIndex);
     }
 
     @Override
@@ -249,11 +278,11 @@ public class CharSequenceValue implements Value, CharSequence {
                 } else if ( Dates.isISO8601 ( buffer, startIndex, endIndex ) ) {
                     return Dates.fromISO8601 ( buffer, startIndex, endIndex );
                 } else {
-                    throw new JsonException( "Unable to convert " + stringValue () + " to date " );
+                    throw new IllegalStateException( "Unable to convert " + stringValue () + " to date " );
                 }
             } else {
 
-                throw new JsonException ( "Unable to convert " + stringValue () + " to date " );
+                throw new IllegalStateException ( "Unable to convert " + stringValue () + " to date " );
             }
         } else {
 

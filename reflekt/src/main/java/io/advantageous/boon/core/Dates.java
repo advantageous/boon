@@ -31,7 +31,6 @@ package io.advantageous.boon.core;
 import io.advantageous.boon.Exceptions;
 import io.advantageous.boon.Str;
 import io.advantageous.boon.core.reflection.FastStringUtils;
-import io.advantageous.boon.json.JsonException;
 import io.advantageous.boon.primitive.CharScanner;
 import io.advantageous.boon.primitive.CharBuf;
 
@@ -687,7 +686,7 @@ public class Dates {
                 try {
                     return looseParse( buffer, startIndex, endIndex );
                 } catch ( Exception ex ) {
-                    throw new JsonException( "unable to do a loose parse", ex );
+                    throw new IllegalStateException( "unable to do a loose parse", ex );
                 }
             }
         } else {
@@ -695,7 +694,7 @@ public class Dates {
             try {
                 return looseParse( buffer, startIndex, endIndex );
             } catch ( Exception ex ) {
-                throw new JsonException( "unable to do a loose parse", ex );
+                throw new IllegalStateException( "unable to do a loose parse", ex );
             }
         }
 

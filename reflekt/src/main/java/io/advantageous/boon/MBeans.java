@@ -43,26 +43,26 @@ import static io.advantageous.boon.Exceptions.requireNonNull;
  */
 public class MBeans {
 
-    public static String toJson () {
-        MBeanServer server = ManagementFactory.getPlatformMBeanServer();
-        return toJson(server);
+//    public static String toJson () {
+//        MBeanServer server = ManagementFactory.getPlatformMBeanServer();
+//        return toJson(server);
+//
+//    }
 
-    }
 
-
-    public static String toJson (final MBeanServer server) {
-        Set<ObjectName> objectNames = server.queryNames( null, null );
-
-        Map<String, Map<String, Object>> map = new LinkedHashMap<>();
-
-        for ( ObjectName name : objectNames ) {
-
-            map.put(name.toString(), MBeans.map(server, name));
-
-        }
-
-        return Boon.toJson(map);
-    }
+//    public static String toJson (final MBeanServer server) {
+//        Set<ObjectName> objectNames = server.queryNames( null, null );
+//
+//        Map<String, Map<String, Object>> map = new LinkedHashMap<>();
+//
+//        for ( ObjectName name : objectNames ) {
+//
+//            map.put(name.toString(), MBeans.map(server, name));
+//
+//        }
+//
+//        return Boon.toJson(map);
+//    }
 
     public static Map<String, Object> map(  final ObjectName name ) {
         MBeanServer server = ManagementFactory.getPlatformMBeanServer();

@@ -28,7 +28,6 @@
 
 package io.advantageous.boon;
 
-import io.advantageous.boon.MBeans;
 import org.junit.Test;
 
 import javax.management.DynamicMBean;
@@ -38,10 +37,6 @@ import java.lang.management.ManagementFactory;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
-
-import static io.advantageous.boon.Boon.puts;
-import static io.advantageous.boon.Boon.toJson;
-import static org.junit.Assert.assertEquals;
 
 
 public class MBeansTest {
@@ -94,10 +89,6 @@ public class MBeansTest {
     }
 
 
-    @Test
-    public void jsonDump() throws Exception {
-        puts(MBeans.toJson());
-    }
 
     @Test
     public void createTest() throws Exception {
@@ -118,18 +109,6 @@ public class MBeansTest {
 
         }
 
-        puts("\n\n\n", toJson(map), "\n\n\n");
-
-        puts();
-
-        hello.name = "laskdjfal;ksdjf;laskjdf;laksjdfl;aksjdfl;kajsdf\n\n\n\n\\n\n";
-
-
-        for ( ObjectName name : objectNames ) {
-            System.out.println( name.toString() );
-            System.out.println( MBeans.map( server, name ) );
-
-        }
 
 
     }

@@ -1,7 +1,5 @@
 package io.advantageous.boon;
 
-import io.advantageous.boon.Boon;
-import io.advantageous.boon.Lists;
 import junit.framework.TestCase;
 import io.advantageous.boon.primitive.Arry;
 import org.junit.Test;
@@ -16,19 +14,6 @@ import static io.advantageous.boon.Boon.puts;
  */
 public class BoonTest extends TestCase {
 
-    @Test
-    public void test() {
-
-        final List<String> abc = Lists.list("abc", "123");
-        puts(Boon.toPrettyJson(abc));
-
-        final String json = Boon.toPrettyJson(abc);
-
-        final Object o = Boon.fromJson(json);
-
-        Boon.equalsOrDie("lists are equal", o, abc);
-
-    }
 
 
     public static enum Fruit {
@@ -158,30 +143,6 @@ public class BoonTest extends TestCase {
 
         final String json = Boon.toPrettyJson(list);
         puts(json);
-
-
-       final List<Dept> list2 =Boon.fromJsonArray(json, Dept.class);
-
-
-        final String json2 = Boon.toPrettyJson(list2);
-        puts(json2);
-
-
-        Boon.equalsOrDie("dept lists are the same", list, list2);
-
-
-        final String json3 = Boon.toPrettyJsonWithTypes(list);
-        puts("JSON 3 WITH TYPES\n\n", json3);
-
-        final List<Dept> list3 =Boon.fromJsonArray(json3, Dept.class);
-
-
-        Boon.equalsOrDie("dept lists are the same", list, list3);
-
-
-
-
-
 
     }
 

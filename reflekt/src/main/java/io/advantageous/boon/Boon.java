@@ -30,7 +30,6 @@ package io.advantageous.boon;
 
 
 import io.advantageous.boon.core.reflection.*;
-import io.advantageous.boon.json.JsonFactory;
 import io.advantageous.boon.core.Conversions;
 import io.advantageous.boon.core.Sys;
 import io.advantageous.boon.core.Typ;
@@ -41,7 +40,6 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static io.advantageous.boon.Lists.toListOrSingletonList;
-import static io.advantageous.boon.Maps.fromMap;
 
 /**
  * This class contains some utility methods and acts as facade
@@ -362,54 +360,6 @@ public class Boon {
 
 
     /**
-     * Helper method to quickly convert a Java object into JSON.
-     * Facade into the JSON system.
-     *
-     * @param value Java object
-     * @return JSON-ified Java object
-     */
-    public static String toJson(Object value) {
-        return JsonFactory.toJson(value);
-    }
-
-
-    /**
-     * Helper method to quickly convert JSON into a Java object.
-     * Facade into the JSON system.
-     *
-     * @param value JSON content
-     * @return Java object
-     */
-    public static Object fromJson(String value) {
-        return JsonFactory.fromJson(value);
-    }
-
-    /**
-     * Helper method to quickly convert JSON into a Java object.
-     * Facade into the JSON system.
-     *
-     * @param value JSON content
-     * @param clazz type you want to convert the JSON to
-     * @return Java object
-     */
-    public static <T> T fromJson(String value, Class<T> clazz) {
-        return JsonFactory.fromJson(value, clazz);
-    }
-
-    /**
-     * converts JSON into strongly typed list
-     *
-     * @param value value
-     * @param clazz class
-     * @param <T>   T
-     * @return new list
-     */
-    public static <T> List<T> fromJsonArray(String value, Class<T> clazz) {
-        return JsonFactory.fromJsonArray(value, clazz);
-    }
-
-
-    /**
      * Does path lookupWithDefault.
      * Facade over BeanUtils.
      *
@@ -595,166 +545,6 @@ public class Boon {
 
 
 
-
-    /**
-     * Load JSON object as resource
-     * Looks in file system first and then classpath.
-     *
-     * @param path path to resource
-     * @return JSON object loaded as resource
-     */
-    public static Object jsonResource(String path) {
-        if (!IO.exists(IO.path(path))) {
-            path = add("classpath:/", path);
-        }
-
-        String str = IO.read(path);
-        if (str != null) {
-            return fromJson(str);
-        }
-        return null;
-    }
-
-
-    /**
-     * Load JSON object as resource
-     * Looks in file system.
-     *
-     * @param path path to resource
-     * @return JSON object loaded as resource
-     */
-    public static Object jsonResource(Path path) {
-
-        String str = IO.read(path);
-        if (str != null) {
-            return fromJson(str);
-        }
-        return null;
-    }
-
-
-
-
-
-    /**
-     * <p>
-     * </p>
-     * Looks in file system first and then classpath.
-     *
-     * @param path path to resource
-     * @return JSON object loaded as resource
-     */
-    public static Map<String, Object> resourceMap(String path) {
-        return (Map<String, Object>) jsonResource(path);
-    }
-
-
-    /**
-     * <p>
-     * </p>
-     * Looks in file system first.
-     *
-     * @param path path to resource
-     * @return JSON object loaded as resource
-     */
-    public static Map<String, Object> resourceMap(Path path) {
-        return (Map<String, Object>) jsonResource(path);
-    }
-
-
-
-    /**
-     * <p>
-     * Load JSON list as resource.
-     *
-     * </p>
-     * Looks in file system first and then classpath.
-     *
-     * @param path path to resource
-     * @return JSON object loaded as resource
-     */
-    public static <T> T resourceObject(String path, Class<T> type) {
-        return fromMap(resourceMap(path), type);
-    }
-
-
-    /**
-     * <p>
-     * Load JSON object as resource.
-     * </p>
-     * Looks in file system.
-     *
-     * @param path path to resource
-     * @return JSON object loaded as resource
-     */
-    public static <T> T resourceObject(Path path, Class<T> type) {
-        return fromMap(resourceMap(path), type);
-    }
-
-
-
-    /**
-     * <p>
-     * Load JSON list as resource .
-     * </p>
-     * Looks in file system first and then classpath.
-     *
-     * @param path path to resource
-     * @return JSON object loaded as resource
-     */
-    public static List<?> resourceList(String path) {
-        return (List<?>) jsonResource(path);
-    }
-
-
-    /**
-     * <p>
-     * Load JSON list as resource .
-     * </p>
-     * Looks in file system first.
-     *
-     * @param path path to resource
-     * @return JSON object loaded as resource
-     */
-    public static List<?> resourceList(Path path) {
-        return (List<?>) jsonResource(path);
-    }
-
-
-    /**
-     * <p>
-     * Load JSON list as resource .
-     * </p>
-     * Looks in file system first and then classpath.
-     *
-     * @param path path to resource
-     * @return JSON object loaded as resource
-     */
-    public static <T> List<T> resourceList(String path, Class<T> listOf) {
-
-        List<Map> list = (List) jsonResource(path);
-
-        return MapObjectConversion.convertListOfMapsToObjects(listOf, list);
-
-    }
-
-
-    /**
-     * <p>
-     * Load JSON list as resource .
-     * </p>
-     * Looks in file system.
-     *
-     * @param path path to resource
-     * @return JSON object loaded as resource
-     */
-    public static <T> List<T> resourceList(Path path, Class<T> listOf) {
-
-        List<Map> list = (List) jsonResource(path);
-
-        return MapObjectConversion.convertListOfMapsToObjects(listOf, list);
-
-    }
 
 
 
