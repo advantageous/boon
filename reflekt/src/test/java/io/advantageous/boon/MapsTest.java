@@ -29,6 +29,7 @@
 package io.advantageous.boon;
 
 
+import io.advantageous.boon.core.Pair;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -36,7 +37,7 @@ import java.util.Arrays;
 
 import java.util.*;
 
-import static io.advantageous.boon.Boon.puts;
+import static io.advantageous.boon.Str.puts;
 import static io.advantageous.boon.Exceptions.die;
 import static io.advantageous.boon.Lists.list;
 import static io.advantageous.boon.Maps.*;
@@ -220,8 +221,9 @@ public class MapsTest {
         assertEquals( "dog1", dogMap.get( "dog1" ).name );
         assertEquals( "dog2", dogMap.get( "dog2" ).name );
 
-        dogMap = Maps.map(
-                Lists.list( new String[]{ "dog0", "dog1", "dog2" } ),
+
+        final List<String> keys = Lists.list(new String[]{"dog0", "dog1", "dog2"});
+        dogMap = Maps.map(keys,
                 Lists.list( new Dog( "dog0" ),
                         new Dog( "dog1" ), new Dog( "dog2" ) )
         );
@@ -400,8 +402,10 @@ public class MapsTest {
         assertEquals( "dog", dogMap.get( "dog" ).name );
 
 
-        dogMap = sortedMap(
-                java.util.Arrays.asList( new String[]{ "dog0", "dog1", "dog2" } ),
+        List<String> keys = java.util.Arrays.asList( new String[]{ "dog0", "dog1", "dog2" } );
+
+
+        dogMap = sortedMap(keys,
                 Arrays.asList( new Dog( "dog0" ),
                         new Dog( "dog1" ), new Dog( "dog2" ) )
         );
@@ -410,8 +414,8 @@ public class MapsTest {
         assertEquals( "dog2", dogMap.get( "dog2" ).name );
 
 
-        dogMap = sortedMap(
-                ( Iterable ) Arrays.asList( "dog0", "dog1", "dog2" ),
+        final Iterable iterableKeys = (Iterable) Arrays.asList("dog0", "dog1", "dog2");
+        dogMap = sortedMap(iterableKeys,
                 ( Iterable ) Arrays.asList( new Dog( "dog0" ),
                         new Dog( "dog1" ), new Dog( "dog2" ) )
         );
@@ -596,8 +600,10 @@ public class MapsTest {
         assertEquals( "dog", dogMap.get( "dog" ).name );
 
 
+        final List<String> strings = Arrays.asList(new String[]{"dog0", "dog1", "dog2"});
+
         dogMap = sortedMap( comparator,
-                Arrays.asList( new String[]{ "dog0", "dog1", "dog2" } ),
+                strings,
                 Arrays.asList( new Dog( "dog0" ),
                         new Dog( "dog1" ), new Dog( "dog2" ) )
         );
@@ -784,8 +790,10 @@ public class MapsTest {
         assertEquals( "dog1", dogMap.get( "dog1" ).name );
         assertEquals( "dog2", dogMap.get( "dog2" ).name );
 
+
+        final List<String> strings = Arrays.asList(new String[]{"dog0", "dog1", "dog2"});
         dogMap = Maps.safeMap(
-                Arrays.asList( new String[]{ "dog0", "dog1", "dog2" } ),
+                strings,
                 Arrays.asList( new Dog( "dog0" ),
                         new Dog( "dog1" ), new Dog( "dog2" ) )
         );
@@ -973,8 +981,10 @@ public class MapsTest {
         assertEquals( "dog", dogMap.get( "dog" ).name );
 
 
+        final List<String> strings = Arrays.asList(new String[]{"dog0", "dog1", "dog2"});
+
         dogMap = safeSortedMap( comparator,
-                Arrays.asList( new String[]{ "dog0", "dog1", "dog2" } ),
+                strings,
                 Arrays.asList( new Dog( "dog0" ),
                         new Dog( "dog1" ), new Dog( "dog2" ) )
         );
@@ -1161,8 +1171,10 @@ public class MapsTest {
         assertEquals( "dog1", dogMap.get( "dog1" ).name );
         assertEquals( "dog2", dogMap.get( "dog2" ).name );
 
-        dogMap = Maps.safeSortedMap(
-                Arrays.asList( new String[]{ "dog0", "dog1", "dog2" } ),
+        List<String> keys = Arrays.asList( new String[]{ "dog0", "dog1", "dog2" } );
+
+                dogMap = Maps.safeSortedMap(
+                        keys,
                 Arrays.asList( new Dog( "dog0" ),
                         new Dog( "dog1" ), new Dog( "dog2" ) )
         );

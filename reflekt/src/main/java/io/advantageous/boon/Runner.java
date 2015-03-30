@@ -40,7 +40,7 @@ import java.util.Scanner;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static io.advantageous.boon.Boon.sputs;
+import static io.advantageous.boon.Str.sputs;
 
 /**
  * Ported this form EasyJava/Facile. Got rid of the FileObject stuff.
@@ -129,7 +129,7 @@ public class Runner {
 
         ProcessOut out = runProcess( timeout, path, verbose, args );
         if ( out.getExit() != 0 ) {
-            throw new ProcessException( Boon.sputs("EXIT CODE", out.getExit(), out.getStderr()) );
+            throw new ProcessException( Str.sputs("EXIT CODE", out.getExit(), out.getStderr()) );
         } else {
             return out.getStdout();
         }
@@ -143,7 +143,7 @@ public class Runner {
 
         ProcessOut out = runProcessAt( cwd, timeout, path, verbose, args );
         if ( out.getExit() != 0 ) {
-            throw new ProcessException( Boon.sputs("EXIT CODE", out.getExit(), out.getStderr()) );
+            throw new ProcessException( Str.sputs("EXIT CODE", out.getExit(), out.getStderr()) );
         } else {
             return out.getStdout();
         }
@@ -578,7 +578,7 @@ public class Runner {
                     }
 
                     if ( verbose ) {
-                        Boon.puts(line);
+                        Str.puts(line);
                     }
                     outputBuffer.append( line ).append( '\n' );
                 }

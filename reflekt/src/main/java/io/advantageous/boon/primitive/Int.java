@@ -31,7 +31,6 @@ package io.advantageous.boon.primitive;
 import io.advantageous.boon.Exceptions;
 import io.advantageous.boon.StringScanner;
 import io.advantageous.boon.Universal;
-import io.advantageous.boon.collections.IntList;
 import io.advantageous.boon.core.reflection.BeanUtils;
 import io.advantageous.boon.core.reflection.Invoker;
 import io.advantageous.boon.core.reflection.fields.FieldAccess;
@@ -1503,15 +1502,6 @@ public class Int {
     public static double standardDeviation(Collection<?> inputList, String propertyPath) {
         double variance = variance(inputList, propertyPath);
         return Math.round(Math.sqrt(variance));
-    }
-
-    /**
-     * Calculate standard deviation.
-     *
-     * @return standard deviation
-     */
-    public static int median(Collection<?> inputList, String propertyPath) {
-        return IntList.toIntList(inputList, propertyPath).median();
     }
 
 

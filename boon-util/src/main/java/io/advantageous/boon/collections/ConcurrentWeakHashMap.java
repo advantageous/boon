@@ -30,7 +30,7 @@ package io.advantageous.boon.collections;
 
 
 import io.advantageous.boon.Exceptions;
-import io.advantageous.boon.Pair;
+import io.advantageous.boon.core.Pair;
 
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;

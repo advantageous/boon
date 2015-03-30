@@ -28,8 +28,7 @@
 
 package io.advantageous.boon.collections;
 
-import io.advantageous.boon.collections.DoubleList;
-import io.advantageous.boon.primitive.Dbl;
+import io.advantageous.boon.primitive.Flt;
 import org.junit.Test;
 
 import static io.advantageous.boon.Exceptions.die;
@@ -37,51 +36,51 @@ import static io.advantageous.boon.Exceptions.die;
 /**
  * Created by Richard on 3/19/14.
  */
-public class DoubleListTest {
-    @Test
+public class FloatListTest {
+     @Test
     public void testMath() {
-        DoubleList list = new DoubleList();
+        FloatList list = new FloatList();
         list.add(1);
         list.add(2);
         list.add(3);
 
-        Dbl.equalsOrDie(3, list.max());
-        Dbl.equalsOrDie(1, list.min());
-        Dbl.equalsOrDie(2, list.median());
-        Dbl.equalsOrDie(2, list.mean());
-        Dbl.equalsOrDie(0.816496580927726, list.standardDeviation());
+        Flt.equalsOrDie(3, list.max());
+        Flt.equalsOrDie(1, list.min());
+        Flt.equalsOrDie(2, list.median());
+        Flt.equalsOrDie(2, list.mean());
+        Flt.equalsOrDie(0.8164966f, list.standardDeviation());
 
         for (int index = 0; index< 15; index++) {
             list.add(3);
         }
 
 
-        Dbl.equalsOrDie(3, list.max());
-        Dbl.equalsOrDie(1, list.min());
-        Dbl.equalsOrDie(3, list.median());
-        Dbl.equalsOrDie(2.8333333333333335, list.mean());
-        Dbl.equalsOrDie(0.49999999999999994, list.standardDeviation());
+        Flt.equalsOrDie(3, list.max());
+        Flt.equalsOrDie(1, list.min());
+        Flt.equalsOrDie(3, list.median());
+        Flt.equalsOrDie(2.8333333f, list.mean());
+        Flt.equalsOrDie(0.5f, list.standardDeviation());
 
         for (int index = 0; index< 20; index++) {
             list.addFloat(2);
         }
 
-        Dbl.equalsOrDie(3, list.max());
-        Dbl.equalsOrDie(1, list.min());
-        Dbl.equalsOrDie(2, list.median());
-        Dbl.equalsOrDie(2.3947368421052633, list.mean());
-        Dbl.equalsOrDie(0.5399548560179785, list.standardDeviation());
+        Flt.equalsOrDie(3, list.max());
+        Flt.equalsOrDie(1, list.min());
+        Flt.equalsOrDie(2, list.median());
+        Flt.equalsOrDie(2.3947368f, list.mean());
+        Flt.equalsOrDie(0.53995484f, list.standardDeviation());
 
         list.addFloat(10);
 
         list.addFloat(-10);
 
 
-        Dbl.equalsOrDie(10, list.max());
-        Dbl.equalsOrDie(-10, list.min());
-        Dbl.equalsOrDie(2, list.median());
-        Dbl.equalsOrDie(2.275, list.mean());
-        Dbl.equalsOrDie(2.355711145280762, list.standardDeviation());
+        Flt.equalsOrDie(10, list.max());
+        Flt.equalsOrDie(-10, list.min());
+        Flt.equalsOrDie(2, list.median());
+        Flt.equalsOrDie(2.275f, list.mean());
+        Flt.equalsOrDie(2.3557112f, list.standardDeviation());
 
 
         list.addFloat(100);
@@ -89,12 +88,12 @@ public class DoubleListTest {
         list.addFloat(-100);
 
 
-        Dbl.equalsOrDie(100, list.max());
-        Dbl.equalsOrDie(-100, list.min());
-        Dbl.equalsOrDie(2, list.median());
-        Dbl.equalsOrDie(2.1666666666666665, list.mean());
-        Dbl.equalsOrDie(21.947900069489965, list.standardDeviation());
-        Dbl.equalsOrDie(42, list.size());
+        Flt.equalsOrDie(100, list.max());
+        Flt.equalsOrDie(-100, list.min());
+        Flt.equalsOrDie(2, list.median());
+        Flt.equalsOrDie(2.1666667f, list.mean());
+        Flt.equalsOrDie(21.9479f, list.standardDeviation());
+        Flt.equalsOrDie(42, list.size());
 
 
 
@@ -103,12 +102,12 @@ public class DoubleListTest {
         }
 
 
-        Dbl.equalsOrDie(100, list.max());
-        Dbl.equalsOrDie(-100, list.min());
-        Dbl.equalsOrDie(2, list.median());
-        Dbl.equalsOrDie(2.0017318159327067, list.mean());
-        Dbl.equalsOrDie(2.2373393245468116, list.standardDeviation());
-        Dbl.equalsOrDie(4042, list.size());
+        Flt.equalsOrDie(100, list.max());
+        Flt.equalsOrDie(-100, list.min());
+        Flt.equalsOrDie(2, list.median());
+        Flt.equalsOrDie(2.0017319f, list.mean());
+        Flt.equalsOrDie(2.2373393f, list.standardDeviation());
+        Flt.equalsOrDie(4042, list.size());
 
 
     }
@@ -116,16 +115,16 @@ public class DoubleListTest {
 
     @Test
     public void test() {
-        DoubleList list = new DoubleList();
+        FloatList list = new FloatList();
         list.addFloat(1);
         list.addFloat(2);
         list.addFloat(3);
 
-        Dbl.equalsOrDie(3, list.max());
-        Dbl.equalsOrDie(1, list.min());
-        Dbl.equalsOrDie(2, list.median());
-        Dbl.equalsOrDie(2, list.mean());
-        Dbl.equalsOrDie(0.816496580927726, list.standardDeviation());
+        Flt.equalsOrDie(3, list.max());
+        Flt.equalsOrDie(1, list.min());
+        Flt.equalsOrDie(2, list.median());
+        Flt.equalsOrDie(2, list.mean());
+        Flt.equalsOrDie(0.8164966f, list.standardDeviation());
 
 
         if (list.getFloat(0) != 1) die();

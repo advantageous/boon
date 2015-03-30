@@ -44,7 +44,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
-import static io.advantageous.boon.Boon.sputs;
+import static io.advantageous.boon.Str.sputs;
 import static io.advantageous.boon.Exceptions.die;
 import static io.advantageous.boon.Exceptions.requireNonNull;
 import static io.advantageous.boon.Lists.len;
@@ -124,7 +124,7 @@ public class IO {
                     fs = provider.newFileSystem( fileJarURI, env );
                 } catch ( IOException ex2 ) {
                     Exceptions.handle( FileSystem.class,
-                            Boon.sputs("unable to load", fileJarURI, "as zip file system"),
+                            Str.sputs("unable to load", fileJarURI, "as zip file system"),
                             ex2 );
                 }
             }

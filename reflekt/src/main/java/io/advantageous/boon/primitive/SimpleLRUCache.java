@@ -1,3 +1,11 @@
+package io.advantageous.boon.primitive;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+
 /*
  * Copyright 2013-2014 Richard M. Hightower
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,57 +34,70 @@
  *               \/           \/          \/         \/        \/  \/
  */
 
-package io.advantageous.boon.cache;
-
-import io.advantageous.boon.Lists;
-import io.advantageous.boon.collections.SortableConcurrentList;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.List;
-
-import static io.advantageous.boon.Boon.puts;
-import static io.advantageous.boon.Exceptions.die;
-
-/**
- * Created by rick on 12/16/13.
+/** This supports both LRU and FIFO.
+ *  Single threaded access.
  */
-public class SortableConcurrentListTest {
+public class SimpleLRUCache<K, V>  {
 
-    private SortableConcurrentList list;
+    Map<K, V> map = new LinkedHashMap();
 
-    @Before
-    public void before() {
 
-        list = new SortableConcurrentList();
+    private static class InternalCacheLinkedList<K, V> extends LinkedHashMap<K, V> {
+        final int limit;
+
+        InternalCacheLinkedList( final int limit, final boolean lru ) {
+            super( 16, 0.75f, lru );
+            this.limit = limit;
+        }
+
+        protected final boolean removeEldestEntry( final Map.Entry<K, V> eldest ) {
+            return super.size() > limit;
+        }
     }
 
-    @After
-    public void after() {
+
+    public SimpleLRUCache( final int limit ) {
+
+            map = new InternalCacheLinkedList<>( limit, true );
 
     }
 
 
-    @Test
-    public void test() {
-        list.add( 9 );
-        list.add( 66 );
-        list.add( 7 );
-        list.add( 55 );
-        list.add( 5 );
-        list.add( 33 );
-        list.add( 3 );
-        list.add( 2 );
-        list.add( 1 );
-        list.add( 0 );
-        list.sort();
-        boolean ok = Lists.list( 0, 1, 2, 3, 5, 7, 9, 33, 55, 66 ).equals( list ) || die();
-        final List purgeList = list.sortAndReturnPurgeList( 0.20f );
-        ok |= Lists.list( 0, 1 ).equals( purgeList ) || die();
-        ok |= Lists.list( 2, 3, 5, 7, 9, 33, 55, 66 ).equals( list ) || die();
-        puts( "test", ok );
+    public void put( K key, V value ) {
+        map.put( key, value );
+    }
 
+    public V get( K key ) {
+        return map.get( key );
+    }
+
+    public V getSilent( K key ) {
+        V value = map.get( key );
+        if ( value != null ) {
+            map.remove( key );
+            map.put( key, value );
+        }
+        return value;
+    }
+
+    public void remove( K key ) {
+        map.remove( key );
+    }
+
+    public int size() {
+        return map.size();
+    }
+
+    public String toString() {
+        return map.toString();
+    }
+
+    public Collection<V> values() {
+        return new ArrayList<>(this.map.values());
+    }
+
+    public Collection<K> keys() {
+        return new ArrayList<>(this.map.keySet());
     }
 
 }

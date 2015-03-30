@@ -29,10 +29,6 @@
 package io.advantageous.boon;
 
 
-import io.advantageous.boon.collections.DoubleList;
-import io.advantageous.boon.collections.FloatList;
-import io.advantageous.boon.collections.IntList;
-import io.advantageous.boon.collections.LongList;
 import io.advantageous.boon.core.Conversions;
 import io.advantageous.boon.core.Predicate;
 import io.advantageous.boon.core.reflection.*;
@@ -239,29 +235,6 @@ public class Lists {
         }
 
         return outputList;
-    }
-
-    public static IntList toIntList( List<?> inputList, String propertyPath ) {
-
-        return IntList.toIntList(inputList, propertyPath);
-    }
-
-
-    public static FloatList toFloatList( List<?> inputList, String propertyPath ) {
-
-        return FloatList.toFloatList(inputList, propertyPath);
-    }
-
-
-    public static DoubleList toDoubleList( List<?> inputList, String propertyPath ) {
-
-        return DoubleList.toDoubleList(inputList, propertyPath);
-    }
-
-
-    public static LongList toLongList( List<?> inputList, String propertyPath ) {
-
-        return LongList.toLongList(inputList, propertyPath);
     }
 
     public static List<?> toList( List<?> inputList, String propertyPath ) {

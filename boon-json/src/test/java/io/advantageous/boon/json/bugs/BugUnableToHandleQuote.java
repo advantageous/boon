@@ -35,7 +35,7 @@ import org.junit.Test;
 
 import java.util.Map;
 
-import static io.advantageous.boon.Boon.puts;
+import static io.advantageous.boon.Str.puts;
 import static io.advantageous.boon.Exceptions.die;
 import static io.advantageous.boon.json.JsonFactory.toJson;
 

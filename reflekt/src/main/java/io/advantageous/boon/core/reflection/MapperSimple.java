@@ -2,6 +2,7 @@ package io.advantageous.boon.core.reflection;
 
 import io.advantageous.boon.Boon;
 import io.advantageous.boon.Exceptions;
+import io.advantageous.boon.Str;
 import io.advantageous.boon.core.reflection.fields.FieldAccess;
 import io.advantageous.boon.core.reflection.fields.FieldAccessMode;
 import io.advantageous.boon.core.value.ValueList;
@@ -22,8 +23,8 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.*;
 
-import static io.advantageous.boon.Boon.puts;
-import static io.advantageous.boon.Boon.sputs;
+import static io.advantageous.boon.Str.puts;
+import static io.advantageous.boon.Str.sputs;
 import static io.advantageous.boon.Exceptions.die;
 import static io.advantageous.boon.Exceptions.handle;
 import static io.advantageous.boon.core.Conversions.coerce;
@@ -1051,7 +1052,7 @@ public class MapperSimple implements Mapper {
             Class<?> cls = Reflection.loadClass( className );
             return fromValueMap( valueMap, cls );
         } catch ( Exception ex ) {
-            return handle(Object.class, sputs("fromValueMap", "map", valueMap, "fieldAccessor", fieldsAccessor), ex);
+            return handle(Object.class, Str.sputs("fromValueMap", "map", valueMap, "fieldAccessor", fieldsAccessor), ex);
         }
     }
 
@@ -1176,7 +1177,7 @@ public class MapperSimple implements Mapper {
                 field.setValue( newInstance, objectValue );
             }
         } catch ( Exception ex ) {
-            Exceptions.handle(Boon.sputs("Problem handling non value case of fromValueMap", "field", field.name(),
+            Exceptions.handle(Str.sputs("Problem handling non value case of fromValueMap", "field", field.name(),
                     "fieldType", field.type().getName(), "object from map", objectValue), ex);
         }
     }

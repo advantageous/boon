@@ -30,7 +30,7 @@ package io.advantageous.boon.json.bugs;
 
 import org.junit.Test;
 
-import static io.advantageous.boon.Boon.puts;
+import static io.advantageous.boon.Str.puts;
 import static io.advantageous.boon.json.JsonFactory.toJson;
 
 

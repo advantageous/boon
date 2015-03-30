@@ -1,5 +1,8 @@
-package io.advantageous.boon;
+package io.advantageous.boon.core;
 
+
+import io.advantageous.boon.Entry;
+import io.advantageous.boon.Exceptions;
 
 import static io.advantageous.boon.Exceptions.requireNonNull;
 
@@ -46,7 +49,7 @@ public class Pair<K, V> implements Entry<K, V> {
     }
 
     public Pair(K k, V v) {
-        Exceptions.requireNonNull( k );
+        Exceptions.requireNonNull(k);
 
         this.k = k;
         this.v = v;

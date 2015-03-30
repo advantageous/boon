@@ -28,12 +28,11 @@
 
 package io.advantageous.boon.primitive;
 
-import io.advantageous.boon.primitive.InMemoryInputStream;
 import org.junit.Test;
 
 import java.nio.charset.StandardCharsets;
 
-import static io.advantageous.boon.Boon.puts;
+import static io.advantageous.boon.Str.puts;
 
 /**
  * Created by Richard on 3/12/14.

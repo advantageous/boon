@@ -8,7 +8,7 @@ import org.junit.Test;
 import java.util.EnumMap;
 import java.util.Map;
 
-import static io.advantageous.boon.Boon.puts;
+import static io.advantageous.boon.Str.puts;
 
 /**
  * Created by Richard on 8/25/14.

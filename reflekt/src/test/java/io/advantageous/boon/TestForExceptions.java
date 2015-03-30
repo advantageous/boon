@@ -29,14 +29,13 @@
 package io.advantageous.boon;
 
 
-import io.advantageous.boon.Exceptions;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import static io.advantageous.boon.Boon.puts;
+import static io.advantageous.boon.Str.puts;
 import static io.advantageous.boon.Exceptions.tryIt;
 
 public class TestForExceptions {

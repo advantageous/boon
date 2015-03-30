@@ -45,7 +45,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.*;
 
-import static io.advantageous.boon.Boon.puts;
+import static io.advantageous.boon.Str.puts;
 import static io.advantageous.boon.Exceptions.die;
 import static io.advantageous.boon.Exceptions.handle;
 import static io.advantageous.boon.core.Conversions.coerce;

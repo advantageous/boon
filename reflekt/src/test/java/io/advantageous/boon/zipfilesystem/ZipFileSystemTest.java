@@ -38,7 +38,7 @@ import java.net.URLClassLoader;
 import java.nio.file.Files;
 import java.util.List;
 
-import static io.advantageous.boon.Boon.puts;
+import static io.advantageous.boon.Str.puts;
 import static io.advantageous.boon.Lists.add;
 import static io.advantageous.boon.Maps.idx;
 

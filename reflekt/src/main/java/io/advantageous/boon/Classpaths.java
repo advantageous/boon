@@ -36,7 +36,7 @@ import java.nio.file.FileSystem;
 import java.nio.file.Path;
 import java.util.*;
 
-import static io.advantageous.boon.Boon.sputs;
+import static io.advantageous.boon.Str.sputs;
 import static io.advantageous.boon.Exceptions.requireNonNull;
 import static io.advantageous.boon.Lists.*;
 
@@ -59,7 +59,7 @@ public class Classpaths {
 
         } catch ( Exception ex ) {
 
-            return Exceptions.handle( List.class, Boon.sputs("Unable to load listFromClassLoader for", resource),
+            return Exceptions.handle( List.class, Str.sputs("Unable to load listFromClassLoader for", resource),
                     ex );
         }
 

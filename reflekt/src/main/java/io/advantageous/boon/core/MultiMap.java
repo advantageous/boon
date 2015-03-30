@@ -1,4 +1,4 @@
-package io.advantageous.boon.collections;
+package io.advantageous.boon.core;
 
 import java.util.Collection;
 import java.util.Iterator;

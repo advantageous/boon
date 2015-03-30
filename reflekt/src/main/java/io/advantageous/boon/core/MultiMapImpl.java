@@ -26,10 +26,9 @@
  *               \/           \/          \/         \/        \/  \/
  */
 
-package io.advantageous.boon.collections;
+package io.advantageous.boon.core;
 
 import io.advantageous.boon.Exceptions;
-import io.advantageous.boon.core.Conversions;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

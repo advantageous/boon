@@ -36,7 +36,7 @@ import org.junit.Test;
 
 
 
-import static io.advantageous.boon.Boon.puts;
+import static io.advantageous.boon.Str.puts;
 import static io.advantageous.boon.Lists.*;
 import static io.advantageous.boon.Lists.list;
 import static io.advantageous.boon.Maps.*;

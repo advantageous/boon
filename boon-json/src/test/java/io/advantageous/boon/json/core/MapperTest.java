@@ -41,7 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static io.advantageous.boon.Boon.puts;
+import static io.advantageous.boon.Str.puts;
 import static io.advantageous.boon.Exceptions.die;
 import static io.advantageous.boon.Lists.*;
 import static io.advantageous.boon.Lists.list;

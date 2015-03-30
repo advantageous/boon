@@ -35,7 +35,7 @@ import org.junit.Test;
 import java.math.BigDecimal;
 import java.util.Map;
 
-import static io.advantageous.boon.Boon.puts;
+import static io.advantageous.boon.Str.puts;
 
 /**
  * Created by Richard on 5/4/14.

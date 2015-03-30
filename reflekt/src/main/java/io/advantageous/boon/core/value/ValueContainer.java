@@ -30,6 +30,7 @@ package io.advantageous.boon.core.value;
 
 
 import io.advantageous.boon.Exceptions;
+import io.advantageous.boon.Str;
 import io.advantageous.boon.core.Value;
 import io.advantageous.boon.core.TypeType;
 import io.advantageous.boon.primitive.CharBuf;
@@ -41,7 +42,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import static io.advantageous.boon.Boon.sputs;
+import static io.advantageous.boon.Str.sputs;
 import static io.advantageous.boon.Exceptions.die;
 
 public class ValueContainer implements CharSequence, Value {
@@ -89,12 +90,12 @@ public class ValueContainer implements CharSequence, Value {
 
     @Override
     public int intValue() {
-        return die(int.class, sputs("intValue not supported for type ", type) );
+        return die(int.class, Str.sputs("intValue not supported for type ", type) );
     }
 
     @Override
     public long longValue() {
-        return die(int.class, sputs("intValue not supported for type ", type) );
+        return die(long.class, Str.sputs("intValue not supported for type ", type) );
     }
 
 

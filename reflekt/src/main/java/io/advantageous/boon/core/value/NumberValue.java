@@ -28,8 +28,8 @@
 
 package io.advantageous.boon.core.value;
 
-import io.advantageous.boon.Boon;
 import io.advantageous.boon.Exceptions;
+import io.advantageous.boon.Str;
 import io.advantageous.boon.core.reflection.FastStringUtils;
 import io.advantageous.boon.primitive.CharScanner;
 import io.advantageous.boon.core.Conversions;
@@ -82,7 +82,7 @@ public class NumberValue extends Number implements Value {
                 this.buffer = buffer;
             }
         } catch ( Exception ex ) {
-            Boon.puts("exception", ex, "start", startIndex, "end", endIndex);
+            Str.puts("exception", ex, "start", startIndex, "end", endIndex);
             Exceptions.handle(ex);
 
         }

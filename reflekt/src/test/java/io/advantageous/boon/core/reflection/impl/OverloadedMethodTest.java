@@ -4,13 +4,12 @@ import io.advantageous.boon.Lists;
 import io.advantageous.boon.Maps;
 import io.advantageous.boon.core.reflection.ClassMeta;
 import io.advantageous.boon.core.reflection.MethodAccess;
-import io.advantageous.boon.core.reflection.impl.OverloadedMethod;
 import org.junit.Before;
 import org.junit.Test;
 
 
 import static io.advantageous.boon.Boon.equalsOrDie;
-import static io.advantageous.boon.Boon.puts;
+import static io.advantageous.boon.Str.puts;
 
 /**
  * Created by Richard on 9/22/14.

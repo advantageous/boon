@@ -43,7 +43,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import static io.advantageous.boon.Lists.reduceBy;
 import static io.advantageous.boon.primitive.Arry.reduceBy;
 import static io.advantageous.boon.primitive.Int.reduceBy;
-import static io.advantageous.boon.Boon.puts;
+import static io.advantageous.boon.Str.puts;
 import static io.advantageous.boon.Exceptions.die;
 import static io.advantageous.boon.Lists.*;
 import static org.junit.Assert.assertEquals;

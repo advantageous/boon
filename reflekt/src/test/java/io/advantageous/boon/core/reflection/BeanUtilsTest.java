@@ -30,8 +30,6 @@ package io.advantageous.boon.core.reflection;
 
 import io.advantageous.boon.Boon;
 import io.advantageous.boon.Lists;
-import io.advantageous.boon.core.reflection.BeanUtils;
-import io.advantageous.boon.core.reflection.Reflection;
 import io.advantageous.boon.primitive.Arry;
 import io.advantageous.boon.primitive.Int;
 import org.junit.Test;
@@ -40,7 +38,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static io.advantageous.boon.Boon.equalsOrDie;
-import static io.advantageous.boon.Boon.puts;
+import static io.advantageous.boon.Str.puts;
 import static io.advantageous.boon.Exceptions.die;
 
 public class BeanUtilsTest {

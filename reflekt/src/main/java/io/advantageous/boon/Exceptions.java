@@ -38,7 +38,7 @@ import java.util.*;
 import static io.advantageous.boon.Maps.map;
 import static io.advantageous.boon.primitive.Arry.add;
 import static io.advantageous.boon.primitive.Arry.array;
-import static io.advantageous.boon.Boon.sputs;
+import static io.advantageous.boon.Str.sputs;
 import static io.advantageous.boon.Sets.set;
 import static io.advantageous.boon.Str.startsWithItemInCollection;
 
@@ -70,7 +70,7 @@ public class Exceptions {
 
     public static void  dieIfAnyParametersAreNull(String methodName, Object... parameters) {
 
-        requireNonNull(sputs("METHOD", methodName, "Parameter at index was null: index="));
+        requireNonNull(Str.sputs("METHOD", methodName, "Parameter at index was null: index="));
     }
 
     public static void requireNonNull(Object obj, String message) {
@@ -89,7 +89,7 @@ public class Exceptions {
 
 
     public static boolean die( Object... messages ) {
-        throw new SoftenedException( sputs(messages) );
+        throw new SoftenedException( Str.sputs(messages) );
     }
 
 
@@ -100,7 +100,7 @@ public class Exceptions {
 
 
     public static <T> T die( Class<T> clazz, Object... messages ) {
-        throw new SoftenedException( sputs(messages) );
+        throw new SoftenedException( Str.sputs(messages) );
     }
 
     public static void handle( java.lang.Exception e ) {
@@ -125,12 +125,12 @@ public class Exceptions {
 
     public static <T> T handle( Class<T> clazz,  Throwable e, Object... messages ) {
 
-        throw new SoftenedException( sputs(messages), e );
+        throw new SoftenedException( Str.sputs(messages), e );
     }
 
     public static void handle( Throwable e, Object... messages ) {
 
-        throw new SoftenedException( sputs(messages), e );
+        throw new SoftenedException( Str.sputs(messages), e );
     }
 
 
@@ -199,7 +199,7 @@ public class Exceptions {
                 continue;
             }
 
-            String key =   Boon.sputs(st.getClassName(), st.getFileName(), st.getMethodName(), st.getLineNumber());
+            String key =   Str.sputs(st.getClassName(), st.getFileName(), st.getMethodName(), st.getLineNumber());
             if (seenThisBefore.contains(key)) {
                 continue;
             } else {
@@ -375,8 +375,8 @@ public class Exceptions {
         final StackTraceElement[] stackTrace = ex.getStackTrace();
         for ( StackTraceElement element : stackTrace ) {
             buffer.add( element.getClassName() );
-            sputs( "      ", buffer, "class", element.getClassName(),
-                    "method", element.getMethodName(), "line", element.getLineNumber() );
+            Str.sputs("      ", buffer, "class", element.getClassName(),
+                    "method", element.getMethodName(), "line", element.getLineNumber());
         }
 
         return buffer.toString();

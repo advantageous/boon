@@ -36,7 +36,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.List;
 
-import static io.advantageous.boon.Boon.puts;
+import static io.advantageous.boon.Str.puts;
 import static io.advantageous.boon.Exceptions.die;
 import static io.advantageous.boon.Lists.list;
 import static io.advantageous.boon.Str.lines;

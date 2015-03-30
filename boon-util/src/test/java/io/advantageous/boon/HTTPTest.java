@@ -31,10 +31,6 @@ package io.advantageous.boon;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import io.advantageous.boon.HTTP;
-import io.advantageous.boon.IO;
-import io.advantageous.boon.Lists;
-import io.advantageous.boon.Maps;
 import org.junit.Test;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -47,8 +43,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static io.advantageous.boon.Boon.puts;
-import static io.advantageous.boon.Boon.sputs;
+import static io.advantageous.boon.Str.puts;
+import static io.advantageous.boon.Str.sputs;
 import static io.advantageous.boon.Exceptions.die;
 import static io.advantageous.boon.Maps.copy;
 import static io.advantageous.boon.Maps.map;
@@ -184,7 +180,7 @@ public class HTTPTest {
         ok &= response.length == 19 || die( "response is the wrong length" + response.length );
 
         for ( int index = 0; index < 19; index++ ) {
-            ok &= response[ index ] == index || die( sputs( "index", index, "ressponse at index", response[ index ] ) );
+            ok &= response[ index ] == index || die( Str.sputs("index", index, "ressponse at index", response[index]) );
 
         }
         Thread.sleep( 10 );

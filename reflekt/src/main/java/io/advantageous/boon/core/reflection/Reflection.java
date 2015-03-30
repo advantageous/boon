@@ -37,7 +37,7 @@ import io.advantageous.boon.core.reflection.fields.ReflectField;
 import io.advantageous.boon.core.reflection.fields.UnsafeField;
 import io.advantageous.boon.Exceptions;
 import io.advantageous.boon.Lists;
-import io.advantageous.boon.Pair;
+import io.advantageous.boon.core.Pair;
 import sun.misc.Unsafe;
 
 import java.lang.ref.WeakReference;
@@ -500,7 +500,7 @@ public class Reflection {
                 if ( _useUnsafe ) {
                     newInstance = ( T ) getUnsafe().allocateInstance( clazz );
                 } else {
-                    Exceptions.die (Boon.sputs(clazz.getName(), "does not have a no arg constructor and unsafe is not turned on"));
+                    Exceptions.die (Str.sputs(clazz.getName(), "does not have a no arg constructor and unsafe is not turned on"));
                 }
 
             }

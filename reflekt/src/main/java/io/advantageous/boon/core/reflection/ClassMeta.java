@@ -29,9 +29,10 @@
 package io.advantageous.boon.core.reflection;
 
 import io.advantageous.boon.Exceptions;
+import io.advantageous.boon.core.MultiMap;
+import io.advantageous.boon.core.MultiMapImpl;
 import io.advantageous.boon.core.reflection.fields.FieldAccess;
 import io.advantageous.boon.Lists;
-import io.advantageous.boon.collections.MultiMapImpl;
 import io.advantageous.boon.core.Typ;
 import io.advantageous.boon.core.reflection.impl.ConstructorAccessImpl;
 import io.advantageous.boon.core.reflection.impl.MethodAccessImpl;
@@ -43,8 +44,6 @@ import java.lang.reflect.Type;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static io.advantageous.boon.Exceptions.die;
-import static io.advantageous.boon.Exceptions.requireNonNull;
 import static io.advantageous.boon.Lists.list;
 
 
@@ -59,7 +58,7 @@ public class ClassMeta <T> implements Annotated{
 
     final List<ConstructorAccess<T>> constructorAccessSet;
 
-    final MultiMapImpl<String, MethodAccess> methodsMulti;
+    final MultiMap<String, MethodAccess> methodsMulti;
     final List <MethodAccess> methods;
 
     final Map<String, FieldAccess> fieldMap;

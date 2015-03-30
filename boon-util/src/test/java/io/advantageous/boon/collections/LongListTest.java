@@ -56,9 +56,7 @@ package io.advantageous.boon.collections;
  *               \/           \/          \/         \/        \/  \/
  */
 
-import io.advantageous.boon.collections.LongList;
 import junit.framework.TestCase;
-import io.advantageous.boon.primitive.Lng;
 
 import static io.advantageous.boon.primitive.Lng.equalsOrDie;
 import org.junit.Test;
@@ -76,32 +74,32 @@ public class LongListTest extends TestCase {
         list.addLong(2);
         list.addLong(3);
 
-        Lng.equalsOrDie(3L, list.max());
-        Lng.equalsOrDie(1L, list.min());
-        Lng.equalsOrDie(2L, list.median());
-        Lng.equalsOrDie(2L, list.mean());
-        Lng.equalsOrDie(1L, list.standardDeviation());
+        equalsOrDie(3L, list.max());
+        equalsOrDie(1L, list.min());
+        equalsOrDie(2L, list.median());
+        equalsOrDie(2L, list.mean());
+        equalsOrDie(1L, list.standardDeviation());
 
         for (int index = 0; index< 15; index++) {
             list.addLong(3);
         }
 
 
-        Lng.equalsOrDie(3, list.max());
-        Lng.equalsOrDie(1, list.min());
-        Lng.equalsOrDie(3, list.median());
-        Lng.equalsOrDie(3, list.mean());
-        Lng.equalsOrDie(0, list.standardDeviation());
+        equalsOrDie(3, list.max());
+        equalsOrDie(1, list.min());
+        equalsOrDie(3, list.median());
+        equalsOrDie(3, list.mean());
+        equalsOrDie(0, list.standardDeviation());
 
         for (int index = 0; index< 20; index++) {
             list.addLong(2);
         }
 
-        Lng.equalsOrDie(3, list.max());
-        Lng.equalsOrDie(1, list.min());
-        Lng.equalsOrDie(2, list.median());
-        Lng.equalsOrDie(2, list.mean());
-        Lng.equalsOrDie(1, list.standardDeviation());
+        equalsOrDie(3, list.max());
+        equalsOrDie(1, list.min());
+        equalsOrDie(2, list.median());
+        equalsOrDie(2, list.mean());
+        equalsOrDie(1, list.standardDeviation());
 
         list.addLong(10);
 

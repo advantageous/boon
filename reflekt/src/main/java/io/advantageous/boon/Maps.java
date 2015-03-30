@@ -30,6 +30,7 @@ package io.advantageous.boon;
 
 
 import io.advantageous.boon.core.Conversions;
+import io.advantageous.boon.core.Pair;
 import io.advantageous.boon.core.Typ;
 import io.advantageous.boon.core.reflection.BeanUtils;
 import io.advantageous.boon.core.reflection.MapObjectConversion;

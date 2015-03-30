@@ -26,11 +26,11 @@
  *               \/           \/          \/         \/        \/  \/
  */
 
-package io.advantageous.boon.collections;
+package io.advantageous.boon.core;
 
+import io.advantageous.boon.Lists;
 import io.advantageous.boon.Maps;
 import io.advantageous.boon.Sets;
-import io.advantageous.boon.core.Sys;
 import io.advantageous.boon.primitive.Arry;
 
 import java.util.*;
@@ -256,5 +256,33 @@ public class LazyMap extends AbstractMap<String, Object> {
         }
         size = 0;
         return map;
+    }
+
+    /**
+     * Created by Richard on 9/1/14.
+     */
+    public static class FakeMapEntrySet extends AbstractSet<Entry<String, Object>> {
+
+
+        Entry<String, Object>[] array;
+
+        public FakeMapEntrySet(int size, String[] keys, Object[] values) {
+
+            array = new Entry[size];
+
+            for (int index = 0; index < size; index++) {
+                array[index] = Maps.entry(keys[index], values[index]);
+            }
+        }
+
+        @Override
+        public Iterator<Entry<String, Object>> iterator() {
+            return Lists.list(this.array).iterator();
+        }
+
+        @Override
+        public int size() {
+            return array.length;
+        }
     }
 }

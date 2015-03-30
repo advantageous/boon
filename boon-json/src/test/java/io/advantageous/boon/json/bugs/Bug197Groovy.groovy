@@ -8,7 +8,7 @@ import io.advantageous.boon.primitive.CharBuf
 import org.codehaus.groovy.runtime.GStringImpl
 import org.junit.Test
 
-import static io.advantageous.boon.Boon.puts
+import static io.advantageous.boon.Str.puts
 
 /**
  * Created by Richard on 9/14/14.

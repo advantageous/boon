@@ -39,8 +39,6 @@ import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static io.advantageous.boon.Lists.toListOrSingletonList;
-
 /**
  * This class contains some utility methods and acts as facade
  * over the most popular Boon features.
@@ -48,10 +46,6 @@ import static io.advantageous.boon.Lists.toListOrSingletonList;
 public class Boon {
 
 
-    /**
-     * Sets where Boon looks for config information.
-     */
-    public static final String BOON_SYSTEM_CONF_DIR = "BOON_SYSTEM_CONF_DIR";
 
 
     /**
@@ -72,211 +66,6 @@ public class Boon {
         return (a == b) || (a != null && a.equals(b));
     }
 
-    /**
-     * Prints a simple message to the console.
-     *
-     * @param message string to print.
-     */
-    public static void println(String message) {
-        Sys.println(message);
-    }
-
-    /**
-     * Adds a newline to the console.
-     */
-    public static void println() {
-        Sys.println("");
-    }
-
-    /**
-     * Prints an object to the console.
-     *
-     * @param message object to print.
-     */
-    public static void println(Object message) {
-
-        print(message);
-        println();
-    }
-
-    /**
-     * Prints to console.
-     *
-     * @param message message
-     */
-    public static void print(String message) {
-        Sys.print(message);
-    }
-
-    /**
-     * Print a single object to the console.
-     * If null prints out &gt;NULL&lt;
-     * If char[] converts to String.
-     * If array prints out string version of array
-     * by first converting array to a list.
-     * If any object, then it uses the toString to print out the object.
-     *
-     * @param message the object that you wish to print.
-     */
-    public static void print(Object message) {
-
-        if (message == null) {
-            print("<NULL>");
-        } else if (message instanceof char[]) {
-            print(FastStringUtils.noCopyStringFromChars((char[]) message));
-        } else if (message.getClass().isArray()) {
-            print(toListOrSingletonList(message).toString());
-        } else {
-            print(message.toString());
-        }
-    }
-
-    /**
-     * Like print, but prints out a whole slew of objects on the same line.
-     *
-     * @param messages objects you want to print on the same line.
-     */
-    public static void puts(Object... messages) {
-
-        for (Object message : messages) {
-            print(message);
-            if (!(message instanceof Terminal.Escape)) print(' ');
-        }
-        println();
-
-    }
-
-
-
-
-    /**
-     * <p>
-     * Like puts but prints out each object on its own line.
-     * If the object is a list or array,
-     * then each item in the list gets printed out on its own line.
-     * </p>
-     *
-     * @param messages the stuff you want to print out.
-     */
-    public static void putl(Object... messages) {
-
-        for (Object message : messages) {
-
-            if (message instanceof Collection || Typ.isArray(message)) {
-                Iterator iterator = Conversions.iterator(message);
-                while (iterator.hasNext()) {
-                    puts(iterator.next());
-                }
-                continue;
-            }
-            print(message);
-            println();
-        }
-        println();
-
-    }
-
-    /**
-     * like putl but writes to a string.
-     *
-     * @param messages the stuff you want to print out.
-     * @return string
-     */
-    public static String sputl(Object... messages) {
-        CharBuf buf = CharBuf.create(100);
-        return sputl(buf, messages).toString();
-    }
-
-    /**
-     * Like puts but writes to a String.
-     *
-     * @param messages the stuff you want to print out.
-     * @return string
-     */
-    public static String sputs(Object... messages) {
-        CharBuf buf = CharBuf.create(80);
-        return sputs(buf, messages).toString();
-    }
-
-
-    /**
-     * Writes to a char buf. A char buf is like a StringBuilder.
-     *
-     * @param buf      char buf
-     * @param messages messages
-     * @return charbuf
-     */
-    public static CharBuf sputl(CharBuf buf, Object... messages) {
-
-        for (Object message : messages) {
-            if (message == null) {
-                buf.add("<NULL>");
-            } else if (message.getClass().isArray()) {
-                buf.add(toListOrSingletonList(message).toString());
-            } else {
-                buf.add(message.toString());
-            }
-            buf.add('\n');
-        }
-        buf.add('\n');
-
-        return buf;
-
-
-    }
-
-    /**
-     * Like puts but writes to a CharBuf.
-     *
-     * @param buf      char buf
-     * @param messages messages to write.
-     * @return string created.
-     */
-    public static CharBuf sputs(CharBuf buf, Object... messages) {
-
-        int index = 0;
-        for (Object message : messages) {
-            if (index != 0) {
-                buf.add(' ');
-            }
-            index++;
-
-            if (message == null) {
-                buf.add("<NULL>");
-            } else if (message.getClass().isArray()) {
-                buf.add(toListOrSingletonList(message).toString());
-            } else {
-                buf.add(message.toString());
-            }
-        }
-        buf.add('\n');
-
-        return buf;
-
-    }
-
-    public static StringBuilder sputs(StringBuilder buf, Object... messages) {
-
-        int index = 0;
-        for (Object message : messages) {
-            if (index != 0) {
-                buf.append(' ');
-            }
-            index++;
-
-            if (message == null) {
-                buf.append("<NULL>");
-            } else if (message.getClass().isArray()) {
-                buf.append(toListOrSingletonList(message).toString());
-            } else {
-                buf.append(message.toString());
-            }
-        }
-        buf.append('\n');
-
-        return buf;
-
-    }
 
     public static boolean isArray(Object obj) {
         return Typ.isArray(obj);
@@ -474,7 +263,7 @@ public class Boon {
      * @param pressEnterKeyMessage message
      */
     public static void pressEnterKey(String pressEnterKeyMessage) {
-        puts(pressEnterKeyMessage);
+        Str.puts(pressEnterKeyMessage);
         gets();
     }
 
@@ -483,7 +272,7 @@ public class Boon {
      * Used by console apps.
      */
     public static void pressEnterKey() {
-        puts("Press enter key to continue");
+        Str.puts("Press enter key to continue");
         gets();
     }
 

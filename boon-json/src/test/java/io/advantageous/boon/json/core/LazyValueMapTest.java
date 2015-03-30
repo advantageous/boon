@@ -29,6 +29,7 @@
 package io.advantageous.boon.json.core;
 
 import io.advantageous.boon.IO;
+import io.advantageous.boon.Str;
 import io.advantageous.boon.core.Value;
 import io.advantageous.boon.json.JsonParserAndMapper;
 import io.advantageous.boon.json.JsonParserFactory;
@@ -38,7 +39,7 @@ import org.junit.Test;
 
 import java.util.*;
 
-import static io.advantageous.boon.Boon.sputs;
+import static io.advantageous.boon.Str.sputs;
 import static io.advantageous.boon.Exceptions.die;
 
 public class LazyValueMapTest {
@@ -172,7 +173,7 @@ public class LazyValueMapTest {
         } else if ( object == null ) {
             nullCount++;
         } else {
-            die ( sputs ( object, object.getClass ().getName (), map, c ) );
+            die ( Str.sputs(object, object.getClass().getName(), map, c) );
         }
     }
 
@@ -199,7 +200,7 @@ public class LazyValueMapTest {
         } else if ( object == null ) {
             nullCount++;
         } else {
-            die ( sputs ( object, object.getClass ().getName (), map, list ) );
+            die ( Str.sputs(object, object.getClass().getName(), map, list) );
         }
     }
 

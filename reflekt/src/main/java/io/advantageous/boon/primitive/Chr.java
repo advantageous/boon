@@ -34,7 +34,7 @@ import io.advantageous.boon.Universal;
 import io.advantageous.boon.core.reflection.FastStringUtils;
 
 import static java.lang.System.arraycopy;
-import static io.advantageous.boon.Boon.puts;
+import static io.advantageous.boon.Str.puts;
 import static io.advantageous.boon.Exceptions.die;
 
 

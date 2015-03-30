@@ -2,7 +2,7 @@ package io.advantageous.boon;
 
 import org.junit.Test;
 
-import static io.advantageous.boon.Boon.puts;
+import static io.advantageous.boon.Str.puts;
 import static io.advantageous.boon.Terminal.Escape.*;
 
 public class TerminalTest {

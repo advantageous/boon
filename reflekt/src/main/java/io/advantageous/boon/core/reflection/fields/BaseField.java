@@ -44,7 +44,7 @@ import java.math.BigInteger;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static io.advantageous.boon.Boon.sputs;
+import static io.advantageous.boon.Str.sputs;
 import static io.advantageous.boon.Exceptions.die;
 import static io.advantageous.boon.core.Conversions.*;
 
@@ -539,10 +539,10 @@ public abstract class BaseField implements FieldAccess {
                         this.setObject ( obj, object );
                         return;
                     }  else if (object != null) {
-                                die(sputs("Unable to set value into field after conversion was called",
-                                    this, "converted value", object, "original value", value, "field", this,
-                                    "converted object type", object.getClass()
-                                        ));
+                                die(Str.sputs("Unable to set value into field after conversion was called",
+                                        this, "converted value", object, "original value", value, "field", this,
+                                        "converted object type", object.getClass()
+                                ));
 
 
                     }

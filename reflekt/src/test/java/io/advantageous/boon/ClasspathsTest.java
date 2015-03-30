@@ -29,9 +29,6 @@
 package io.advantageous.boon;
 
 
-import io.advantageous.boon.Classpaths;
-import io.advantageous.boon.IO;
-import io.advantageous.boon.Str;
 import org.junit.Test;
 
 import java.io.File;
@@ -41,7 +38,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-import static io.advantageous.boon.Boon.puts;
+import static io.advantageous.boon.Str.puts;
 import static io.advantageous.boon.Exceptions.die;
 import static io.advantageous.boon.primitive.Chr.multiply;
 

@@ -28,9 +28,10 @@
 
 package io.advantageous.boon.primitive;
 
+import io.advantageous.boon.Str;
 import org.junit.Test;
 
-import static io.advantageous.boon.Boon.sputs;
+import static io.advantageous.boon.Str.sputs;
 import static io.advantageous.boon.Exceptions.die;
 import static io.advantageous.boon.primitive.Int.reduceBy;
 
@@ -63,7 +64,7 @@ public class IntTest {
 
 
         if (sum != 36)
-            die(sputs("Sum was 36", sum));
+            die(Str.sputs("Sum was 36", sum));
 
 
     }
@@ -78,7 +79,7 @@ public class IntTest {
 
 
         if (sum != 36) {
-            die(sputs("Sum was 36", sum));
+            die(Str.sputs("Sum was 36", sum));
         }
 
     }

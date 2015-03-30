@@ -36,9 +36,6 @@ import io.advantageous.boon.core.Dates;
 import io.advantageous.boon.core.reflection.FastStringUtils;
 import io.advantageous.boon.core.reflection.Mapper;
 import io.advantageous.boon.Lists;
-import io.advantageous.boon.cache.Cache;
-import io.advantageous.boon.cache.CacheType;
-import io.advantageous.boon.cache.SimpleCache;
 import io.advantageous.boon.core.TypeType;
 
 import java.io.IOException;
@@ -189,7 +186,7 @@ public class CharBuf extends PrintWriter implements CharSequence {
     }
 
 
-    private Cache <Integer, char[]> icache;
+    private SimpleLRUCache <Integer, char[]> icache;
 
     public final CharBuf addInt( int i ) {
         switch (i) {
@@ -212,7 +209,7 @@ public class CharBuf extends PrintWriter implements CharSequence {
 
 
         if (icache == null) {
-            icache = new SimpleCache<> ( 1000, CacheType.LRU );
+            icache = new SimpleLRUCache<> ( 1000 );
         }
         char [] chars = icache.get ( key );
 
@@ -281,7 +278,7 @@ public class CharBuf extends PrintWriter implements CharSequence {
     }
 
 
-    private Cache <Double, char[]> dcache;
+    private SimpleLRUCache <Double, char[]> dcache;
 
 
 
@@ -293,7 +290,7 @@ public class CharBuf extends PrintWriter implements CharSequence {
     public final  CharBuf addDouble( Double key ) {
 
         if (dcache == null) {
-            dcache = new SimpleCache<> ( 100, CacheType.LRU );
+            dcache = new SimpleLRUCache<> ( 100 );
         }
         char [] chars = dcache.get ( key );
 
@@ -314,7 +311,7 @@ public class CharBuf extends PrintWriter implements CharSequence {
     }
 
 
-    private Cache <Float, char[]> fcache;
+    private SimpleLRUCache <Float, char[]> fcache;
 
     public final  CharBuf addFloat( float d ) {
         addFloat( Float.valueOf( d ) );
@@ -325,7 +322,7 @@ public class CharBuf extends PrintWriter implements CharSequence {
     public final  CharBuf addFloat( Float key ) {
 
         if (fcache == null) {
-            fcache = new SimpleCache<> ( 100, CacheType.LRU );
+            fcache = new SimpleLRUCache<> ( 100 );
         }
         char [] chars = fcache.get ( key );
 
@@ -1036,10 +1033,10 @@ public class CharBuf extends PrintWriter implements CharSequence {
     }
 
 
-    private Cache <BigDecimal, char[]> bigDCache;
+    private SimpleLRUCache <BigDecimal, char[]> bigDCache;
     public CharBuf addBigDecimal( BigDecimal key ) {
         if (bigDCache == null) {
-            bigDCache = new SimpleCache<> ( 100, CacheType.LRU );
+            bigDCache = new SimpleLRUCache<> ( 100 );
         }
         char [] chars = bigDCache.get ( key );
 
@@ -1056,11 +1053,11 @@ public class CharBuf extends PrintWriter implements CharSequence {
 
     }
 
-    private Cache <BigInteger, char[]> bigICache;
+    private SimpleLRUCache <BigInteger, char[]> bigICache;
 
     public CharBuf addBigInteger( BigInteger key ) {
         if (bigICache == null) {
-            bigICache = new SimpleCache<> ( 100, CacheType.LRU );
+            bigICache = new SimpleLRUCache<> ( 100 );
         }
         char [] chars = bigICache.get ( key );
 
@@ -1077,7 +1074,7 @@ public class CharBuf extends PrintWriter implements CharSequence {
     }
 
 
-    private Cache <Long, char[]> lcache;
+    private SimpleLRUCache <Long, char[]> lcache;
 
 
 
@@ -1090,7 +1087,7 @@ public class CharBuf extends PrintWriter implements CharSequence {
     public final  CharBuf addLong( Long key ) {
 
         if (lcache == null) {
-            lcache = new SimpleCache<> ( 100, CacheType.LRU );
+            lcache = new SimpleLRUCache<> ( 100 );
         }
         char [] chars = lcache.get ( key );
 
@@ -1105,10 +1102,10 @@ public class CharBuf extends PrintWriter implements CharSequence {
         return this;
     }
 
-    private Cache <Currency, char[]> currencyCache;
+    private SimpleLRUCache <Currency, char[]> currencyCache;
     public CharBuf addCurrency( Currency key ) {
         if (currencyCache == null) {
-            currencyCache = new SimpleCache<> ( 100, CacheType.LRU );
+            currencyCache = new SimpleLRUCache<> ( 100 );
         }
         char [] chars = currencyCache.get ( key );
 

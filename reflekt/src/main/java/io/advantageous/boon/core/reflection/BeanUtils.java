@@ -44,7 +44,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static io.advantageous.boon.Boon.className;
-import static io.advantageous.boon.Boon.sputs;
+import static io.advantageous.boon.Str.sputs;
 import static io.advantageous.boon.Exceptions.*;
 import static io.advantageous.boon.Str.lines;
 import static io.advantageous.boon.StringScanner.isDigits;
@@ -524,12 +524,12 @@ public class BeanUtils {
                 } else {
 
                     if ( field == null ) {
-                        die( sputs(
-                                "We were unable to access property=", property,
-                                "\nThe properties passed were=", properties,
-                                "\nThe root object is =", root.getClass().getName(),
-                                "\nThe current object is =", object.getClass().getName()
-                        )
+                        die( Str.sputs(
+                                        "We were unable to access property=", property,
+                                        "\nThe properties passed were=", properties,
+                                        "\nThe root object is =", root.getClass().getName(),
+                                        "\nThe current object is =", object.getClass().getName()
+                                )
                         );
                     }
 
@@ -586,12 +586,12 @@ public class BeanUtils {
                 } else {
 
                     if ( field == null ) {
-                        die( sputs(
-                                "We were unable to access property=", property,
-                                "\nThe properties passed were=", properties,
-                                "\nThe root object is =", root.getClass().getName(),
-                                "\nThe current object is =", object.getClass().getName()
-                        )
+                        die( Str.sputs(
+                                        "We were unable to access property=", property,
+                                        "\nThe properties passed were=", properties,
+                                        "\nThe root object is =", root.getClass().getName(),
+                                        "\nThe current object is =", object.getClass().getName()
+                                )
                         );
                     }
 
@@ -1708,7 +1708,7 @@ public class BeanUtils {
                 copySrcFieldToDestField ( src, dst, dstField, srcField, ignore );
 
             }catch (Exception ex) {
-                Exceptions.handle( sputs("copying field", srcField.name(), srcClass, " to ", dstField.name(), dstClass), ex );
+                Exceptions.handle( Str.sputs("copying field", srcField.name(), srcClass, " to ", dstField.name(), dstClass), ex );
             }
         }
     }
@@ -1730,7 +1730,7 @@ public class BeanUtils {
                 copySrcFieldToDestField ( src, dst, dstField, srcField, null );
 
             }catch (Exception ex) {
-                 Exceptions.handle( sputs("copying field", srcField.name(), srcClass, " to ", dstField.name(), dstClass), ex );
+                 Exceptions.handle( Str.sputs("copying field", srcField.name(), srcClass, " to ", dstField.name(), dstClass), ex );
             }
         }
     }

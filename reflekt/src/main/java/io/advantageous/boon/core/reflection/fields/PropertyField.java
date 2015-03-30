@@ -29,11 +29,12 @@
 package io.advantageous.boon.core.reflection.fields;
 
 import io.advantageous.boon.Exceptions;
+import io.advantageous.boon.Str;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import static io.advantageous.boon.Boon.sputs;
+import static io.advantageous.boon.Str.sputs;
 
 public class PropertyField extends BaseField {
     final Method getter;
@@ -97,8 +98,8 @@ public class PropertyField extends BaseField {
         try {
             return getter.invoke ( obj );
         } catch ( Throwable e ) {
-            return Exceptions.handle( Object.class, sputs( "unable to call getObject for property ", this.name,
-                    "for class ", this.type ), e );
+            return Exceptions.handle( Object.class, Str.sputs("unable to call getObject for property ", this.name,
+                    "for class ", this.type), e );
         }
     }
 
@@ -125,7 +126,7 @@ public class PropertyField extends BaseField {
         try {
             return ( Boolean ) this.getObject ( obj );
         } catch ( Exception e ) {
-            return Exceptions.handle( boolean.class, sputs( "unable to call getObject for property", this.name ), e );
+            return Exceptions.handle( boolean.class, Str.sputs("unable to call getObject for property", this.name), e );
         }
 
     }
@@ -135,7 +136,7 @@ public class PropertyField extends BaseField {
         try {
             return ( Integer ) this.getObject ( obj );
         } catch ( Exception e ) {
-            return Exceptions.handle( int.class, sputs( "unable to call getObject for property", this.name ), e );
+            return Exceptions.handle( int.class, Str.sputs("unable to call getObject for property", this.name), e );
         }
     }
 
@@ -144,7 +145,7 @@ public class PropertyField extends BaseField {
         try {
             return ( Short ) this.getObject ( obj );
         } catch ( Exception e ) {
-            return Exceptions.handle( short.class, sputs( "unable to call getObject for property", this.name ), e );
+            return Exceptions.handle( short.class, Str.sputs("unable to call getObject for property", this.name), e );
         }
     }
 
@@ -153,7 +154,7 @@ public class PropertyField extends BaseField {
         try {
             return ( Character ) this.getObject ( obj );
         } catch ( Exception e ) {
-            return Exceptions.handle( char.class, sputs( "unable to call getObject for property", this.name ), e );
+            return Exceptions.handle( char.class, Str.sputs("unable to call getObject for property", this.name), e );
         }
     }
 

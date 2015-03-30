@@ -155,7 +155,7 @@ project(':boon-json') {
 project(':boon-util') {
 
     dependencies {
-        compile project(':reflekt')
+        compile project(':boon-json')
     }
 
     uploadArchives {

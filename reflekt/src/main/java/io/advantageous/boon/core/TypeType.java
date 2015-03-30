@@ -318,7 +318,7 @@ public enum TypeType {
                     return TypeType.LIST;
 
                 case "java.util.Map":
-                case "io.advantageous.boon.collections.LazyMap":
+                case "io.advantageous.boon.core.LazyMap":
                 case "java.util.HashMap":
                 case "java.util.LinkedHashMap":
                 case "java.util.TreeMap":

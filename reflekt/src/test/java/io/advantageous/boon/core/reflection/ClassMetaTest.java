@@ -32,7 +32,7 @@ import org.junit.Test;
 
 import java.util.Collection;
 
-import static io.advantageous.boon.Boon.puts;
+import static io.advantageous.boon.Str.puts;
 import static io.advantageous.boon.Exceptions.die;
 
 /**

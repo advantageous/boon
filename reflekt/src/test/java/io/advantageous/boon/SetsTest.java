@@ -38,7 +38,7 @@ import java.util.NavigableSet;
 import java.util.Set;
 import java.util.SortedSet;
 
-import static io.advantageous.boon.Boon.puts;
+import static io.advantageous.boon.Str.puts;
 import static io.advantageous.boon.Sets.*;
 import static io.advantageous.boon.Sets.safeSet;
 import static io.advantageous.boon.Sets.safeSortedSet;

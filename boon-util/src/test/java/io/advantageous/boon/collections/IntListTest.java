@@ -28,7 +28,6 @@
 
 package io.advantageous.boon.collections;
 
-import io.advantageous.boon.collections.IntList;
 import junit.framework.TestCase;
 import io.advantageous.boon.primitive.Int;
 import org.junit.Test;

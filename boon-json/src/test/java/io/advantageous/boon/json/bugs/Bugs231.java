@@ -15,7 +15,7 @@ import java.nio.charset.Charset;
 import java.util.Map;
 
 import static com.google.common.hash.Hashing.md5;
-import static io.advantageous.boon.Boon.puts;
+import static io.advantageous.boon.Str.puts;
 import static io.advantageous.boon.Exceptions.die;
 import static io.advantageous.boon.Maps.fromMap;
 import static io.advantageous.boon.Maps.idx;

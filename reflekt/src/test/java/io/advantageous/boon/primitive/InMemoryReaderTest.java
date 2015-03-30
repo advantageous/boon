@@ -28,10 +28,9 @@
 
 package io.advantageous.boon.primitive;
 
-import io.advantageous.boon.primitive.InMemoryReader;
 import org.junit.Test;
 
-import static io.advantageous.boon.Boon.puts;
+import static io.advantageous.boon.Str.puts;
 
 /**
  * Created by Richard on 3/13/14.

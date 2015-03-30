@@ -30,12 +30,11 @@ package io.advantageous.boon.primitive;
 
 
 import io.advantageous.boon.Lists;
-import io.advantageous.boon.primitive.CharScanner;
 import org.junit.Test;
 
 import java.util.List;
 
-import static io.advantageous.boon.Boon.puts;
+import static io.advantageous.boon.Str.puts;
 import static io.advantageous.boon.Exceptions.die;
 import static io.advantageous.boon.primitive.Chr.chars;
 import static org.junit.Assert.assertArrayEquals;

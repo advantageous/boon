@@ -1,5 +1,8 @@
 package io.advantageous.boon.collections;
 
+import io.advantageous.boon.core.MultiMap;
+import io.advantageous.boon.core.MultiMapImpl;
+
 import java.util.ArrayList;
 
 /**
@@ -7,7 +10,7 @@ import java.util.ArrayList;
  */
 public class MultiMaps {
 
-    public static <K, V> MultiMap <K, V> multiMap() {
+    public static <K, V> MultiMap<K, V> multiMap() {
         return new MultiMapImpl(ArrayList.class);
     }
 
