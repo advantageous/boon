@@ -1,2 +1,2 @@
 
-include 'reflekt', 'boon-json', 'boon-util'
+include 'reflekt', 'json', 'util'

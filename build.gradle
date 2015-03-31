@@ -28,6 +28,8 @@ subprojects {
 
     group = 'io.advantageous.boon'
     version = '0.5.1-SNAPSHOT'
+    archivesBaseName = "boon-$project.name"
+
 
     test.onlyIf { !Boolean.getBoolean('skip.tests') }
 
@@ -125,7 +127,6 @@ project(':reflekt') {
         repositories {
             mavenDeployer {
                 pom.project {
-                    name 'reflekt'
                     description 'High performance reflection library'
                 }
             }
@@ -133,7 +134,7 @@ project(':reflekt') {
     }
 }
 
-project(':boon-json') {
+project(':json') {
 
     dependencies {
         compile project(':reflekt')
@@ -152,17 +153,16 @@ project(':boon-json') {
 }
 
 
-project(':boon-util') {
+project(':util') {
 
     dependencies {
-        compile project(':boon-json')
+        compile project(':json')
     }
 
     uploadArchives {
         repositories {
             mavenDeployer {
                 pom.project {
-                    name 'qbit-vertx'
                     description 'High performance Java utilities'
                 }
             }
