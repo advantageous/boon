@@ -144,7 +144,6 @@ project(':json') {
         repositories {
             mavenDeployer {
                 pom.project {
-                    name 'boon-json'
                     description 'High performance JSON library'
                 }
             }
