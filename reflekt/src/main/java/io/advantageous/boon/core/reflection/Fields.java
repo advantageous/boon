@@ -28,8 +28,8 @@
 
 package io.advantageous.boon.core.reflection;
 
-import io.advantageous.boon.Exceptions;
-import io.advantageous.boon.Sets;
+import io.advantageous.boon.core.Exceptions;
+import io.advantageous.boon.core.Sets;
 import io.advantageous.boon.core.Typ;
 import io.advantageous.boon.core.reflection.fields.FieldAccess;
 
@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.die;
 
 /**
  * Created by Richard on 2/17/14.

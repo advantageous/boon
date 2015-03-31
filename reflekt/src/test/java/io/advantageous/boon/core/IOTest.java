@@ -26,12 +26,14 @@
  *               \/           \/          \/         \/        \/  \/
  */
 
-package io.advantageous.boon;
+package io.advantageous.boon.core;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import io.advantageous.boon.*;
+import io.advantageous.boon.core.Exceptions;
+import io.advantageous.boon.core.IO;
+import io.advantageous.boon.core.StringScanner;
 import io.advantageous.boon.core.Sys;
 import io.advantageous.boon.primitive.InMemoryInputStream;
 import org.junit.Before;
@@ -45,9 +47,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.regex.Pattern;
 
-import static io.advantageous.boon.Exceptions.die;
-import static io.advantageous.boon.Lists.idx;
-import static io.advantageous.boon.Lists.len;
+import static io.advantageous.boon.core.Exceptions.die;
+import static io.advantageous.boon.core.Lists.idx;
+import static io.advantageous.boon.core.Lists.len;
 import static org.junit.Assert.assertEquals;
 
 public class IOTest {
@@ -626,64 +628,6 @@ public class IOTest {
 
     }
 
-
-    @Test
-    public void readClasspathResource() {
-
-//        I added classpath reading, listing to IO.
-//
-//        This allows you to easily search a classpath (which is not included with the JDK).
-//
-//        Reading listFromClassLoader from the classpath is included in the JDK, but treating it like a file system (listing directories, etc.) is not.
-//
-//        Also a common problem with loading listFromClassLoader is that the resource path has different  rules so if you are reading from a jar file, you need to specify clz.getResource("org/foo/foo.txt") where org is in the root, but if you are reading from the actual classpath you can specify clz.getResource("/org/foo/foo.txt");. IO utils don't care, it finds it either way.
-//
-//        (I have run into this one about 1 million times, and it throws me for a loop each time. It is on stackoverflow a lot).
-//
-//        Here is some sample code to check out.
-//
-//        Test file is on the classpath and contains this content:
-//
-//        line 1
-//        apple
-//        pear
-//        grapes
-
-        boolean ok = true;
-
-        ok |= Str.in("apple", IO.read("classpath://testfile.txt"))
-                || die( "two slashes should work" );
-
-
-        //Proper URL
-        ok |= Str.in( "apple", IO.read( "classpath:///testfile.txt" ) )
-                || die( "three slashes should work" );
-
-
-        //Not proper URL
-        ok |= Str.in( "apple", IO.read( "classpath:testfile.txt" ) )
-                || die( "no slashes should work" );
-
-        //No URL
-        ok |= Str.in( "apple", IO.readFromClasspath( this.getClass(), "testfile.txt" ) )
-                || die( "you don't have to use classpath scheme" );
-
-        //Slash or no slash, it just works
-        ok |= Str.in( "apple", IO.readFromClasspath( this.getClass(), "/testfile.txt" ) )
-                || die( "on slash works" );
-
-
-        //You can do a listing of a directory inside of a jar file or anywhere on the classpath
-        //this also handles duplicate entries as in two jar files having identical file locations.
-        //uts( IO.list( "classpath:/org/node" ) );
-
-        //Proper URL
-        List<String> paths = IO.list( "classpath:/org/node" );
-        Collections.sort(paths);
-        ok |= Lists.idx(paths, 0).endsWith( "org" + File.separator + "node" + File.separator + "file1.txt" )
-                || die();
-
-    }
 
 
 }

@@ -28,7 +28,6 @@
 
 package io.advantageous.boon.core;
 
-import io.advantageous.boon.*;
 import io.advantageous.boon.core.reflection.*;
 import io.advantageous.boon.primitive.Arry;
 
@@ -41,6 +40,8 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.logging.Logger;
+
+import static io.advantageous.boon.core.Typ.isArray;
 
 
 public class Conversions {
@@ -259,8 +260,8 @@ public class Conversions {
             } else {
                 return true;
             }
-        } else if (Boon.isArray(obj)) {
-            return Boon.len(obj) > 0;
+        } else if (isArray(obj)) {
+            return len(obj) > 0;
         } else if (obj instanceof Collection) {
 
             if (len(obj) > 0) {
@@ -933,7 +934,7 @@ public class Conversions {
             return (T) value;
         } else {
             int index = 0;
-            Object newInstance = Array.newInstance(clz.getComponentType(), Boon.len(value));
+            Object newInstance = Array.newInstance(clz.getComponentType(), len(value));
             Iterator<Object> iterator = iterator(Typ.object, value);
             while (iterator.hasNext()) {
 
@@ -961,7 +962,7 @@ public class Conversions {
         if (value.getClass() == Typ.doubleArray) {
             return (double[]) value;
         }
-        double[] values = new double[Boon.len(value)];
+        double[] values = new double[len(value)];
         int index = 0;
         Iterator<Object> iterator = iterator(Object.class, value);
         while (iterator.hasNext()) {
@@ -976,7 +977,7 @@ public class Conversions {
         if (value.getClass() == Typ.floatArray) {
             return (float[]) value;
         }
-        float[] values = new float[Boon.len(value)];
+        float[] values = new float[len(value)];
         int index = 0;
         Iterator<Object> iterator = iterator(Object.class, value);
         while (iterator.hasNext()) {
@@ -991,7 +992,7 @@ public class Conversions {
         if (value.getClass() == Typ.shortArray) {
             return (long[]) value;
         }
-        long[] values = new long[Boon.len(value)];
+        long[] values = new long[len(value)];
         int index = 0;
         Iterator<Object> iterator = iterator(Object.class, value);
         while (iterator.hasNext()) {
@@ -1006,7 +1007,7 @@ public class Conversions {
         if (value.getClass() == Typ.shortArray) {
             return (short[]) value;
         }
-        short[] values = new short[Boon.len(value)];
+        short[] values = new short[len(value)];
         int index = 0;
         Iterator<Object> iterator = iterator(Object.class, value);
         while (iterator.hasNext()) {
@@ -1021,7 +1022,7 @@ public class Conversions {
         if (value.getClass() == Typ.intArray) {
             return (int[]) value;
         }
-        int[] values = new int[Boon.len(value)];
+        int[] values = new int[len(value)];
         int index = 0;
         Iterator<Object> iterator = iterator(Object.class, value);
         while (iterator.hasNext()) {
@@ -1036,7 +1037,7 @@ public class Conversions {
         if (value.getClass() == Typ.byteArray) {
             return (byte[]) value;
         }
-        byte[] values = new byte[Boon.len(value)];
+        byte[] values = new byte[len(value)];
         int index = 0;
         Iterator<Object> iterator = iterator(Object.class, value);
         while (iterator.hasNext()) {
@@ -1051,7 +1052,7 @@ public class Conversions {
         if (value.getClass() == Typ.charArray) {
             return (char[]) value;
         }
-        char[] values = new char[Boon.len(value)];
+        char[] values = new char[len(value)];
         int index = 0;
         Iterator<Object> iterator = iterator(Typ.object, value);
         while (iterator.hasNext()) {
@@ -1072,7 +1073,7 @@ public class Conversions {
             return Collections.EMPTY_LIST.iterator();
         }
 
-        if (Boon.isArray(value)) {
+        if (isArray(value)) {
             final int length = Arry.len(value);
 
             return new Iterator<T>() {
@@ -1126,7 +1127,7 @@ public class Conversions {
             return new ArrayList(((Map)value).entrySet());
         }
         else {
-            ArrayList list = new ArrayList(Boon.len(value));
+            ArrayList list = new ArrayList(len(value));
             Iterator<Object> iterator = iterator(Typ.object, value);
             while (iterator.hasNext()) {
                 list.add(iterator.next());
@@ -1145,7 +1146,7 @@ public class Conversions {
             return ((Map)value).entrySet();
         }
         else {
-            ArrayList list = new ArrayList(Boon.len(value));
+            ArrayList list = new ArrayList(len(value));
             Iterator<Object> iterator = iterator(Typ.object, value);
             while (iterator.hasNext()) {
                 list.add(iterator.next());
@@ -1161,7 +1162,7 @@ public class Conversions {
         } else if (value instanceof Collection) {
             return new HashSet((Collection) value);
         } else {
-            HashSet set = new HashSet(Boon.len(value));
+            HashSet set = new HashSet(len(value));
             Iterator<Object> iterator = iterator(Typ.object, value);
             while (iterator.hasNext()) {
                 set.add(iterator.next());
@@ -1581,7 +1582,7 @@ public class Conversions {
     }
 
     public static int len(Object obj) {
-        if (Typ.isArray(obj)) {
+        if (isArray(obj)) {
             return Arry.len(obj);
         } else if (obj instanceof CharSequence) {
             return ((CharSequence) obj).length();

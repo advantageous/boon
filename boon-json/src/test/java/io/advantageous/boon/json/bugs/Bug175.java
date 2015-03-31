@@ -28,14 +28,14 @@
 
 package io.advantageous.boon.json.bugs;
 
-import io.advantageous.boon.Lists;
+import io.advantageous.boon.core.Lists;
 import io.advantageous.boon.core.reflection.MapObjectConversion;
 import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.util.Map;
 
-import static io.advantageous.boon.Str.puts;
+import static io.advantageous.boon.core.IO.puts;
 
 /**
  * Created by Richard on 5/4/14.

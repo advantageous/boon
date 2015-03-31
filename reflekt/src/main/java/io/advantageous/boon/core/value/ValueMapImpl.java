@@ -29,13 +29,13 @@
 package io.advantageous.boon.core.value;
 
 
-import io.advantageous.boon.Exceptions;
+import io.advantageous.boon.core.Exceptions;
 import io.advantageous.boon.core.Value;
 import io.advantageous.boon.primitive.Arry;
 
 import java.util.*;
 
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.die;
 
 /**
  * This map is for object serialization mainly.

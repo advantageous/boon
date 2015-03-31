@@ -28,8 +28,8 @@
 
 package io.advantageous.boon.core.value;
 
-import io.advantageous.boon.Exceptions;
-import io.advantageous.boon.Str;
+import io.advantageous.boon.core.Exceptions;
+import io.advantageous.boon.core.IO;
 import io.advantageous.boon.core.reflection.FastStringUtils;
 import io.advantageous.boon.primitive.CharScanner;
 import io.advantageous.boon.core.Conversions;
@@ -44,7 +44,7 @@ import java.util.Arrays;
 import java.util.Currency;
 import java.util.Date;
 
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.die;
 
 public class NumberValue extends Number implements Value {
 
@@ -82,7 +82,7 @@ public class NumberValue extends Number implements Value {
                 this.buffer = buffer;
             }
         } catch ( Exception ex ) {
-            Str.puts("exception", ex, "start", startIndex, "end", endIndex);
+            IO.puts("exception", ex, "start", startIndex, "end", endIndex);
             Exceptions.handle(ex);
 
         }

@@ -28,17 +28,16 @@
 
 package io.advantageous.boon.primitive;
 
-import io.advantageous.boon.Exceptions;
+import io.advantageous.boon.core.Exceptions;
 import io.advantageous.boon.core.reflection.Invoker;
-import io.advantageous.boon.Universal;
 
 import java.lang.invoke.ConstantCallSite;
 import java.lang.invoke.MethodHandle;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
-import static io.advantageous.boon.Exceptions.die;
-import static io.advantageous.boon.Exceptions.handle;
+import static io.advantageous.boon.core.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.handle;
 
 
 public class Flt {
@@ -112,7 +111,7 @@ public class Flt {
      * @param array array
      * @return array
      */
-    @Universal
+
     public static float[] array( final float... array ) {
         Exceptions.requireNonNull( array );
         return array;
@@ -120,23 +119,23 @@ public class Flt {
 
 
 
-    @Universal
+
     public static int lengthOf( float[] array ) {
         return len(array);
     }
 
-    @Universal
+
     public static int len( float[] array ) {
         return array.length;
     }
 
 
-    @Universal
+
     public static float atIndex( final float[] array, final int index ) {
         return idx(array, index);
     }
 
-    @Universal
+
     public static float idx( final float[] array, final int index ) {
         final int i = calculateIndex( array, index );
 
@@ -145,25 +144,25 @@ public class Flt {
 
 
 
-    @Universal
+
     public static void atIndex( final float[] array, int index, float value ) {
         idx (array, index, value);
     }
 
-    @Universal
+
     public static void idx( final float[] array, int index, float value ) {
         final int i = calculateIndex( array, index );
 
         array[ i ] = value;
     }
 
-    @Universal
+
     public static float[] sliceOf( float[] array, int startIndex, int endIndex ) {
 
         return slc(array, startIndex, endIndex);
     }
 
-    @Universal
+
     public static float[] slc( float[] array, int startIndex, int endIndex ) {
 
         final int start = calculateIndex( array, startIndex );
@@ -183,13 +182,13 @@ public class Flt {
     }
 
 
-    @Universal
+
     public static float[] sliceOf( float[] array, int startIndex ) {
 
         return slc(array, startIndex);
     }
 
-    @Universal
+
     public static float[] slc( float[] array, int startIndex ) {
 
         final int start = calculateIndex( array, startIndex );
@@ -209,12 +208,12 @@ public class Flt {
 
 
 
-    @Universal
+
     public static float[] endOfSlice( float[] array, int endIndex ) {
         return slcEnd(array, endIndex);
     }
 
-    @Universal
+
     public static float[] slcEnd( float[] array, int endIndex ) {
 
         final int end = calculateEndIndex( array, endIndex );
@@ -232,7 +231,7 @@ public class Flt {
         return newArray;
     }
 
-    @Universal
+
     public static boolean in( float value, float[] array ) {
         for ( float currentValue : array ) {
             if ( currentValue == value ) {
@@ -243,7 +242,7 @@ public class Flt {
     }
 
 
-    @Universal
+
     public static float[] copy( float[] array ) {
         Exceptions.requireNonNull( array );
         float[] newArray = new float[ array.length ];
@@ -252,7 +251,7 @@ public class Flt {
     }
 
 
-    @Universal
+
     public static float[] add( float[] array, float v ) {
         Exceptions.requireNonNull( array );
         float[] newArray = new float[ array.length + 1 ];
@@ -261,7 +260,7 @@ public class Flt {
         return newArray;
     }
 
-    @Universal
+
     public static float[] add( float[] array, float[] array2 ) {
         Exceptions.requireNonNull( array );
         float[] newArray = new float[ array.length + array2.length ];
@@ -271,7 +270,7 @@ public class Flt {
     }
 
 
-    @Universal
+
     public static float[] insert( final float[] array, final int idx, final float v ) {
 
         if ( idx >= array.length ) {
@@ -310,7 +309,7 @@ public class Flt {
     }
 
 
-    @Universal
+
     public static float[] insert( final float[] array, final int fromIndex, final float[] values ) {
         Exceptions.requireNonNull( array );
 

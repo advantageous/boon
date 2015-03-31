@@ -28,7 +28,7 @@
 
 package io.advantageous.boon.core.reflection;
 
-import io.advantageous.boon.Sets;
+import io.advantageous.boon.core.Sets;
 import io.advantageous.boon.core.reflection.fields.FieldAccessMode;
 import io.advantageous.boon.core.Value;
 import io.advantageous.boon.core.reflection.fields.FieldsAccessor;

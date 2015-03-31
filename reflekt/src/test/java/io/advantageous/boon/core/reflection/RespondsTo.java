@@ -36,10 +36,10 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.List;
 
-import static io.advantageous.boon.Str.puts;
-import static io.advantageous.boon.Exceptions.die;
-import static io.advantageous.boon.Lists.list;
-import static io.advantageous.boon.Str.lines;
+import static io.advantageous.boon.core.IO.puts;
+import static io.advantageous.boon.core.Exceptions.die;
+import static io.advantageous.boon.core.Lists.list;
+import static io.advantageous.boon.core.Str.lines;
 import static io.advantageous.boon.core.reflection.Reflection.handles;
 import static io.advantageous.boon.core.reflection.Reflection.invoke;
 import static io.advantageous.boon.core.reflection.Reflection.respondsTo;

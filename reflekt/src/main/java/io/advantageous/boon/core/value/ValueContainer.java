@@ -29,8 +29,8 @@
 package io.advantageous.boon.core.value;
 
 
-import io.advantageous.boon.Exceptions;
-import io.advantageous.boon.Str;
+import io.advantageous.boon.core.Exceptions;
+import io.advantageous.boon.core.Str;
 import io.advantageous.boon.core.Value;
 import io.advantageous.boon.core.TypeType;
 import io.advantageous.boon.primitive.CharBuf;
@@ -42,8 +42,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import static io.advantageous.boon.Str.sputs;
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Str.sputs;
+import static io.advantageous.boon.core.Exceptions.die;
 
 public class ValueContainer implements CharSequence, Value {
 

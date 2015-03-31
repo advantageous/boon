@@ -28,13 +28,11 @@
 
 package io.advantageous.boon.cache;
 
-import io.advantageous.boon.cache.CacheType;
-import io.advantageous.boon.cache.FastConcurrentReadLruLfuFifoCache;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.die;
 
 /**
  * Created by rick on 12/17/13.

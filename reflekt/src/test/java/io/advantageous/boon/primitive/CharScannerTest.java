@@ -29,13 +29,13 @@
 package io.advantageous.boon.primitive;
 
 
-import io.advantageous.boon.Lists;
+import io.advantageous.boon.core.Lists;
 import org.junit.Test;
 
 import java.util.List;
 
-import static io.advantageous.boon.Str.puts;
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.IO.puts;
+import static io.advantageous.boon.core.Exceptions.die;
 import static io.advantageous.boon.primitive.Chr.chars;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;

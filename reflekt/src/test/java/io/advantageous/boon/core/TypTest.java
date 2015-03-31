@@ -28,10 +28,9 @@
 
 package io.advantageous.boon.core;
 
-import io.advantageous.boon.core.Typ;
 import org.junit.Test;
 
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.die;
 
 /**
  * Created by Richard on 3/25/14.

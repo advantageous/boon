@@ -1,11 +1,11 @@
 package io.advantageous.boon.json.bugs;
 
-import io.advantageous.boon.Maps;
+import io.advantageous.boon.core.Maps;
 import io.advantageous.boon.json.JsonSerializer;
 import io.advantageous.boon.json.JsonSerializerFactory;
 import org.junit.Test;
 
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.die;
 
 
 /**

@@ -28,9 +28,9 @@
 
 package io.advantageous.boon.core.reflection.fields;
 
-import io.advantageous.boon.Exceptions;
-import io.advantageous.boon.Sets;
-import io.advantageous.boon.Str;
+import io.advantageous.boon.core.Exceptions;
+import io.advantageous.boon.core.Sets;
+import io.advantageous.boon.core.Str;
 import io.advantageous.boon.core.Conversions;
 import io.advantageous.boon.core.TypeType;
 import io.advantageous.boon.core.Value;
@@ -44,8 +44,8 @@ import java.math.BigInteger;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static io.advantageous.boon.Str.sputs;
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Str.sputs;
+import static io.advantageous.boon.core.Exceptions.die;
 import static io.advantageous.boon.core.Conversions.*;
 
 public abstract class BaseField implements FieldAccess {

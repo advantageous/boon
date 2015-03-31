@@ -26,11 +26,8 @@
  *               \/           \/          \/         \/        \/  \/
  */
 
-package io.advantageous.boon;
+package io.advantageous.boon.core;
 
-import io.advantageous.boon.core.Conversions;
-import io.advantageous.boon.core.Sys;
-import io.advantageous.boon.core.Typ;
 import io.advantageous.boon.core.reflection.FastStringUtils;
 import io.advantageous.boon.primitive.CharScanner;
 import io.advantageous.boon.primitive.Chr;
@@ -40,11 +37,10 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
-import static io.advantageous.boon.Exceptions.die;
-import static io.advantageous.boon.Lists.toListOrSingletonList;
+import static io.advantageous.boon.core.Exceptions.die;
+import static io.advantageous.boon.core.Lists.toListOrSingletonList;
 
 public class Str {
 
@@ -60,7 +56,7 @@ public class Str {
      * @param str string
      * @return length
      */
-    @Universal
+
     public static int lengthOf( String str ) {
         return len(str);
     }
@@ -72,7 +68,7 @@ public class Str {
      * @param start start index of slice
      * @return new string
      */
-    @Universal
+
     public static String sliceOf( String str, int start ) {
         return slc(str, start);
     }
@@ -85,7 +81,7 @@ public class Str {
      * @param end end index
      * @return new string
      */
-    @Universal
+
     public static String sliceOf( String str, int start, int end ) {
         return slc(str, start, end);
     }
@@ -97,7 +93,7 @@ public class Str {
      * @param end end index of slice
      * @return new string
      */
-    @Universal
+
     public static String endSliceOf( String str, int end ) {
         return slcEnd(str, end);
     }
@@ -109,7 +105,7 @@ public class Str {
      * @param index index
      * @return char at
      */
-    @Universal
+
     public static char atIndex( String str, int index ) {
         return idx(str, index);
     }
@@ -122,7 +118,7 @@ public class Str {
      * @param c char to put in
      * @return new string
      */
-    @Universal
+
     public static String atIndex( String str, int index, char c ) {
             return idx (str, index, c);
     }
@@ -133,7 +129,7 @@ public class Str {
      * @param str string
      * @return length
      */
-    @Universal
+
     public static int len( String str ) {
         return str.length();
     }
@@ -146,7 +142,7 @@ public class Str {
      * @param start start index of slice
      * @return new string
      */
-    @Universal
+
     public static String slc( String str, int start ) {
 
         return FastStringUtils.noCopyStringFromChars(Chr.slc(FastStringUtils.toCharArray(str), start));
@@ -160,7 +156,7 @@ public class Str {
      * @param end end index
      * @return new string
      */
-    @Universal
+
     public static String slc( String str, int start, int end ) {
         return FastStringUtils.noCopyStringFromChars(Chr.slc(FastStringUtils.toCharArray(str), start, end));
     }
@@ -172,7 +168,7 @@ public class Str {
      * @param end end index of slice
      * @return new string
      */
-    @Universal
+
     public static String slcEnd( String str, int end ) {
         return FastStringUtils.noCopyStringFromChars( Chr.slcEnd( FastStringUtils.toCharArray(str), end ) );
     }
@@ -185,7 +181,7 @@ public class Str {
      * @param index index
      * @return char at
      */
-    @Universal
+
     public static char idx( String str, int index ) {
         int i = calculateIndex( str.length(), index );
 
@@ -201,7 +197,7 @@ public class Str {
      * @param c char to put in
      * @return new string
      */
-    @Universal
+
     public static String idx( String str, int index, char c ) {
 
         char[] chars = str.toCharArray();
@@ -215,7 +211,7 @@ public class Str {
      * @param str string
      * @return true or false
      */
-    @Universal
+
     public static boolean in( char[] chars, String str ) {
         return Chr.in ( chars, FastStringUtils.toCharArray(str) );
     }
@@ -227,7 +223,7 @@ public class Str {
      * @param str string
      * @return true or false
      */
-    @Universal
+
     public static boolean in( char c, String str ) {
         return Chr.in ( c, FastStringUtils.toCharArray(str) );
     }
@@ -240,7 +236,7 @@ public class Str {
      * @param str string
      * @return true or false
      */
-    @Universal
+
     public static boolean in( char c, int offset, String str ) {
         return Chr.in ( c, offset, FastStringUtils.toCharArray(str) );
     }
@@ -254,7 +250,7 @@ public class Str {
      * @param str string
      * @return true or false
      */
-    @Universal
+
     public static boolean in( char c, int offset, int end, String str ) {
         return Chr.in ( c, offset, end, FastStringUtils.toCharArray(str) );
     }
@@ -266,7 +262,7 @@ public class Str {
      * @param c char
      * @return new string
      */
-    @Universal
+
     public static String add( String str, char c ) {
         return FastStringUtils.noCopyStringFromChars( Chr.add( FastStringUtils.toCharArray(str), c ) );
     }
@@ -278,7 +274,7 @@ public class Str {
      * @param str2 string 2
      * @return new string
      */
-    @Universal
+
     public static String add( String str, String str2 ) {
         return FastStringUtils.noCopyStringFromChars(
                 Chr.add(
@@ -293,7 +289,7 @@ public class Str {
      * @param strings strings
      * @return new string
      */
-    @Universal
+
     public static String add( String... strings ) {
         int length = 0;
         for ( String str : strings ) {
@@ -642,7 +638,7 @@ public class Str {
 
     }
 
-    @Universal
+
     public static boolean in( String value, String str ) {
         return str.contains( value );
     }
@@ -738,7 +734,7 @@ public class Str {
 
     }
 
-    @Universal
+
     public static boolean isEmpty( String str ) {
         if ( str == null ) {
             return true;
@@ -748,7 +744,7 @@ public class Str {
 
     }
 
-    @Universal
+
     public static boolean isEmpty( Object str ) {
         if ( str == null ) {
             return true;
@@ -913,98 +909,6 @@ public class Str {
     }
 
     /**
-     * Adds a newline to the console.
-     */
-    public static void println() {
-        Sys.println("");
-    }
-
-    /**
-     * Prints an object to the console.
-     *
-     * @param message object to print.
-     */
-    public static void println(Object message) {
-
-        print(message);
-        println();
-    }
-
-    /**
-     * Prints to console.
-     *
-     * @param message message
-     */
-    public static void print(String message) {
-        Sys.print(message);
-    }
-
-    /**
-     * Print a single object to the console.
-     * If null prints out &gt;NULL&lt;
-     * If char[] converts to String.
-     * If array prints out string version of array
-     * by first converting array to a list.
-     * If any object, then it uses the toString to print out the object.
-     *
-     * @param message the object that you wish to print.
-     */
-    public static void print(Object message) {
-
-        if (message == null) {
-            print("<NULL>");
-        } else if (message instanceof char[]) {
-            print(FastStringUtils.noCopyStringFromChars((char[]) message));
-        } else if (message.getClass().isArray()) {
-            print(toListOrSingletonList(message).toString());
-        } else {
-            print(message.toString());
-        }
-    }
-
-    /**
-     * Like print, but prints out a whole slew of objects on the same line.
-     *
-     * @param messages objects you want to print on the same line.
-     */
-    public static void puts(Object... messages) {
-
-        for (Object message : messages) {
-            print(message);
-            if (!(message instanceof Terminal.Escape)) print(' ');
-        }
-        println();
-
-    }
-
-    /**
-     * <p>
-     * Like puts but prints out each object on its own line.
-     * If the object is a list or array,
-     * then each item in the list gets printed out on its own line.
-     * </p>
-     *
-     * @param messages the stuff you want to print out.
-     */
-    public static void putl(Object... messages) {
-
-        for (Object message : messages) {
-
-            if (message instanceof Collection || Typ.isArray(message)) {
-                Iterator iterator = Conversions.iterator(message);
-                while (iterator.hasNext()) {
-                    puts(iterator.next());
-                }
-                continue;
-            }
-            print(message);
-            println();
-        }
-        println();
-
-    }
-
-    /**
      * like putl but writes to a string.
      *
      * @param messages the stuff you want to print out.
@@ -1103,5 +1007,17 @@ public class Str {
 
         return buf;
 
+    }
+
+    public static String toPrettyJson(Object object) {
+
+        CharBuf buf = CharBuf.createCharBuf();
+        return buf.prettyPrintObject(object, false, 0).toString();
+    }
+
+    public static String toPrettyJsonWithTypes(Object object) {
+
+        CharBuf buf = CharBuf.createCharBuf();
+        return buf.prettyPrintObject(object, true, 0).toString();
     }
 }

@@ -28,9 +28,8 @@
 
 package io.advantageous.boon.primitive;
 
-import io.advantageous.boon.Exceptions;
-import io.advantageous.boon.StringScanner;
-import io.advantageous.boon.Universal;
+import io.advantageous.boon.core.Exceptions;
+import io.advantageous.boon.core.StringScanner;
 import io.advantageous.boon.core.reflection.BeanUtils;
 import io.advantageous.boon.core.reflection.Invoker;
 import io.advantageous.boon.core.reflection.fields.FieldAccess;
@@ -42,8 +41,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 
-import static io.advantageous.boon.Exceptions.die;
-import static io.advantageous.boon.Exceptions.handle;
+import static io.advantageous.boon.core.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.handle;
 
 
 /**
@@ -140,7 +139,7 @@ public class Int {
      * @param array array
      * @return array
      */
-    @Universal
+
     public static int[] array( final int... array ) {
         Exceptions.requireNonNull( array );
         return array;
@@ -152,7 +151,7 @@ public class Int {
      * @param array the array you are getting the length from.
      * @return array length
      */
-    @Universal
+
     public static int lengthOf( int[] array ) {
         return len(array);
     }
@@ -163,7 +162,7 @@ public class Int {
      * @param array the array you are getting the length from.
      * @return array length
      */
-    @Universal
+
     public static int len( int[] array ) {
         return array.length;
     }
@@ -175,7 +174,7 @@ public class Int {
      * @param array the array you are getting the from.
      * @return the value
      */
-    @Universal
+
     public static int idx( final int[] array, final int index ) {
         final int i = calculateIndex( array, index );
 
@@ -189,7 +188,7 @@ public class Int {
      * @param array the array you are getting the from.
      * @return the value
      */
-    @Universal
+
     public static int atIndex( final int[] array, final int index ) {
         final int i = calculateIndex( array, index );
 
@@ -201,7 +200,7 @@ public class Int {
      * Sets the value at the given index.
      * @param array the array you are getting the from.
      */
-    @Universal
+
     public static void idx( final int[] array, int index, int value ) {
         final int i = calculateIndex( array, index );
 
@@ -214,7 +213,7 @@ public class Int {
      * @param array the array you are setting the value to.
      * @param value the new value.
      */
-    @Universal
+
     public static void atIndex( final int[] array, int index, int value ) {
         final int i = calculateIndex( array, index );
 
@@ -228,7 +227,7 @@ public class Int {
      * @param endIndex the end index of the slice
      * @return the new slice
      */
-    @Universal
+
     public static int[] slc( int[] array, int startIndex, int endIndex ) {
 
         final int start = calculateIndex( array, startIndex );
@@ -255,7 +254,7 @@ public class Int {
      * @param endIndex the end index of the slice
      * @return the new slice
      */
-    @Universal
+
     public static int[] sliceOf( int[] array, int startIndex, int endIndex ) {
 
         final int start = calculateIndex( array, startIndex );
@@ -281,7 +280,7 @@ public class Int {
      * @param startIndex the start index of the slice
      * @return the new slice
      */
-    @Universal
+
     public static int[] slc( int[] array, int startIndex ) {
 
         final int start = calculateIndex( array, startIndex );
@@ -306,7 +305,7 @@ public class Int {
      * @param startIndex the start index of the slice
      * @return the new slice
      */
-    @Universal
+
     public static int[] sliceOf( int[] array, int startIndex ) {
 
         final int start = calculateIndex( array, startIndex );
@@ -331,7 +330,7 @@ public class Int {
      * @param endIndex the end index of the slice
      * @return the new slice
      */
-    @Universal
+
     public static int[] slcEnd( int[] array, int endIndex ) {
 
         final int end = calculateEndIndex( array, endIndex );
@@ -356,7 +355,7 @@ public class Int {
      * @param endIndex the end index of the slice
      * @return the new slice
      */
-    @Universal
+
     public static int[] endSliceOf( int[] array, int endIndex ) {
 
         final int end = calculateEndIndex( array, endIndex );
@@ -380,7 +379,7 @@ public class Int {
      * @param array the array you are getting slice from
      * @return true if the value is in the array
      */
-    @Universal
+
     public static boolean in( int value, int[] array ) {
         for ( int currentValue : array ) {
             if ( currentValue == value ) {
@@ -396,7 +395,7 @@ public class Int {
      * @param array the array you want to copy
      * @return the copied array
      */
-    @Universal
+
     public static int[] copy( int[] array ) {
         int[] newArray = new int[ array.length ];
         System.arraycopy( array, 0, newArray, 0, array.length );
@@ -410,7 +409,7 @@ public class Int {
      * @param v the value you are adding to the end.
      * @return the new array
      */
-    @Universal
+
     public static int[] add( int[] array, int v ) {
         int[] newArray = new int[ array.length + 1 ];
         System.arraycopy( array, 0, newArray, 0, array.length );
@@ -424,7 +423,7 @@ public class Int {
      * @param array2 second array
      * @return result
      */
-    @Universal
+
     public static int[] add( int[] array, int[] array2 ) {
         int[] newArray = new int[ array.length + array2.length ];
         System.arraycopy( array, 0, newArray, 0, array.length );
@@ -440,7 +439,7 @@ public class Int {
      * @param v value
      * @return new array
      */
-    @Universal
+
     public static int[] insert( final int[] array, final int idx, final int v ) {
 
         if ( idx >= array.length ) {
@@ -485,7 +484,7 @@ public class Int {
      * @param array array
      * @return new array
      */
-    @Universal
+
     public static int[] insert( final int[] array, final int fromIndex, final int[] values ) {
 
         if ( fromIndex >= array.length ) {

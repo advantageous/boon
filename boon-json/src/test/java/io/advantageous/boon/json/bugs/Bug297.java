@@ -7,7 +7,7 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static io.advantageous.boon.Str.puts;
+import static io.advantageous.boon.core.IO.puts;
 
 /**
  * Created by rhightower on 3/23/15.

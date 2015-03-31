@@ -28,13 +28,9 @@
 
 package io.advantageous.boon.core.reflection;
 
-import io.advantageous.boon.*;
+import io.advantageous.boon.core.*;
 import io.advantageous.boon.core.reflection.fields.FieldAccess;
 import io.advantageous.boon.primitive.CharScanner;
-import io.advantageous.boon.core.Conversions;
-import io.advantageous.boon.core.Typ;
-import io.advantageous.boon.core.TypeType;
-import io.advantageous.boon.core.Value;
 import io.advantageous.boon.primitive.CharBuf;
 
 import java.lang.reflect.Array;
@@ -43,11 +39,11 @@ import java.lang.reflect.ParameterizedType;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static io.advantageous.boon.Boon.className;
-import static io.advantageous.boon.Str.sputs;
-import static io.advantageous.boon.Exceptions.*;
-import static io.advantageous.boon.Str.lines;
-import static io.advantageous.boon.StringScanner.isDigits;
+import static io.advantageous.boon.core.Typ.isArray;
+import static io.advantageous.boon.core.reflection.ClassMeta.className;
+import static io.advantageous.boon.core.Exceptions.*;
+import static io.advantageous.boon.core.Str.lines;
+import static io.advantageous.boon.core.StringScanner.isDigits;
 
 /**
  * Created by rick on 12/20/13.
@@ -678,7 +674,7 @@ public class BeanUtils {
 
                     object = _getFieldValuesFromCollectionOrArray( object, property);
                     continue;
-                } else if (Typ.isArray(object)) {
+                } else if (isArray(object)) {
 
 
                     Iterator iter = Conversions.iterator(object);
@@ -1033,7 +1029,7 @@ public class BeanUtils {
                     object = _getFieldValuesFromCollectionOrArray( object, property);
 
                     continue;
-                } else if (Typ.isArray(object)) {
+                } else if (isArray(object)) {
 
                     Iterator iter = Conversions.iterator(object);
                     List list = Lists.list(iter);
@@ -1511,7 +1507,7 @@ public class BeanUtils {
                     list.add(map.get(key));
                 }else {
 
-                    Class currentClass = Boon.cls(item);
+                    Class currentClass = ClassMeta.cls(item);
 
                     if (lastClass==null || currentClass != lastClass) {
 
@@ -1835,7 +1831,7 @@ public class BeanUtils {
     }
 
     public static Object idx( Object object, int index ) {
-        if ( Boon.isArray( object ) ) {
+        if ( isArray(object) ) {
             object = Array.get ( object, index );
         } else if ( object instanceof List ) {
             object = Lists.idx ( ( List ) object, index );
@@ -1845,7 +1841,7 @@ public class BeanUtils {
 
     public static void idx( Object object, int index, Object value ) {
         try {
-            if ( Boon.isArray( object ) ) {
+            if ( isArray(object) ) {
                 Array.set( object, index, value );
             } else if ( object instanceof List ) {
                 Lists.idx( ( List ) object, index, value );

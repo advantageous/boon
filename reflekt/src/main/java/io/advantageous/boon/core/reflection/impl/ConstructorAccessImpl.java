@@ -28,7 +28,7 @@
 
 package io.advantageous.boon.core.reflection.impl;
 
-import io.advantageous.boon.Exceptions;
+import io.advantageous.boon.core.Exceptions;
 import io.advantageous.boon.core.reflection.AnnotationData;
 import io.advantageous.boon.core.reflection.Annotations;
 import io.advantageous.boon.core.reflection.ConstructorAccess;
@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static io.advantageous.boon.Exceptions.handle;
+import static io.advantageous.boon.core.Exceptions.handle;
 
 /**
  * Created by Richard on 2/20/14.

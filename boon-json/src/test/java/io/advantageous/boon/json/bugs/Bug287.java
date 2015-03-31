@@ -4,7 +4,7 @@ import io.advantageous.boon.json.JsonFactory;
 import io.advantageous.boon.json.ObjectMapper;
 import org.junit.Test;
 
-import static io.advantageous.boon.Str.puts;
+import static io.advantageous.boon.core.IO.puts;
 
 /**
  * Created by rhightower on 1/5/15.

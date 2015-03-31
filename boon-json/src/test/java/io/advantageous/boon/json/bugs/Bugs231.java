@@ -3,7 +3,7 @@ package io.advantageous.boon.json.bugs;
 import com.google.common.hash.HashCode;
 
 import com.google.common.hash.Hasher;
-import io.advantageous.boon.Maps;
+import io.advantageous.boon.core.Maps;
 import io.advantageous.boon.json.JsonSerializer;
 import io.advantageous.boon.json.JsonSerializerFactory;
 import io.advantageous.boon.json.serializers.CustomObjectSerializer;
@@ -15,11 +15,11 @@ import java.nio.charset.Charset;
 import java.util.Map;
 
 import static com.google.common.hash.Hashing.md5;
-import static io.advantageous.boon.Str.puts;
-import static io.advantageous.boon.Exceptions.die;
-import static io.advantageous.boon.Maps.fromMap;
-import static io.advantageous.boon.Maps.idx;
-import static io.advantageous.boon.Maps.idxStr;
+import static io.advantageous.boon.core.IO.puts;
+import static io.advantageous.boon.core.Exceptions.die;
+import static io.advantageous.boon.core.Maps.fromMap;
+import static io.advantageous.boon.core.Maps.idx;
+import static io.advantageous.boon.core.Maps.idxStr;
 import static io.advantageous.boon.json.JsonFactory.fromJson;
 
 /**

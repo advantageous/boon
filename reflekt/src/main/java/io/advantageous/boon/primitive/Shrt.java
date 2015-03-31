@@ -28,11 +28,10 @@
 
 package io.advantageous.boon.primitive;
 
-import io.advantageous.boon.Exceptions;
-import io.advantageous.boon.Universal;
+import io.advantageous.boon.core.Exceptions;
 import io.advantageous.boon.core.reflection.Invoker;
 
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.die;
 
 
 public class Shrt {
@@ -111,27 +110,27 @@ public class Shrt {
      * @param array array
      * @return array
      */
-    @Universal
+
     public static short[] array( final short... array ) {
         Exceptions.requireNonNull( array );
         return array;
     }
 
 
-    @Universal
+
     public static int len( short[] array ) {
         return array.length;
     }
 
 
-    @Universal
+
     public static int lengthOf( short[] array ) {
         return array.length;
     }
 
 
 
-    @Universal
+
     public static short idx( final short[] array, final int index ) {
         final int i = calculateIndex( array, index );
 
@@ -139,7 +138,7 @@ public class Shrt {
     }
 
 
-    @Universal
+
     public static void idx( final short[] array, int index, short value ) {
         final int i = calculateIndex( array, index );
 
@@ -147,7 +146,7 @@ public class Shrt {
     }
 
 
-    @Universal
+
     public static short[] slc( short[] array, int startIndex, int endIndex ) {
 
         final int start = calculateIndex( array, startIndex );
@@ -167,7 +166,7 @@ public class Shrt {
     }
 
 
-    @Universal
+
     public static short[] sliceOf( short[] array, int startIndex, int endIndex ) {
 
         final int start = calculateIndex( array, startIndex );
@@ -186,7 +185,7 @@ public class Shrt {
         return newArray;
     }
 
-    @Universal
+
     public static short[] slc( short[] array, int startIndex ) {
 
         final int start = calculateIndex( array, startIndex );
@@ -204,7 +203,7 @@ public class Shrt {
         return newArray;
     }
 
-    @Universal
+
     public static short[] sliceOf( short[] array, int startIndex ) {
 
         final int start = calculateIndex( array, startIndex );
@@ -222,7 +221,7 @@ public class Shrt {
         return newArray;
     }
 
-    @Universal
+
     public static short[] endSliceOf( short[] array, int endIndex ) {
         Exceptions.requireNonNull( array );
 
@@ -241,7 +240,7 @@ public class Shrt {
         return newArray;
     }
 
-    @Universal
+
     public static short[] slcEnd( short[] array, int endIndex ) {
         Exceptions.requireNonNull( array );
 
@@ -260,7 +259,7 @@ public class Shrt {
         return newArray;
     }
 
-    @Universal
+
     public static boolean in( short value, short[] array ) {
         for ( short currentValue : array ) {
             if ( currentValue == value ) {
@@ -271,7 +270,7 @@ public class Shrt {
     }
 
 
-    @Universal
+
     public static short[] copy( short[] array ) {
         Exceptions.requireNonNull( array );
         short[] newArray = new short[ array.length ];
@@ -280,7 +279,7 @@ public class Shrt {
     }
 
 
-    @Universal
+
     public static short[] add( short[] array, short v ) {
         Exceptions.requireNonNull( array );
         short[] newArray = new short[ array.length + 1 ];
@@ -289,7 +288,7 @@ public class Shrt {
         return newArray;
     }
 
-    @Universal
+
     public static short[] add( short[] array, short[] array2 ) {
         Exceptions.requireNonNull( array );
         short[] newArray = new short[ array.length + array2.length ];
@@ -299,7 +298,7 @@ public class Shrt {
     }
 
 
-    @Universal
+
     public static short[] insert( final short[] array, final int idx, final short v ) {
         Exceptions.requireNonNull( array );
 
@@ -339,7 +338,7 @@ public class Shrt {
     }
 
 
-    @Universal
+
     public static short[] insert( final short[] array, final int fromIndex, final short[] values ) {
         Exceptions.requireNonNull( array );
 

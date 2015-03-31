@@ -29,11 +29,9 @@
 package io.advantageous.boon.primitive;
 
 
-import io.advantageous.boon.primitive.Byt;
-import io.advantageous.boon.primitive.Chr;
 import org.junit.Test;
 
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.die;
 import static io.advantageous.boon.primitive.Chr.*;
 import static org.junit.Assert.*;
 

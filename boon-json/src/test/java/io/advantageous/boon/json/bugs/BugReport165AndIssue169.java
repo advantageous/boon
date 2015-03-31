@@ -47,8 +47,8 @@ import java.util.TimeZone;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLongFieldUpdater;
 
-import static io.advantageous.boon.Str.puts;
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.IO.puts;
+import static io.advantageous.boon.core.Exceptions.die;
 import static io.advantageous.boon.json.JsonFactory.fromJson;
 import static io.advantageous.boon.json.JsonFactory.toJson;
 

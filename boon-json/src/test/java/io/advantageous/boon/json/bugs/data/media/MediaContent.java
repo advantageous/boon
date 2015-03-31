@@ -28,7 +28,7 @@
 
 package io.advantageous.boon.json.bugs.data.media;
 
-import io.advantageous.boon.Lists;
+import io.advantageous.boon.core.Lists;
 
 import java.util.ArrayList;
 import java.util.List;

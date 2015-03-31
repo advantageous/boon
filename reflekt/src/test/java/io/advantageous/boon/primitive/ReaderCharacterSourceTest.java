@@ -28,7 +28,7 @@
 
 package io.advantageous.boon.primitive;
 
-import io.advantageous.boon.Str;
+import io.advantageous.boon.core.Str;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -36,8 +36,8 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
-import static io.advantageous.boon.Str.puts;
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.IO.puts;
+import static io.advantageous.boon.core.Exceptions.die;
 
 public class ReaderCharacterSourceTest {
 

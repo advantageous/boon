@@ -28,17 +28,16 @@
 
 package io.advantageous.boon.primitive;
 
-import io.advantageous.boon.Exceptions;
+import io.advantageous.boon.core.Exceptions;
 import io.advantageous.boon.core.reflection.Invoker;
-import io.advantageous.boon.Universal;
 
 import java.lang.invoke.ConstantCallSite;
 import java.lang.invoke.MethodHandle;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
-import static io.advantageous.boon.Exceptions.die;
-import static io.advantageous.boon.Exceptions.handle;
+import static io.advantageous.boon.core.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.handle;
 
 
 public class Dbl {
@@ -112,20 +111,20 @@ public class Dbl {
      * @param array array
      * @return array
      */
-    @Universal
+
     public static double[] array( final double... array ) {
         Exceptions.requireNonNull( array );
         return array;
     }
 
 
-    @Universal
+
     public static int len( double[] array ) {
         return array.length;
     }
 
 
-    @Universal
+
     public static double idx( final double[] array, final int index ) {
         final int i = calculateIndex( array, index );
 
@@ -133,19 +132,19 @@ public class Dbl {
     }
 
 
-    @Universal
+
     public static void idx( final double[] array, int index, double value ) {
         final int i = calculateIndex( array, index );
 
         array[ i ] = value;
     }
 
-    @Universal
+
     public static double[] sliceOf( double[] array, int startIndex, int endIndex ) {
         return slc(array, startIndex, endIndex);
     }
 
-    @Universal
+
     public static double[] slc( double[] array, int startIndex, int endIndex ) {
 
         final int start = calculateIndex( array, startIndex );
@@ -164,7 +163,7 @@ public class Dbl {
         return newArray;
     }
 
-    @Universal
+
     public static double[] slc( double[] array, int startIndex ) {
 
         final int start = calculateIndex( array, startIndex );
@@ -183,13 +182,13 @@ public class Dbl {
     }
 
 
-    @Universal
+
     public static double[] endSliceOf( final double[] array, final int endIndex ) {
         return slcEnd(array, endIndex);
     }
 
 
-    @Universal
+
     public static double[] slcEnd( final double[] array, final int endIndex ) {
 
         final int end = calculateEndIndex(array, endIndex);
@@ -207,7 +206,7 @@ public class Dbl {
         return newArray;
     }
 
-    @Universal
+
     public static boolean in( double value, double[] array ) {
         for ( double currentValue : array ) {
             if ( currentValue == value ) {
@@ -218,7 +217,7 @@ public class Dbl {
     }
 
 
-    @Universal
+
     public static double[] copy( double[] array ) {
         double[] newArray = new double[ array.length ];
         System.arraycopy( array, 0, newArray, 0, array.length );
@@ -226,7 +225,7 @@ public class Dbl {
     }
 
 
-    @Universal
+
     public static double[] add( double[] array, double v ) {
         double[] newArray = new double[ array.length + 1 ];
         System.arraycopy( array, 0, newArray, 0, array.length );
@@ -234,7 +233,7 @@ public class Dbl {
         return newArray;
     }
 
-    @Universal
+
     public static double[] add( double[] array, double[] array2 ) {
         double[] newArray = new double[ array.length + array2.length ];
         System.arraycopy( array, 0, newArray, 0, array.length );
@@ -243,7 +242,7 @@ public class Dbl {
     }
 
 
-    @Universal
+
     public static double[] insert( final double[] array, final int idx, final double v ) {
         Exceptions.requireNonNull( array );
 
@@ -283,7 +282,7 @@ public class Dbl {
     }
 
 
-    @Universal
+
     public static double[] insert( final double[] array, final int fromIndex, final double[] values ) {
          if ( fromIndex >= array.length ) {
             return add( array, values );

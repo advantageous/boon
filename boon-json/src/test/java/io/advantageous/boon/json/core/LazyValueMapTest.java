@@ -28,8 +28,8 @@
 
 package io.advantageous.boon.json.core;
 
-import io.advantageous.boon.IO;
-import io.advantageous.boon.Str;
+import io.advantageous.boon.core.IO;
+import io.advantageous.boon.core.Str;
 import io.advantageous.boon.core.Value;
 import io.advantageous.boon.json.JsonParserAndMapper;
 import io.advantageous.boon.json.JsonParserFactory;
@@ -39,8 +39,8 @@ import org.junit.Test;
 
 import java.util.*;
 
-import static io.advantageous.boon.Str.sputs;
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Str.sputs;
+import static io.advantageous.boon.core.Exceptions.die;
 
 public class LazyValueMapTest {
 

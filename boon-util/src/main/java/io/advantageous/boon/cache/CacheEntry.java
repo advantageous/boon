@@ -30,7 +30,7 @@ package io.advantageous.boon.cache;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.die;
 
 /**
  * A cache entry.

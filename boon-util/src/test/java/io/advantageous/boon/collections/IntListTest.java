@@ -32,7 +32,7 @@ import junit.framework.TestCase;
 import io.advantageous.boon.primitive.Int;
 import org.junit.Test;
 
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.die;
 
 /**
  * Created by Richard on 2/18/14.

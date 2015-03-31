@@ -28,13 +28,13 @@
 
 package io.advantageous.boon.primitive;
 
-import io.advantageous.boon.Exceptions;
+import io.advantageous.boon.core.Exceptions;
 
 
 import java.util.Arrays;
 
-import static io.advantageous.boon.Exceptions.die;
-import static io.advantageous.boon.Exceptions.handle;
+import static io.advantageous.boon.core.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.handle;
 
 public class ByteScanner {
 

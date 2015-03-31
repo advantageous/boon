@@ -26,7 +26,7 @@
  *               \/           \/          \/         \/        \/  \/
  */
 
-package io.advantageous.boon;
+package io.advantageous.boon.core;
 
 
 import io.advantageous.boon.core.Conversions;
@@ -157,7 +157,6 @@ public class Lists {
      * @param <V> generics
      * @return new list
      */
-    @Universal
     public static <V> List<V> deepCopy( List<V> list ) {
         if ( list instanceof LinkedList ) {
             return deepCopyToList( list, new LinkedList<V>(  ) );
@@ -420,13 +419,11 @@ public class Lists {
     /**
      * Universal methods
      */
-    @Universal
     public static int len( List<?> list ) {
         return list.size();
     }
 
 
-    @Universal
     public static int lengthOf( List<?> list ) {
         return len (list);
     }
@@ -435,32 +432,27 @@ public class Lists {
         return list == null || list.size() == 0;
     }
 
-    @Universal
     public static <V> boolean in( V value, List<?> list ) {
         return list.contains( value );
     }
 
-    @Universal
     public static <V> void add( List<V> list, V value ) {
         list.add( value );
     }
 
 
-    @Universal
     public static <V> void add( List<V> list, V... values ) {
         for (V v : values) {
             list.add( v );
         }
     }
 
-    @Universal
     public static <T> T atIndex( List<T> list, final int index ) {
 
         return idx(list, index);
 
     }
 
-    @Universal
     public static <T> T idx( List<T> list, final int index ) {
         int i = calculateIndex( list, index );
         if ( i > list.size() - 1 ) {
@@ -480,24 +472,20 @@ public class Lists {
     }
 
 
-    @Universal
     public static <V> void atIndex( List<V> list, int index, V v ) {
         idx (list, index, v);
     }
 
-    @Universal
     public static <V> void idx( List<V> list, int index, V v ) {
         int i = calculateIndex( list, index );
         list.set( i, v );
     }
 
 
-    @Universal
     public static <V> List<V> sliceOf( List<V> list, int startIndex, int endIndex ) {
         return slc(list, startIndex, endIndex);
     }
 
-    @Universal
     public static <V> List<V> slc( List<V> list, int startIndex, int endIndex ) {
         int start = calculateIndex( list, startIndex );
         int end = calculateIndex( list, endIndex );
@@ -505,29 +493,26 @@ public class Lists {
     }
 
 
-    @Universal
     public static <V> List<V> sliceOf( List<V> list, int startIndex ) {
         return slc(list, startIndex);
     }
 
-    @Universal
     public static <V> List<V> slc( List<V> list, int startIndex ) {
         return slc( list, startIndex, list.size() );
     }
 
-    @Universal
     public static <V> List<V> endSliceOf( List<V> list, int endIndex ) {
         return slcEnd( list, endIndex );
     }
 
 
-    @Universal
+
     public static <V> List<V> slcEnd( List<V> list, int endIndex ) {
         return slc( list, 0, endIndex );
     }
 
 
-    @Universal
+
     public static <V> List<V> copy( List<V> list ) {
         if ( list instanceof LinkedList ) {
             return new LinkedList<>( list );
@@ -539,23 +524,23 @@ public class Lists {
     }
 
 
-    @Universal
+
     public static <V> List<V> copy( CopyOnWriteArrayList<V> list ) {
         return new CopyOnWriteArrayList<>( list );
     }
 
-    @Universal
+
     public static <V> List<V> copy( ArrayList<V> list ) {
         return new ArrayList<>( list );
     }
 
-    @Universal
+
     public static <V> List<V> copy( LinkedList<V> list ) {
         return new LinkedList<>( list );
     }
 
 
-    @Universal
+
     public static <V> void insert( List<V> list, int index, V v ) {
         int i = calculateIndex( list, index );
         list.add( i, v );

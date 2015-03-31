@@ -28,11 +28,11 @@
 
 package io.advantageous.boon.primitive;
 
-import io.advantageous.boon.Str;
+import io.advantageous.boon.core.Str;
 import org.junit.Test;
 
-import static io.advantageous.boon.Str.sputs;
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Str.sputs;
+import static io.advantageous.boon.core.Exceptions.die;
 import static io.advantageous.boon.primitive.Int.reduceBy;
 
 /**

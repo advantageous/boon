@@ -1,15 +1,15 @@
 package io.advantageous.boon.core.reflection.impl;
 
-import io.advantageous.boon.Lists;
-import io.advantageous.boon.Maps;
+import io.advantageous.boon.core.Lists;
+import io.advantageous.boon.core.Maps;
 import io.advantageous.boon.core.reflection.ClassMeta;
 import io.advantageous.boon.core.reflection.MethodAccess;
 import org.junit.Before;
 import org.junit.Test;
 
 
-import static io.advantageous.boon.Boon.equalsOrDie;
-import static io.advantageous.boon.Str.puts;
+import static io.advantageous.boon.core.IO.puts;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Richard on 9/22/14.
@@ -88,7 +88,7 @@ public class OverloadedMethodTest {
         String str = (String) method.invokeDynamic(new SomeClass(), "a", 'b');
 
         puts(str);
-        equalsOrDie("addStringChar_a_b", str);
+        assertEquals("addStringChar_a_b", str);
 
     }
 
@@ -96,7 +96,7 @@ public class OverloadedMethodTest {
     public void testTwoInts() {
         String str = (String) method.invokeDynamic(new SomeClass(), 1, 2);
 
-        equalsOrDie("addTwoInts_1_2", str);
+        assertEquals("addTwoInts_1_2", str);
         puts(str);
     }
 
@@ -104,7 +104,7 @@ public class OverloadedMethodTest {
     public void testTwoChars() {
         String str = (String) method.invokeDynamic(new SomeClass(), 'a', 'b');
 
-        equalsOrDie("addTwoChars_a_b", str);
+        assertEquals("addTwoChars_a_b", str);
         puts(str);
     }
 
@@ -112,7 +112,7 @@ public class OverloadedMethodTest {
     @Test
     public void testTwoStrings() {
         String str = (String) method.invokeDynamic(new SomeClass(), "a", "b");
-        equalsOrDie("addTwoStrings_a_b", str);
+        assertEquals("addTwoStrings_a_b", str);
 
         puts(str);
     }
@@ -121,7 +121,7 @@ public class OverloadedMethodTest {
     @Test
     public void testTwoLongs() {
         String str = (String) method.invokeDynamic(new SomeClass(), 1L, 1L);
-        equalsOrDie("addTwoLongs1_1", str);
+        assertEquals("addTwoLongs1_1", str);
 
         puts(str);
     }
@@ -132,7 +132,7 @@ public class OverloadedMethodTest {
         String str = (String) method.invokeDynamic(new SomeClass(), new Employee(), new Employee());
 
         puts(str);
-        equalsOrDie("addTwoEmployeesEmployee{name='employee'}_Employee{name='employee'}", str);
+        assertEquals("addTwoEmployeesEmployee{name='employee'}_Employee{name='employee'}", str);
 
     }
 
@@ -143,7 +143,7 @@ public class OverloadedMethodTest {
                 Maps.map("name", "emp1"), Maps.map("name", "emp2"));
 
         puts(str);
-        equalsOrDie("addTwoEmployeesEmployee{name='emp1'}_Employee{name='emp2'}", str);
+        assertEquals("addTwoEmployeesEmployee{name='emp1'}_Employee{name='emp2'}", str);
 
     }
 
@@ -154,7 +154,7 @@ public class OverloadedMethodTest {
                 Lists.list("emp1"), Lists.list("emp2"));
 
         puts(str);
-        equalsOrDie("addTwoEmployeesEmployee{name='emp1'}_Employee{name='emp2'}", str);
+        assertEquals("addTwoEmployeesEmployee{name='emp1'}_Employee{name='emp2'}", str);
 
     }
 
@@ -164,7 +164,7 @@ public class OverloadedMethodTest {
         String str = (String) method.invokeDynamic(new SomeClass(), 'a', "b");
 
         puts(str);
-        equalsOrDie("addTwoStrings_a_b", str);
+        assertEquals("addTwoStrings_a_b", str);
 
     }
 
@@ -176,7 +176,7 @@ public class OverloadedMethodTest {
         String str = (String) method.invokeDynamic(new SomeClass(), 1, 1L);
 
         puts(str);
-        equalsOrDie("addIntLong1_1", str);
+        assertEquals("addIntLong1_1", str);
 
     }
 
@@ -185,7 +185,7 @@ public class OverloadedMethodTest {
         String str = (String) method.invokeDynamic(new SomeClass(), 1L, 1);
 
         puts(str);
-        equalsOrDie("addTwoLongs1_1", str);
+        assertEquals("addTwoLongs1_1", str);
 
     }
 
@@ -195,7 +195,7 @@ public class OverloadedMethodTest {
         String str = (String) method.invokeDynamic(new SomeClass(), Long.MAX_VALUE, 1);
 
         puts(str);
-        equalsOrDie("addTwoLongs9223372036854775807_1", str);
+        assertEquals("addTwoLongs9223372036854775807_1", str);
 
     }
 }

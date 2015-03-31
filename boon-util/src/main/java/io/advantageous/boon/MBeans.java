@@ -28,6 +28,8 @@
 
 package io.advantageous.boon;
 
+import io.advantageous.boon.core.Exceptions;
+
 import javax.management.*;
 import javax.management.openmbean.CompositeData;
 import javax.management.openmbean.TabularData;
@@ -35,7 +37,7 @@ import java.lang.management.ManagementFactory;
 import java.lang.reflect.Array;
 import java.util.*;
 
-import static io.advantageous.boon.Exceptions.requireNonNull;
+import static io.advantageous.boon.core.Exceptions.requireNonNull;
 
 
 /**

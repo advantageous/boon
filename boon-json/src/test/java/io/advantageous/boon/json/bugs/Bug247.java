@@ -2,12 +2,11 @@ package io.advantageous.boon.json.bugs;
 
 import com.google.common.base.Predicate;
 
-import static io.advantageous.boon.Exceptions.die;
-import static io.advantageous.boon.Maps.map;
+import static io.advantageous.boon.core.Exceptions.die;
+import static io.advantageous.boon.core.Maps.map;
 
 import com.google.common.collect.Maps;
-import io.advantageous.boon.Boon;
-import io.advantageous.boon.Str;
+import io.advantageous.boon.core.Str;
 import io.advantageous.boon.json.JsonSerializer;
 import io.advantageous.boon.json.JsonSerializerFactory;
 import io.advantageous.boon.json.serializers.JsonSerializerInternal;
@@ -72,7 +71,7 @@ public class Bug247 {
         };
         Map<String, String> filtered = Maps.filterKeys(map, startsWithB);
 
-        String result = Boon.toPrettyJson(filtered);
+        String result = Str.toPrettyJson(filtered);
 
         Str.equalsOrDie("        {\n" +
                 "            \"Bbbbb\" : \"bbbb\"\n" +

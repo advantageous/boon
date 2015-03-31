@@ -26,7 +26,7 @@
  *               \/           \/          \/         \/        \/  \/
  */
 
-package io.advantageous.boon;
+package io.advantageous.boon.core;
 
 import io.advantageous.boon.primitive.CharBuf;
 
@@ -35,12 +35,12 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.*;
 
-import static io.advantageous.boon.Maps.map;
+import static io.advantageous.boon.core.Maps.map;
 import static io.advantageous.boon.primitive.Arry.add;
 import static io.advantageous.boon.primitive.Arry.array;
-import static io.advantageous.boon.Str.sputs;
-import static io.advantageous.boon.Sets.set;
-import static io.advantageous.boon.Str.startsWithItemInCollection;
+import static io.advantageous.boon.core.Str.sputs;
+import static io.advantageous.boon.core.Sets.set;
+import static io.advantageous.boon.core.Str.startsWithItemInCollection;
 
 public class Exceptions {
 

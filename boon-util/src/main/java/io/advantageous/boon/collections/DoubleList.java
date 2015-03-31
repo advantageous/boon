@@ -28,7 +28,7 @@
 
 package io.advantageous.boon.collections;
 
-import io.advantageous.boon.StringScanner;
+import io.advantageous.boon.core.StringScanner;
 import io.advantageous.boon.core.reflection.BeanUtils;
 import io.advantageous.boon.core.reflection.fields.FieldAccess;
 import io.advantageous.boon.primitive.Dbl;

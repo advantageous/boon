@@ -1,5 +1,7 @@
 package io.advantageous.boon;
 
+import io.advantageous.boon.core.IO;
+
 /**
  * Created by gcc on 1/15/15.
  */
@@ -50,5 +52,23 @@ public class Terminal {
         public String toString() {
             return this.value;
         }
+
+
     }
+
+    /**
+     * Like print, but prints out a whole slew of objects on the same line.
+     *
+     * @param messages objects you want to print on the same line.
+     */
+    public static void puts(Object... messages) {
+
+        for (Object message : messages) {
+            IO.print(message);
+            if (!(message instanceof Terminal.Escape)) IO.print(' ');
+        }
+        IO.println();
+
+    }
+
 }

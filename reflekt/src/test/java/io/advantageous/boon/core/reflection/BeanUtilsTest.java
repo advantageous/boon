@@ -28,8 +28,9 @@
 
 package io.advantageous.boon.core.reflection;
 
-import io.advantageous.boon.Boon;
-import io.advantageous.boon.Lists;
+import io.advantageous.boon.core.Exceptions;
+import io.advantageous.boon.core.Lists;
+import io.advantageous.boon.core.Str;
 import io.advantageous.boon.primitive.Arry;
 import io.advantageous.boon.primitive.Int;
 import org.junit.Test;
@@ -37,9 +38,8 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static io.advantageous.boon.Boon.equalsOrDie;
-import static io.advantageous.boon.Str.puts;
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.IO.puts;
+import static io.advantageous.boon.core.Exceptions.die;
 
 public class BeanUtilsTest {
 
@@ -92,7 +92,7 @@ public class BeanUtilsTest {
 
     @Test
     public void testPrettyPrintWithTypes() {
-        puts(Boon.toPrettyJsonWithTypes(new TestClass()));
+        puts(Str.toPrettyJsonWithTypes(new TestClass()));
 
         final String s = BeanUtils.asPrettyJsonString(new TestClass());
     }
@@ -136,7 +136,7 @@ public class BeanUtilsTest {
         }
 
         public static List<Player> players( Player... players ) {
-            return Lists.list ( players ) ;
+            return Lists.list(players) ;
         }
 
 
@@ -394,4 +394,31 @@ public class BeanUtilsTest {
 
 
     }
+
+
+
+
+
+    public static boolean equalsOrDie(Object expected, Object got) {
+
+        if (expected == null && got == null) {
+            return true;
+        }
+
+        if (expected == null && got != null) Exceptions.die();
+        if (!expected.equals(got)) Exceptions.die("Expected was", expected, "but we got", got);
+
+        return true;
+    }
+
+
+    public static boolean equalsOrDie(String message, Object expected, Object got) {
+
+        if (expected == null && got != null) Exceptions.die(message, "Expected was", expected, "but we got", got);
+        if (!expected.equals(got)) Exceptions.die(message, "Expected was", expected, "but we got", got);
+
+        return true;
+    }
+
+
 }

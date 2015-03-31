@@ -28,14 +28,14 @@
 
 package io.advantageous.boon.primitive;
 
-import io.advantageous.boon.Exceptions;
-import io.advantageous.boon.Maps;
-import io.advantageous.boon.Str;
+import io.advantageous.boon.core.Exceptions;
+import io.advantageous.boon.core.Maps;
+import io.advantageous.boon.core.Str;
 import io.advantageous.boon.core.Conversions;
 import io.advantageous.boon.core.Dates;
 import io.advantageous.boon.core.reflection.FastStringUtils;
 import io.advantageous.boon.core.reflection.Mapper;
-import io.advantageous.boon.Lists;
+import io.advantageous.boon.core.Lists;
 import io.advantageous.boon.core.TypeType;
 
 import java.io.IOException;
@@ -46,8 +46,8 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-import static io.advantageous.boon.Exceptions.die;
-import static io.advantageous.boon.Lists.toListOrSingletonList;
+import static io.advantageous.boon.core.Exceptions.die;
+import static io.advantageous.boon.core.Lists.toListOrSingletonList;
 
 /**
  * This class is like a StringBuilder but it also pretends to be a PrintWriter.

@@ -28,11 +28,11 @@
 
 package io.advantageous.boon.primitive;
 
-import io.advantageous.boon.Exceptions;
+import io.advantageous.boon.core.Exceptions;
 
 import java.io.UnsupportedEncodingException;
 
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.die;
 
 public class ByteBuf implements Output {
 

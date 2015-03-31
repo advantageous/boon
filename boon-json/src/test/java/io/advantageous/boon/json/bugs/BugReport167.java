@@ -38,8 +38,8 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.Map;
 
-import static io.advantageous.boon.Str.puts;
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.IO.puts;
+import static io.advantageous.boon.core.Exceptions.die;
 import static io.advantageous.boon.json.JsonFactory.fromJson;
 import static io.advantageous.boon.json.JsonFactory.toJson;
 

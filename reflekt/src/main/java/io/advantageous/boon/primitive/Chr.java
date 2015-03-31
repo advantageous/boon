@@ -29,13 +29,12 @@
 package io.advantageous.boon.primitive;
 
 
-import io.advantageous.boon.Exceptions;
-import io.advantageous.boon.Universal;
+import io.advantageous.boon.core.Exceptions;
 import io.advantageous.boon.core.reflection.FastStringUtils;
 
 import static java.lang.System.arraycopy;
-import static io.advantageous.boon.Str.puts;
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.IO.puts;
+import static io.advantageous.boon.core.Exceptions.die;
 
 
 public class Chr {
@@ -60,34 +59,34 @@ public class Chr {
      * @param array array
      * @return array
      */
-    @Universal
+
     public static char[] array( final char... array ) {
         return array;
     }
 
-    @Universal
+
     public static char[] chars( final String array ) {
         return FastStringUtils.toCharArray(array);
     }
 
 
-    @Universal
+
     public static int lengthOf( char[] array ) {
         return len(array);
     }
 
-    @Universal
+
     public static int len( char[] array ) {
         return array.length;
     }
 
 
-    @Universal
+
     public static char atIndex( final char[] array, final int index ) {
         return idx(array, index);
     }
 
-    @Universal
+
     public static char idx( final char[] array, final int index ) {
         final int i = calculateIndex( array, index );
 
@@ -95,12 +94,12 @@ public class Chr {
     }
 
 
-    @Universal
+
     public static void atIndex( final char[] array, int index, char value ) {
         idx(array, index, value);
     }
 
-    @Universal
+
     public static void idx( final char[] array, int index, char value ) {
         final int i = calculateIndex( array, index );
 
@@ -109,24 +108,24 @@ public class Chr {
 
 
 
-    @Universal
+
     public static void atIndex( final char[] array, int index, char[] input ) {
         idx(array, index, input);
     }
 
-    @Universal
+
     public static void idx( final char[] array, int index, char[] input ) {
         final int i = calculateIndex( array, index );
 
         _idx( array, i, input );
     }
 
-    @Universal
+
     public static char[] sliceOf( char[] array, int startIndex, int endIndex ) {
            return slc(array, startIndex, endIndex);
     }
 
-    @Universal
+
     public static char[] slc( char[] array, int startIndex, int endIndex ) {
 
         final int start = calculateIndex( array, startIndex );
@@ -143,12 +142,12 @@ public class Chr {
     }
 
 
-    @Universal
+
     public static char[] sliceOf( char[] array, int startIndex ) {
         return slc(array, startIndex);
     }
 
-    @Universal
+
     public static char[] slc( char[] array, int startIndex ) {
 
         final int start = calculateIndex( array, startIndex );
@@ -167,12 +166,12 @@ public class Chr {
     }
 
 
-    @Universal
+
     public static char[] endSliceOf( char[] array, int endIndex ) {
         return slcEnd(array, endIndex);
     }
 
-    @Universal
+
     public static char[] slcEnd( char[] array, int endIndex ) {
 
         final int end = calculateEndIndex( array, endIndex );
@@ -190,7 +189,7 @@ public class Chr {
         return newArray;
     }
 
-    @Universal
+
     public static boolean in( char value, char[] array ) {
         for ( char currentValue : array ) {
             if ( currentValue == value ) {
@@ -201,7 +200,7 @@ public class Chr {
     }
 
 
-    @Universal
+
     public static boolean in( char[] values, char[] array ) {
         for ( char currentValue : array ) {
 
@@ -216,7 +215,7 @@ public class Chr {
 
 
 
-    @Universal
+
     public static boolean in( int value, char[] array ) {
         for ( int currentValue : array ) {
             if ( currentValue == value ) {
@@ -225,7 +224,7 @@ public class Chr {
         }
         return false;
     }
-    @Universal
+
     public static boolean in( char value, int offset, char[] array ) {
         for ( int index = offset; index < array.length; index++ ) {
             char currentValue = array[ index ];
@@ -237,7 +236,7 @@ public class Chr {
     }
 
 
-    @Universal
+
     public static boolean in( char value, int offset, int end, char[] array ) {
         for ( int index = offset; index < end; index++ ) {
             char currentValue = array[ index ];
@@ -357,7 +356,7 @@ public class Chr {
     }
 
 
-    @Universal
+
     public static char[] copy( char[] array ) {
         Exceptions.requireNonNull( array );
         char[] newArray = new char[ array.length ];
@@ -365,7 +364,7 @@ public class Chr {
         return newArray;
     }
 
-    @Universal
+
     public static char[] copy( char[] array, int offset, int length ) {
         char[] newArray = new char[ length ];
         arraycopy ( array, offset, newArray, 0, length );
@@ -373,7 +372,7 @@ public class Chr {
     }
 
 
-    @Universal
+
     public static char[] add( char[] array, char v ) {
         Exceptions.requireNonNull( array );
         char[] newArray = new char[ array.length + 1 ];
@@ -383,18 +382,18 @@ public class Chr {
     }
 
 
-    @Universal
+
     public static char[] add( char[] array, String str ) {
         return add( array, str.toCharArray() );
     }
 
-    @Universal
+
     public static char[] add( char[] array, StringBuilder stringBuilder ) {
         return add( array, getCharsFromStringBuilder( stringBuilder ) );
     }
 
 
-    @Universal
+
     public static char[] add( char[] array, char[] array2 ) {
         char[] newArray = new char[ array.length + array2.length ];
         arraycopy ( array, 0, newArray, 0, array.length );
@@ -403,7 +402,7 @@ public class Chr {
     }
 
 
-    @Universal
+
     public static char[] insert( final char[] array, final int idx, final char v ) {
         Exceptions.requireNonNull( array );
 
@@ -443,19 +442,19 @@ public class Chr {
     }
 
 
-    @Universal
+
     public static char[] insert( final char[] array, final int fromIndex, String values ) {
         return insert( array, fromIndex, values.toCharArray() );
     }
 
 
-    @Universal
+
     public static char[] insert( final char[] array, final int fromIndex, StringBuilder values ) {
         return insert( array, fromIndex, getCharsFromStringBuilder( values ) );
     }
 
 
-    @Universal
+
     public static char[] insert( final char[] array, final int fromIndex, final char[] values ) {
         Exceptions.requireNonNull( array );
 

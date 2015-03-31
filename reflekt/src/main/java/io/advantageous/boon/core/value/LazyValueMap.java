@@ -34,7 +34,7 @@ import io.advantageous.boon.primitive.Arry;
 
 import java.util.*;
 
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.die;
 
 /**
  * This class is important to the performance of the parser.

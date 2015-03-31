@@ -26,10 +26,10 @@
  *               \/           \/          \/         \/        \/  \/
  */
 
-package io.advantageous.boon;
+package io.advantageous.boon.core;
 
 
-import io.advantageous.boon.core.Pair;
+import io.advantageous.boon.core.*;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -37,10 +37,10 @@ import java.util.Arrays;
 
 import java.util.*;
 
-import static io.advantageous.boon.Str.puts;
-import static io.advantageous.boon.Exceptions.die;
-import static io.advantageous.boon.Lists.list;
-import static io.advantageous.boon.Maps.*;
+import static io.advantageous.boon.core.IO.puts;
+import static io.advantageous.boon.core.Exceptions.die;
+import static io.advantageous.boon.core.Lists.list;
+import static io.advantageous.boon.core.Maps.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -68,7 +68,7 @@ public class MapsTest {
 
 
         puts(Maps.asPrettyJsonString(map));
-        puts(Boon.toPrettyJson(map));
+        puts(Str.toPrettyJson(map));
 
 
     }

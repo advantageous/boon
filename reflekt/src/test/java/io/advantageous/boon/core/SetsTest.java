@@ -26,7 +26,7 @@
  *               \/           \/          \/         \/        \/  \/
  */
 
-package io.advantageous.boon;
+package io.advantageous.boon.core;
 
 
 import io.advantageous.boon.primitive.Arry;
@@ -38,10 +38,10 @@ import java.util.NavigableSet;
 import java.util.Set;
 import java.util.SortedSet;
 
-import static io.advantageous.boon.Str.puts;
-import static io.advantageous.boon.Sets.*;
-import static io.advantageous.boon.Sets.safeSet;
-import static io.advantageous.boon.Sets.safeSortedSet;
+import static io.advantageous.boon.core.IO.puts;
+import static io.advantageous.boon.core.Sets.*;
+import static io.advantageous.boon.core.Sets.safeSet;
+import static io.advantageous.boon.core.Sets.safeSortedSet;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 

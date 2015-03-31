@@ -28,12 +28,10 @@
 
 package io.advantageous.boon.core.reflection;
 
-import io.advantageous.boon.Lists;
-import io.advantageous.boon.core.reflection.Mapper;
-import io.advantageous.boon.core.reflection.MapperComplex;
+import io.advantageous.boon.core.Lists;
 import org.junit.Test;
 
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.die;
 
 /**
  * Created by Richard on 5/26/14.

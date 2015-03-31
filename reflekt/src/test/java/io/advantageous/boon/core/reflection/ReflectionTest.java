@@ -29,13 +29,10 @@
 package io.advantageous.boon.core.reflection;
 
 
-import io.advantageous.boon.Boon;
-import io.advantageous.boon.Exceptions;
-import io.advantageous.boon.Lists;
-import io.advantageous.boon.Maps;
-import io.advantageous.boon.core.reflection.BeanUtils;
-import io.advantageous.boon.core.reflection.Fields;
-import io.advantageous.boon.core.reflection.MapObjectConversion;
+import io.advantageous.boon.core.Exceptions;
+import io.advantageous.boon.core.Lists;
+import io.advantageous.boon.core.Maps;
+import io.advantageous.boon.core.Conversions;
 import io.advantageous.boon.core.reflection.fields.FieldAccess;
 import org.junit.Test;
 
@@ -45,11 +42,12 @@ import java.util.Map;
 import java.util.Set;
 
 
-import static io.advantageous.boon.Exceptions.die;
-import static io.advantageous.boon.Lists.list;
-import static io.advantageous.boon.Maps.in;
-import static io.advantageous.boon.Maps.map;
-import static io.advantageous.boon.Sets.set;
+import static io.advantageous.boon.core.Exceptions.die;
+import static io.advantageous.boon.core.Lists.list;
+import static io.advantageous.boon.core.Maps.in;
+import static io.advantageous.boon.core.Maps.map;
+import static io.advantageous.boon.core.Sets.set;
+import static io.advantageous.boon.core.Conversions.len;
 import static io.advantageous.boon.primitive.Int.array;
 
 
@@ -199,7 +197,7 @@ public class ReflectionTest {
         final Map<String, Object> objectMap = Maps.toMap( manufacturing );
 
         ok &= objectMap.get( "name" ).equals( "manufacturing" ) || die();
-        ok &= Boon.len( objectMap.get( "employees" ) ) == 4 || die();
+        ok &= len(objectMap.get("employees")) == 4 || die();
 
         final Map<String, Object> oMapEmployee = ( Map<String, Object> )
                 BeanUtils.idx(objectMap.get("employees"), 0);
@@ -387,9 +385,9 @@ public class ReflectionTest {
         final int[] array = array( 1, 2, 3 );
 
 
-        final Iterator iterator = Boon.iterator( list );
+        final Iterator iterator = Conversions.iterator(list);
 
-        final Iterator iterator2 = Boon.iterator( array );
+        final Iterator iterator2 = Conversions.iterator(array);
 
         iterator.next();
         iterator2.next();

@@ -26,10 +26,9 @@
  *               \/           \/          \/         \/        \/  \/
  */
 
-package io.advantageous.boon;
+package io.advantageous.boon.core;
 
-import io.advantageous.boon.core.Sys;
-import io.advantageous.boon.core.Typ;
+import io.advantageous.boon.core.reflection.FastStringUtils;
 import io.advantageous.boon.primitive.ByteBuf;
 import io.advantageous.boon.primitive.CharBuf;
 
@@ -41,15 +40,7 @@ import java.nio.file.*;
 import java.nio.file.FileSystem;
 import java.nio.file.spi.FileSystemProvider;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
-
-import static io.advantageous.boon.Str.sputs;
-import static io.advantageous.boon.Exceptions.die;
-import static io.advantageous.boon.Exceptions.requireNonNull;
-import static io.advantageous.boon.Lists.len;
-import static io.advantageous.boon.Str.slc;
-
 
 
 @SuppressWarnings ( "unchecked" )
@@ -59,7 +50,6 @@ public class IO {
     public final static Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
     public final static String FILE_SCHEMA = "file";
     public final static String JAR_SCHEMA = "jar";
-    public final static String CLASSPATH_SCHEMA = "classpath";
 
     public final static String JAR_FILE_SCHEMA = "jar:file";
 
@@ -68,41 +58,6 @@ public class IO {
     private static final int DEFAULT_BUFFER_SIZE = 1024 * 4;
     private static final int EOF = -1;
 
-
-    private static ConcurrentHashMap <String, FileSystem> pathToZipFileSystems = new ConcurrentHashMap<>();
-
-    private static Path convertJarFileSystemURIToPath( String resourceURL ) {
-
-        String str = resourceURL;
-
-        final String[] strings = StringScanner.split( str, '!' );
-
-        URI fileJarURI = URI.create( strings[ 0 ] );
-        String resourcePath = strings[ 1 ];
-
-        String key = Str.slc(strings[0], JAR_FILE_SCHEMA.length() + 1);
-        if ( !pathToZipFileSystems.containsKey( fileJarURI ) ) {
-            pathToZipFileSystems.put( key, IO.zipFileSystem(fileJarURI) );
-
-            cleanPathToZipFileSystemMap();
-        }
-
-        FileSystem fileSystem = pathToZipFileSystems.get( key );
-
-        Path path = fileSystem.getPath(resourcePath);
-
-        return path;
-    }
-
-    private static void cleanPathToZipFileSystemMap() {
-
-        Set<String> paths = pathToZipFileSystems.keySet();
-        for (String path : paths) {
-            if (!Files.exists( IO.path(path) )) {
-                pathToZipFileSystems.remove(path);
-            }
-        }
-    }
 
     public static FileSystem zipFileSystem( URI fileJarURI ) {
 
@@ -149,12 +104,103 @@ public class IO {
 
     public static ConvertToPathFunction convertToPathFunction = new ConvertToPathFunction();
 
+    /**
+     * Adds a newline to the console.
+     */
+    public static void println() {
+        Sys.println("");
+    }
+
+    /**
+     * Prints an object to the console.
+     *
+     * @param message object to print.
+     */
+    public static void println(Object message) {
+
+        print(message);
+        println();
+    }
+
+    /**
+     * Prints to console.
+     *
+     * @param message message
+     */
+    public static void print(String message) {
+        Sys.print(message);
+    }
+
+    /**
+     * Print a single object to the console.
+     * If null prints out &gt;NULL&lt;
+     * If char[] converts to String.
+     * If array prints out string version of array
+     * by first converting array to a list.
+     * If any object, then it uses the toString to print out the object.
+     *
+     * @param message the object that you wish to print.
+     */
+    public static void print(Object message) {
+
+        if (message == null) {
+            print("<NULL>");
+        } else if (message instanceof char[]) {
+            print(FastStringUtils.noCopyStringFromChars((char[]) message));
+        } else if (message.getClass().isArray()) {
+            print(Lists.toListOrSingletonList(message).toString());
+        } else {
+            print(message.toString());
+        }
+    }
+
+    /**
+     * Like print, but prints out a whole slew of objects on the same line.
+     *
+     * @param messages objects you want to print on the same line.
+     */
+    public static void puts(Object... messages) {
+
+        for (Object message : messages) {
+            print(message);
+        }
+        println();
+
+    }
+
+    /**
+     * <p>
+     * Like puts but prints out each object on its own line.
+     * If the object is a list or array,
+     * then each item in the list gets printed out on its own line.
+     * </p>
+     *
+     * @param messages the stuff you want to print out.
+     */
+    public static void putl(Object... messages) {
+
+        for (Object message : messages) {
+
+            if (message instanceof Collection || Typ.isArray(message)) {
+                Iterator iterator = Conversions.iterator(message);
+                while (iterator.hasNext()) {
+                    puts(iterator.next());
+                }
+                continue;
+            }
+            print(message);
+            println();
+        }
+        println();
+
+    }
+
 
     public static class ConvertToPathFunction implements Function<String, Path> {
 
         @Override
         public Path apply( String s ) {
-            return IO.path( s );
+            return path(s);
         }
     }
 
@@ -203,7 +249,7 @@ public class IO {
 
     }
     public static List<String> listByGlob( final String path, final String glob ) {
-        final Path pathFromFileSystem = path( path );
+        final Path pathFromFileSystem = path(path);
         return listByGlob( pathFromFileSystem, glob );
     }
 
@@ -227,7 +273,7 @@ public class IO {
 
 
     public static List<String> listByFileExtension( final String path, final String ext ) {
-        final Path pathFromFileSystem = path( path );
+        final Path pathFromFileSystem = path(path);
         return listByFileExtension( pathFromFileSystem, ext );
     }
 
@@ -251,7 +297,7 @@ public class IO {
 
 
     public static List<String> listByFileExtensionRecursive( final String path, final String ext ) {
-        final Path pathFromFileSystem = path( path );
+        final Path pathFromFileSystem = path(path);
         return listByFileExtensionRecursive( pathFromFileSystem, ext );
     }
 
@@ -398,7 +444,7 @@ public class IO {
 
     public static byte[] input( String fileName ) {
         try {
-            return input( Files.newInputStream( IO.path( fileName ) ) );
+            return input( Files.newInputStream( path(fileName) ) );
         } catch ( IOException e ) {
             return Exceptions.handle( byte[].class, e );
         }
@@ -777,16 +823,8 @@ public class IO {
         } );
     }
 
-    private static String getWindowsPathIfNeeded( String path ) {
+    public static String getWindowsPathIfNeeded( String path ) {
         if ( Sys.isWindows() ) {
-
-            if ( !path.startsWith( "http" ) && !path.startsWith( CLASSPATH_SCHEMA )
-                    && !path.startsWith( JAR_SCHEMA ) ) {
-                path = path.replace( '/', Sys.windowsPathSeparator() );
-                if ( Str.slc(path, 0, 6).equals( "file:\\" ) ) {
-                    path = Str.slc(path, 6);
-                }
-            }
 
             if ( path.startsWith( ".\\" ) ) {
                 path = Str.slc(path, 2);
@@ -839,11 +877,6 @@ public class IO {
 
                     return readFromFileSchema( uri );
 
-                } else if ( uri.getScheme().equals( CLASSPATH_SCHEMA )
-                        || uri.getScheme().equals( JAR_SCHEMA ) ) {
-
-                    return readFromClasspath( uri.toString() );
-
                 } else {
                     return read( location, uri );
                 }
@@ -857,54 +890,8 @@ public class IO {
 
 
 
-    public static String readResource( final String location ) {
-        final URI uri = createURI( location );
 
-        return Exceptions.tryIt( String.class, new Exceptions.TrialWithReturn<String>() {
-
-            @Override
-            public String tryIt() throws Exception {
-
-                String path = location;
-
-                path = getWindowsPathIfNeeded( path );
-
-                if ( uri.getScheme() == null ) {
-
-                    Path thePath = FileSystems.getDefault().getPath( path );
-                    if (IO.exists(thePath)) {
-                        return read( Files.newBufferedReader( thePath, DEFAULT_CHARSET ) );
-                    } else {
-                        path = CLASSPATH_SCHEMA + ":/" + location;
-                        thePath = IO.path(path);
-                        if (IO.exists(thePath)) {
-                            return read( Files.newBufferedReader( thePath, DEFAULT_CHARSET ) );
-                        } else {
-                            return null;
-                        }
-                    }
-
-                } else if ( uri.getScheme().equals( FILE_SCHEMA ) ) {
-
-                    return readFromFileSchema( uri );
-
-                } else if ( uri.getScheme().equals( CLASSPATH_SCHEMA )
-                        || uri.getScheme().equals( JAR_SCHEMA ) ) {
-
-                    return readFromClasspath( uri.toString() );
-
-                } else {
-                    return read( location, uri );
-                }
-
-
-            }
-        } );
-
-    }
-
-
-    private static String readFromFileSchema( URI uri ) {
+    public static String readFromFileSchema( URI uri ) {
         Path thePath = uriToPath( uri );
 
         try {
@@ -958,7 +945,7 @@ public class IO {
         }
     }
 
-    private static String read( String location, URI uri ) throws Exception {
+    public static String read( String location, URI uri ) throws Exception {
         try {
             FileSystem fileSystem = FileSystems.getFileSystem( uri );
             Path fsPath = fileSystem.getPath( location );
@@ -1032,7 +1019,7 @@ public class IO {
 
         try {
 
-            final Path newDir = path( dir );
+            final Path newDir = path(dir);
             createDirectory( newDir );
 
             return newDir;
@@ -1060,12 +1047,12 @@ public class IO {
     }
 
     public static void write( String file, String contents ) {
-        write( IO.path(file), contents.getBytes( DEFAULT_CHARSET ) );
+        write( path(file), contents.getBytes( DEFAULT_CHARSET ) );
     }
 
 
     public static void output( String file, byte[] bytes ) {
-        IO.write( IO.path(file), bytes );
+        IO.write( path(file), bytes );
     }
 
     public static void output( Path file, byte[] bytes ) {
@@ -1074,7 +1061,7 @@ public class IO {
 
 
     public static void write( String file, byte[] contents ) {
-        write (IO.path(file), contents);
+        write (path(file), contents);
     }
 
     public static void write( Path file, byte[] contents ) {
@@ -1106,116 +1093,10 @@ public class IO {
 
     }
 
-    public static String readFromClasspath( Class<?> clazz, String location ) {
-        List<String> resources = Classpaths.resources( clazz, location );
-
-
-
-        if ( len( resources ) > 0 ) {
-            try {
-                return read( Files.newBufferedReader( IO.path(resources.get(0)), DEFAULT_CHARSET ) );
-            } catch ( IOException e ) {
-                return Exceptions.handle( String.class, "unable to read classpath resource " + location, e );
-            }
-        } else {
-            return null;
-        }
-    }
-
-    private static List<String> listFromDefaultClassLoader( String s ) {
-        List<String> result = new ArrayList<>();
-
-        String newPath = s;
-
-        final List<String> resources = Classpaths.resources(
-                IO.class, newPath );
-
-
-        for ( String resourcePath : resources ) {
-            Path path = IO.path(resourcePath);
-            if ( Files.isDirectory( path ) ) {
-                result.addAll( IO.list( resourcePath ) );
-            } else {
-                result.add( resourcePath.toString() );
-            }
-        }
-
-
-        return result;
-    }
-
-
-    private static List<Path> pathsFromDefaultClassLoader( String s ) {
-        List<Path> result = new ArrayList<>();
-
-        String newPath = s;
-
-        final List<Path> resources = Classpaths.paths(
-                IO.class, newPath );
-
-
-        for ( Path resourcePath : resources ) {
-            if ( Files.isDirectory( resourcePath ) ) {
-                result.addAll( IO.paths( resourcePath ) );
-            } else {
-                result.add( resourcePath);
-            }
-        }
-
-
-        return result;
-    }
-
-
-
-    public static Path path( String location ) {
-        if ( location.startsWith( CLASSPATH_SCHEMA + ":" ) ) {
-            String path = StringScanner.split( location, ':' )[ 1 ];
-
-            final List<String> resources = Classpaths.resources(
-                    IO.class, path );
-
-            if (resources == null || resources.size() == 0) {
-                Exceptions.die("Resource not found", location);
-            }
-
-            String result = Lists.idx( resources, 0 );
-            if ( result == null ) {
-                return path( path );
-            }
-            return IO.path(result);
-
-        } else if (location.startsWith( JAR_FILE_SCHEMA + ":" )) {
-            return convertJarFileSystemURIToPath(location);
-        } else {
-            return Paths.get( location );
-        }
-    }
-
-    public static String readFromClasspath( String location ) {
-
-        Exceptions.requireNonNull(location, "location can't be null");
-
-        if ( !location.startsWith( CLASSPATH_SCHEMA + ":" ) ) {
-            Exceptions.die("Location must starts with " + CLASSPATH_SCHEMA);
-        }
-
-        Path path = path( location );
-
-        if ( path == null ) {
-            return null;
-        }
-        try {
-            return read( Files.newBufferedReader( path, DEFAULT_CHARSET ) );
-        } catch ( IOException e ) {
-            return Exceptions.handle( String.class, "unable to read classpath resource " + location, e );
-
-        }
-    }
 
 
     public static InputStream inputStream( String resource ) {
-        Path path = path( resource );
+        Path path = path(resource);
         try {
             return Files.newInputStream( path );
         } catch ( IOException e ) {
@@ -1226,37 +1107,16 @@ public class IO {
     //
 
     public static List<String> list( final String path ) {
-
-        URI uri = URI.create( path );
-        if ( uri.getScheme() == null ) {
-            final Path pathFromFileSystem = path( path );
+            final Path pathFromFileSystem = path(path);
             return list( pathFromFileSystem );
-        } else if ( uri.getScheme().equals( CLASSPATH_SCHEMA ) ) {
-
-            return listFromDefaultClassLoader( StringScanner.split( path, ':' )[ 1 ] );
-
-        } else {
-            final Path pathFromFileSystem = path( path );
-            return list( pathFromFileSystem );
-        }
     }
 
 
 
     public static List<Path> paths( final String path ) {
 
-        URI uri = URI.create( path );
-        if ( uri.getScheme() == null ) {
-            final Path pathFromFileSystem = path( path );
+            final Path pathFromFileSystem = path(path);
             return listPath(pathFromFileSystem);
-        } else if ( uri.getScheme().equals( CLASSPATH_SCHEMA ) ) {
-
-            return pathsFromDefaultClassLoader( StringScanner.split( path, ':' )[ 1 ] );
-
-        } else {
-            final Path pathFromFileSystem = path( path );
-            return listPath(pathFromFileSystem);
-        }
     }
 
     public static List<Path> pathsByExt( final String path, String ext ) {
@@ -1320,7 +1180,7 @@ public class IO {
 
     public static void delete(String path) {
         try {
-            Files.delete(IO.path(path));
+            Files.delete(path(path));
         } catch (IOException e) {
             Exceptions.handle(e);
         }
@@ -1328,11 +1188,21 @@ public class IO {
 
     public static void createDirectories(String path) {
         try {
-            Files.createDirectories(IO.path(path));
+            Files.createDirectories(path(path));
         } catch (IOException e) {
             Exceptions.handle(e);
         }
     }
+
+
+
+    public static Path path( String location ) {
+            return Paths.get(location);
+    }
+
+
+
+
 
 
 
@@ -1342,7 +1212,7 @@ public class IO {
 
 
     public static boolean exists (String path ) {
-        return Files.exists(IO.path(path));
+        return Files.exists(path(path));
     }
 
     public static void move(Path source, Path target) {
@@ -1352,4 +1222,37 @@ public class IO {
             Exceptions.handle(e);
         }
     }
+
+
+    /**
+     * Press enter to continue. Used for console apps.
+     *
+     * @param pressEnterKeyMessage message
+     */
+    public static void pressEnterKey(String pressEnterKeyMessage) {
+        puts(pressEnterKeyMessage);
+        gets();
+    }
+
+
+    /**
+     * Used by console apps.
+     */
+    public static void pressEnterKey() {
+        puts("Press enter key to continue");
+        gets();
+    }
+
+
+    /**
+     * Gets input from console.
+     *
+     * @return String from console.
+     */
+    public static String gets() {
+        Scanner console = new Scanner(System.in);
+        String input = console.nextLine();
+        return input.trim();
+    }
+
 }

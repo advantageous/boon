@@ -32,8 +32,8 @@ import org.junit.Test;
 
 import java.util.Collection;
 
-import static io.advantageous.boon.Str.puts;
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.IO.puts;
+import static io.advantageous.boon.core.Exceptions.die;
 
 /**
  * Created by Richard on 3/7/14.

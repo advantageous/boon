@@ -1,10 +1,7 @@
 package io.advantageous.boon.core;
 
 
-import io.advantageous.boon.Entry;
-import io.advantageous.boon.Exceptions;
-
-import static io.advantageous.boon.Exceptions.requireNonNull;
+import static io.advantageous.boon.core.Exceptions.requireNonNull;
 
 /**
 * Created by Richard on 9/9/14.

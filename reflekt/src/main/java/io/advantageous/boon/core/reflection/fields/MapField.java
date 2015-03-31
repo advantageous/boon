@@ -28,7 +28,7 @@
 
 package io.advantageous.boon.core.reflection.fields;
 
-import io.advantageous.boon.Exceptions;
+import io.advantageous.boon.core.Exceptions;
 import io.advantageous.boon.core.Conversions;
 import io.advantageous.boon.core.Value;
 import io.advantageous.boon.core.TypeType;
@@ -38,7 +38,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Collections;
 import java.util.Map;
 
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.die;
 
 public class MapField implements FieldAccess {
 

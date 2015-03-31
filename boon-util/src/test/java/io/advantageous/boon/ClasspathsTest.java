@@ -29,6 +29,9 @@
 package io.advantageous.boon;
 
 
+import io.advantageous.boon.core.IO;
+import io.advantageous.boon.core.Lists;
+import io.advantageous.boon.core.Str;
 import org.junit.Test;
 
 import java.io.File;
@@ -36,10 +39,11 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collections;
 import java.util.List;
 
-import static io.advantageous.boon.Str.puts;
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.IO.puts;
+import static io.advantageous.boon.core.Exceptions.die;
 import static io.advantageous.boon.primitive.Chr.multiply;
 
 public class ClasspathsTest {
@@ -132,7 +136,7 @@ public class ClasspathsTest {
 
         int directoryCount = 0;
         for ( String path : resourcePaths ) {
-            if ( !Files.isDirectory( IO.path(path) ) ) {
+            if ( !Files.isDirectory( Classpaths.path(path) ) ) {
                 die();
             } else {
                 directoryCount++;
@@ -164,7 +168,7 @@ public class ClasspathsTest {
         int fileCount = 0;
         int dirCount = 0;
         for ( String path : resourcePaths ) {
-            if ( !Files.isDirectory( IO.path(path) ) ) {
+            if ( !Files.isDirectory( Classpaths.path(path) ) ) {
                 fileCount++;
             } else {
                 dirCount++;
@@ -217,11 +221,71 @@ public class ClasspathsTest {
 
             puts(spath);
             if (spath.toString().endsWith(".txt")) {
-                puts(IO.readResource(spath));
+                puts(Classpaths.readResource(spath));
             }
         }
 
 
     }
+
+
+    @Test
+    public void readClasspathResource() {
+
+//        I added classpath reading, listing to IO.
+//
+//        This allows you to easily search a classpath (which is not included with the JDK).
+//
+//        Reading listFromClassLoader from the classpath is included in the JDK, but treating it like a file system (listing directories, etc.) is not.
+//
+//        Also a common problem with loading listFromClassLoader is that the resource path has different  rules so if you are reading from a jar file, you need to specify clz.getResource("org/foo/foo.txt") where org is in the root, but if you are reading from the actual classpath you can specify clz.getResource("/org/foo/foo.txt");. IO utils don't care, it finds it either way.
+//
+//        (I have run into this one about 1 million times, and it throws me for a loop each time. It is on stackoverflow a lot).
+//
+//        Here is some sample code to check out.
+//
+//        Test file is on the classpath and contains this content:
+//
+//        line 1
+//        apple
+//        pear
+//        grapes
+
+        boolean ok = true;
+
+        ok |= Str.in("apple", Classpaths.read("classpath://testfile.txt"))
+                || die( "two slashes should work" );
+
+
+        //Proper URL
+        ok |= Str.in( "apple", Classpaths.read( "classpath:///testfile.txt" ) )
+                || die( "three slashes should work" );
+
+
+        //Not proper URL
+        ok |= Str.in( "apple", Classpaths.read( "classpath:testfile.txt" ) )
+                || die( "no slashes should work" );
+
+        //No URL
+        ok |= Str.in( "apple", Classpaths.readFromClasspath(this.getClass(), "testfile.txt") )
+                || die( "you don't have to use classpath scheme" );
+
+        //Slash or no slash, it just works
+        ok |= Str.in( "apple", Classpaths.readFromClasspath(this.getClass(), "/testfile.txt") )
+                || die( "on slash works" );
+
+
+        //You can do a listing of a directory inside of a jar file or anywhere on the classpath
+        //this also handles duplicate entries as in two jar files having identical file locations.
+        //uts( IO.list( "classpath:/org/node" ) );
+
+        //Proper URL
+        List<String> paths = Classpaths.list( "classpath:/org/node" );
+        Collections.sort(paths);
+        ok |= Lists.idx(paths, 0).endsWith( "org" + File.separator + "node" + File.separator + "file1.txt" )
+                || die();
+
+    }
+
 
 }

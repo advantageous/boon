@@ -28,13 +28,13 @@
 
 package io.advantageous.boon.core.value;
 
-import io.advantageous.boon.Exceptions;
+import io.advantageous.boon.core.Exceptions;
 import io.advantageous.boon.core.Value;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.die;
 
 /** This holds a mapping from value key to value value to mazimize lazyness.
  *

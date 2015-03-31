@@ -26,17 +26,18 @@
  *               \/           \/          \/         \/        \/  \/
  */
 
-package io.advantageous.boon;
+package io.advantageous.boon.core;
 
+import io.advantageous.boon.core.StringScanner;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.advantageous.boon.Str.puts;
+import static io.advantageous.boon.core.IO.puts;
 import static io.advantageous.boon.primitive.Arry.idx;
 import static io.advantageous.boon.primitive.Arry.len;
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.die;
 import static org.junit.Assert.assertEquals;
 
 /**

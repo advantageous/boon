@@ -28,16 +28,14 @@
 
 package io.advantageous.boon.primitive;
 
-import io.advantageous.boon.Exceptions;
-import io.advantageous.boon.primitive.ByteBuf;
-import io.advantageous.boon.primitive.Input;
+import io.advantageous.boon.core.Exceptions;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import static junit.framework.Assert.assertTrue;
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.die;
 import static io.advantageous.boon.primitive.Byt.*;
 import static io.advantageous.boon.primitive.Shrt.*;
 import static io.advantageous.boon.primitive.Int.*;

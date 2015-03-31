@@ -28,10 +28,9 @@
 
 package io.advantageous.boon.core.reflection;
 
-import io.advantageous.boon.Boon;
-import io.advantageous.boon.Exceptions;
-import io.advantageous.boon.Lists;
-import io.advantageous.boon.Str;
+import io.advantageous.boon.core.Exceptions;
+import io.advantageous.boon.core.Lists;
+import io.advantageous.boon.core.Str;
 import io.advantageous.boon.core.Typ;
 import io.advantageous.boon.core.reflection.fields.FieldAccess;
 import io.advantageous.boon.core.reflection.fields.FieldAccessMode;
@@ -52,9 +51,8 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.*;
 
-import static io.advantageous.boon.Str.puts;
-import static io.advantageous.boon.Str.sputs;
-import static io.advantageous.boon.Exceptions.handle;
+import static io.advantageous.boon.core.Str.sputs;
+import static io.advantageous.boon.core.Exceptions.handle;
 import static io.advantageous.boon.core.Conversions.coerce;
 import static io.advantageous.boon.core.Conversions.toEnum;
 import static io.advantageous.boon.core.TypeType.*;
@@ -372,7 +370,7 @@ public class MapperComplex implements Mapper {
                 buf.multiply('-', 10).add("FINAL ARGUMENTS").multiply('-', 10).addLine();
                 if (finalArgs!=null) {
                     for (Object o : finalArgs) {
-                        buf.puts("argument type    ", Boon.className(o));
+                        buf.puts("argument type    ", ClassMeta.className(o));
                     }
                 }
 
@@ -384,11 +382,6 @@ public class MapperComplex implements Mapper {
                 }
 
                 buf.multiply('-', 35).addLine();
-
-                if (Boon.debugOn()) {
-                    puts(buf);
-                }
-
 
 
                 buf.addLine("PARAMETER TYPES");
@@ -1736,7 +1729,7 @@ public class MapperComplex implements Mapper {
                 case INTERFACE:
                 case ABSTRACT:
                     final Map<String, Object> abstractMap = toMap(value);
-                    abstractMap.put("class", Boon.className(value));
+                    abstractMap.put("class", ClassMeta.className(value));
                     map.put(fieldName, abstractMap);
                     break;
 

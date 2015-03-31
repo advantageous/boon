@@ -28,6 +28,11 @@
 
 package io.advantageous.boon;
 
+import io.advantageous.boon.core.IO;
+import io.advantageous.boon.core.Lists;
+import io.advantageous.boon.core.Str;
+import io.advantageous.boon.core.StringScanner;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -40,7 +45,7 @@ import java.util.Scanner;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static io.advantageous.boon.Str.sputs;
+import static io.advantageous.boon.core.Str.sputs;
 
 /**
  * Ported this form EasyJava/Facile. Got rid of the FileObject stuff.
@@ -69,8 +74,8 @@ public class Runner {
 
     public static List<Path> path() {
 
-        final String[] paths = StringScanner.splitByDelimiters( System.getenv().get( "PATH" ), ":;" );
-        return Lists.mapBy( paths, IO.convertToPathFunction );
+        final String[] paths = StringScanner.splitByDelimiters(System.getenv().get("PATH"), ":;");
+        return Lists.mapBy(paths, IO.convertToPathFunction);
 
     }
 
@@ -119,7 +124,7 @@ public class Runner {
         out.exit = runner.exec();
         out.stdout = runner.stdOut();
         out.stderr = runner.stdErr();
-        out.commandLine = Str.joinCollection( ' ', runner.commandLine );
+        out.commandLine = Str.joinCollection(' ', runner.commandLine);
         return out;
     }
 
@@ -445,7 +450,7 @@ public class Runner {
 
         private void initializePath() {
             String cmd = commandLine.get( 0 );
-            Path pathCommand = IO.path( cmd );
+            Path pathCommand = IO.path(cmd);
             if ( !Files.exists( pathCommand ) ) {
                 for ( Path dir : path ) {
                     pathCommand = IO.path( dir, cmd );
@@ -578,7 +583,7 @@ public class Runner {
                     }
 
                     if ( verbose ) {
-                        Str.puts(line);
+                        IO.puts(line);
                     }
                     outputBuffer.append( line ).append( '\n' );
                 }

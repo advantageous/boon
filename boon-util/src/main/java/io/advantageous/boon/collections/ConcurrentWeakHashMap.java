@@ -29,7 +29,7 @@
 package io.advantageous.boon.collections;
 
 
-import io.advantageous.boon.Exceptions;
+import io.advantageous.boon.core.Exceptions;
 import io.advantageous.boon.core.Pair;
 
 import java.lang.ref.ReferenceQueue;
@@ -38,7 +38,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.die;
 
 /**
  * I got a lot of ideas from concurrent java books. and looking at open source implementations of this

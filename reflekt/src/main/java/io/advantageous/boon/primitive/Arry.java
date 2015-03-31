@@ -29,24 +29,23 @@
 package io.advantageous.boon.primitive;
 
 
-import io.advantageous.boon.Exceptions;
-import io.advantageous.boon.Lists;
+import io.advantageous.boon.core.Exceptions;
+import io.advantageous.boon.core.Lists;
 import io.advantageous.boon.core.reflection.Invoker;
 import io.advantageous.boon.core.reflection.MapObjectConversion;
-import io.advantageous.boon.Universal;
 
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.die;
 
 @SuppressWarnings ( { "unchecked", "SuspiciousSystemArraycopy" } )
 public class Arry {
 
 
-    @Universal
+
     public static <V> V[] array( Class<V> clasz, int size ) {
         Object newArray = Array.newInstance( clasz, size );
         return ( V[] ) newArray;
@@ -108,24 +107,24 @@ public class Arry {
 
     /* Universal methods */
 
-    @Universal
+
     public static <V> int len( V[] array ) {
         return array.length;
     }
 
-    @Universal
+
     public static <V> int lengthOf( V[] array ) {
         return array.length;
     }
 
-    @Universal
+
     public static <V> V idx( final V[] array, int index ) {
         final int i = calculateIndex( array, index );
 
         return array[ i ];
     }
 
-    @Universal
+
     public static Object idx( final Object array, int index ) {
         final int i = calculateIndex( array, index );
 
@@ -133,7 +132,7 @@ public class Arry {
     }
 
 
-    @Universal
+
     public static Object fastIndex( final Object array, int index ) {
         final int i = calculateIndex( array, index );
 
@@ -141,21 +140,21 @@ public class Arry {
     }
 
 
-    @Universal
+
     public static <V> V atIndex( final V[] array, int index ) {
         final int i = calculateIndex( array, index );
 
         return array[ i ];
     }
 
-    @Universal
+
     public static <V> void idx( final V[] array, int index, V value ) {
         final int i = calculateIndex( array, index );
 
         array[ i ] = value;
     }
 
-    @Universal
+
     public static <V> void atIndex( final V[] array, int index, V value ) {
         final int i = calculateIndex( array, index );
 
@@ -163,13 +162,13 @@ public class Arry {
     }
 
 
-    @Universal
+
     public static <V> V[] sliceOf( V[] array, int startIndex, int endIndex ) {
 
         return slc(array, startIndex, endIndex);
     }
 
-    @Universal
+
     public static <V> V[] slc( V[] array, int startIndex, int endIndex ) {
 
         final int start = calculateIndex( array, startIndex );
@@ -207,7 +206,7 @@ public class Arry {
         return newArray;
     }
 
-    @Universal
+
     public static <V> boolean in( V value, V[] array ) {
         for ( V currentValue : array ) {
             if ( currentValue.equals( value ) ) {
@@ -218,12 +217,12 @@ public class Arry {
     }
 
 
-    @Universal
+
     public static <V> V[] sliceOf( V[] array, int startIndex ) {
         return slc(array, startIndex);
     }
 
-    @Universal
+
     public static <V> V[] slc( V[] array, int startIndex ) {
 
 
@@ -243,7 +242,7 @@ public class Arry {
     }
 
 
-    @Universal
+
     public static <V> V[] copy( V[] array ) {
         Object newArray = Array.newInstance( array.getClass().getComponentType(), array.length );
         System.arraycopy( array, 0, newArray, 0, array.length );
@@ -251,7 +250,7 @@ public class Arry {
     }
 
 
-    @Universal
+
     public static <V> V[] add( V[] array, V v ) {
         Object newArray = Array.newInstance( array.getClass().getComponentType(), array.length + 1 );
         System.arraycopy( array, 0, newArray, 0, array.length );
@@ -260,7 +259,7 @@ public class Arry {
     }
 
 
-    @Universal
+
     public static <V> V[] add( V[] array, V[] array2 ) {
         Object newArray = Array.newInstance( array.getClass().getComponentType(), array.length + array2.length );
         System.arraycopy( array, 0, newArray, 0, array.length );
@@ -269,7 +268,7 @@ public class Arry {
         return ( V[] ) newArray;
     }
 
-    @Universal
+
     public static <V> V[] insert( V[] array, int index, V v ) {
         Object newArray = Array.newInstance( array.getClass().getComponentType(), array.length + 1 );
         if ( index != 0 ) {
@@ -293,12 +292,12 @@ public class Arry {
     }
 
 
-    @Universal
+
     public static <V> V[] endSliceOf( V[] array, int endIndex ) {
         return slcEnd(array, endIndex);
     }
 
-    @Universal
+
     public static <V> V[] slcEnd( V[] array, int endIndex ) {
 
         final int end = calculateEndIndex( array, endIndex );

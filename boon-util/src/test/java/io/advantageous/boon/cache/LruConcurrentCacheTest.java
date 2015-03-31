@@ -28,11 +28,9 @@
 
 package io.advantageous.boon.cache;
 
-import io.advantageous.boon.cache.Cache;
-import io.advantageous.boon.cache.ConcurrentLruCache;
 import org.junit.Test;
 
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.die;
 
 public class LruConcurrentCacheTest {
 

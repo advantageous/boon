@@ -28,7 +28,7 @@
 
 package io.advantageous.boon.cache;
 
-import io.advantageous.boon.Lists;
+import io.advantageous.boon.core.Lists;
 import io.advantageous.boon.collections.SortableConcurrentList;
 import org.junit.After;
 import org.junit.Before;
@@ -36,8 +36,8 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static io.advantageous.boon.Str.puts;
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.IO.puts;
+import static io.advantageous.boon.core.Exceptions.die;
 
 /**
  * Created by rick on 12/16/13.

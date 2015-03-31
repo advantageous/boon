@@ -29,13 +29,12 @@
 package io.advantageous.boon.primitive;
 
 
-import io.advantageous.boon.Exceptions;
+import io.advantageous.boon.core.Exceptions;
 import io.advantageous.boon.core.reflection.Invoker;
-import io.advantageous.boon.Universal;
 
 import java.nio.charset.StandardCharsets;
 
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.die;
 
 
 public class Byt {
@@ -105,7 +104,7 @@ public class Byt {
      * @param array array
      * @return array
      */
-    @Universal
+
     public static byte[] array( final byte... array ) {
         return array;
     }
@@ -114,7 +113,7 @@ public class Byt {
      * @param array array
      * @return array
      */
-    @Universal
+
     public static byte[] bytes( final byte... array ) {
         return array;
     }
@@ -123,29 +122,29 @@ public class Byt {
      * @param str string
      * @return array
      */
-    @Universal
+
     public static byte[] bytes( String str ) {
          return str.getBytes( StandardCharsets.UTF_8 );
     }
 
 
-    @Universal
+
     public static int len( byte[] array ) {
         return array.length;
     }
 
 
-    @Universal
+
     public static int lengthOf( byte[] array ) {
         return array.length;
     }
 
-    @Universal
+
     public static byte atIndex( final byte[] array, final int index ) {
            return idx(array, index);
     }
 
-    @Universal
+
     public static byte idx( final byte[] array, final int index ) {
         final int i = calculateIndex( array, index );
 
@@ -153,13 +152,13 @@ public class Byt {
     }
 
 
-    @Universal
+
     public static void atIndex( final byte[] array, int index, byte value ) {
          idx(array, index, value);
     }
 
 
-    @Universal
+
     public static void idx( final byte[] array, int index, byte value ) {
         final int i = calculateIndex( array, index );
 
@@ -167,12 +166,12 @@ public class Byt {
     }
 
 
-    @Universal
+
     public static byte[] sliceOf( byte[] array, int startIndex, int endIndex ) {
         return slc (array, startIndex, endIndex);
     }
 
-    @Universal
+
     public static byte[] slc( byte[] array, int startIndex, int endIndex ) {
 
         final int start = calculateIndex( array, startIndex );
@@ -192,12 +191,12 @@ public class Byt {
     }
 
 
-    @Universal
+
     public static byte[] sliceOf( byte[] array, int startIndex ) {
         return slc(array, startIndex);
     }
 
-    @Universal
+
     public static byte[] slc( byte[] array, int startIndex ) {
 
         final int start = calculateIndex( array, startIndex );
@@ -216,12 +215,12 @@ public class Byt {
     }
 
 
-    @Universal
+
     public static byte[] endSliceOf( byte[] array, int endIndex ) {
         return slcEnd(array, endIndex);
     }
 
-    @Universal
+
     public static byte[] slcEnd( byte[] array, int endIndex ) {
 
         final int end = calculateEndIndex( array, endIndex );
@@ -239,7 +238,7 @@ public class Byt {
         return newArray;
     }
 
-    @Universal
+
     public static boolean in( int value, byte... array ) {
         for ( int currentValue : array ) {
             if ( currentValue == value ) {
@@ -250,7 +249,7 @@ public class Byt {
     }
 
 
-    @Universal
+
     public static boolean inIntArray( byte value, int[] array ) {
         for ( int currentValue : array ) {
             if ( currentValue == value ) {
@@ -261,7 +260,7 @@ public class Byt {
     }
 
 
-    @Universal
+
     public static boolean in( int value, int offset, byte[] array ) {
         for ( int index = offset; index < array.length; index++ ) {
             int currentValue = array[ index ];
@@ -272,7 +271,7 @@ public class Byt {
         return false;
     }
 
-    @Universal
+
     public static boolean in( int value, int offset, int end, byte[] array ) {
         for ( int index = offset; index < end; index++ ) {
             int currentValue = array[ index ];
@@ -284,7 +283,7 @@ public class Byt {
     }
 
 
-    @Universal
+
     public static byte[] copy( byte[] array ) {
         Exceptions.requireNonNull(array);
         byte[] newArray = new byte[ array.length ];
@@ -292,7 +291,7 @@ public class Byt {
         return newArray;
     }
 
-    @Universal
+
     public static byte[] copy( byte[] array, int offset, int length ) {
         Exceptions.requireNonNull( array );
         byte[] newArray = new byte[ length ];
@@ -301,7 +300,7 @@ public class Byt {
     }
 
 
-    @Universal
+
     public static byte[] add( byte[] array, byte v ) {
         byte[] newArray = new byte[ array.length + 1 ];
         System.arraycopy( array, 0, newArray, 0, array.length );
@@ -309,7 +308,7 @@ public class Byt {
         return newArray;
     }
 
-    @Universal
+
     public static byte[] add( byte[] array, byte[] array2 ) {
         byte[] newArray = new byte[ array.length + array2.length ];
         System.arraycopy( array, 0, newArray, 0, array.length );
@@ -318,7 +317,7 @@ public class Byt {
     }
 
 
-    @Universal
+
     public static byte[] insert( final byte[] array, final int idx, final byte v ) {
 
         if ( idx >= array.length ) {
@@ -357,7 +356,7 @@ public class Byt {
     }
 
 
-    @Universal
+
     public static byte[] insert( final byte[] array, final int fromIndex, final byte[] values ) {
 
         if ( fromIndex >= array.length ) {

@@ -28,7 +28,7 @@
 
 package io.advantageous.boon.primitive;
 
-import io.advantageous.boon.Exceptions;
+import io.advantageous.boon.core.Exceptions;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

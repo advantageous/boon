@@ -29,13 +29,12 @@
 package io.advantageous.boon.primitive;
 
 
-import io.advantageous.boon.primitive.CharBuf;
 import org.junit.Test;
 
 import java.nio.charset.StandardCharsets;
 
 import static junit.framework.Assert.assertTrue;
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.die;
 import static io.advantageous.boon.primitive.Chr.chars;
 import static org.junit.Assert.assertEquals;
 

@@ -32,7 +32,7 @@ import org.junit.Test;
 
 import java.nio.charset.StandardCharsets;
 
-import static io.advantageous.boon.Str.puts;
+import static io.advantageous.boon.core.IO.puts;
 
 /**
  * Created by Richard on 3/12/14.

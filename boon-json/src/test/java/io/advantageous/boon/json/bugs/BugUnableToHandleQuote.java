@@ -28,15 +28,15 @@
 
 package io.advantageous.boon.json.bugs;
 
-import io.advantageous.boon.Maps;
+import io.advantageous.boon.core.Maps;
 import io.advantageous.boon.json.JsonParserAndMapper;
 import io.advantageous.boon.json.JsonParserFactory;
 import org.junit.Test;
 
 import java.util.Map;
 
-import static io.advantageous.boon.Str.puts;
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.IO.puts;
+import static io.advantageous.boon.core.Exceptions.die;
 import static io.advantageous.boon.json.JsonFactory.toJson;
 
 /**

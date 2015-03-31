@@ -29,8 +29,7 @@
 package io.advantageous.boon;
 
 
-import io.advantageous.boon.core.Conversions;
-import io.advantageous.boon.core.Sys;
+import io.advantageous.boon.core.*;
 import io.advantageous.boon.primitive.ByteBuf;
 
 import java.io.IOException;
@@ -51,7 +50,7 @@ public class HTTP {
     public static String get(
             final String url ) {
 
-        return Exceptions.tryIt( String.class, new Exceptions.TrialWithReturn<String>() {
+        return Exceptions.tryIt(String.class, new Exceptions.TrialWithReturn<String>() {
             @Override
             public String tryIt() throws Exception {
                 URLConnection connection;
@@ -60,10 +59,10 @@ public class HTTP {
                         "Accept", "text/html,application/xhtml+xml,application/xml,application/json,text/plain;"
                 );
 
-                connection = doGet( url, accept, null, null );
-                return extractResponseString( connection );
+                connection = doGet(url, accept, null, null);
+                return extractResponseString(connection);
             }
-        } );
+        });
 
     }
 
@@ -374,7 +373,7 @@ public class HTTP {
         manageHeaders( headers, connection );
 
 
-        IO.write( connection.getOutputStream(), body, IO.DEFAULT_CHARSET );
+        IO.write(connection.getOutputStream(), body, IO.DEFAULT_CHARSET);
         return connection;
     }
 

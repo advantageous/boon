@@ -28,13 +28,13 @@
 
 package io.advantageous.boon.core.reflection.fields;
 
-import io.advantageous.boon.Exceptions;
-import io.advantageous.boon.Str;
+import io.advantageous.boon.core.Exceptions;
+import io.advantageous.boon.core.Str;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import static io.advantageous.boon.Str.sputs;
+import static io.advantageous.boon.core.Str.sputs;
 
 public class PropertyField extends BaseField {
     final Method getter;

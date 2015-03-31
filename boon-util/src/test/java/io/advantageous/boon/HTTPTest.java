@@ -31,6 +31,10 @@ package io.advantageous.boon;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import io.advantageous.boon.core.IO;
+import io.advantageous.boon.core.Lists;
+import io.advantageous.boon.core.Maps;
+import io.advantageous.boon.core.Str;
 import org.junit.Test;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -43,11 +47,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static io.advantageous.boon.Str.puts;
-import static io.advantageous.boon.Str.sputs;
-import static io.advantageous.boon.Exceptions.die;
-import static io.advantageous.boon.Maps.copy;
-import static io.advantageous.boon.Maps.map;
+import static io.advantageous.boon.core.IO.puts;
+import static io.advantageous.boon.core.Str.sputs;
+import static io.advantageous.boon.core.Exceptions.die;
+import static io.advantageous.boon.core.Maps.copy;
+import static io.advantageous.boon.core.Maps.map;
 import static org.junit.Assert.assertTrue;
 
 public class HTTPTest {
@@ -123,7 +127,7 @@ public class HTTPTest {
 
             } else if ( t.getRequestMethod().equals( "POST" ) ) {
                 InputStream requestBody = t.getRequestBody();
-                String body = IO.read( requestBody );
+                String body = IO.read(requestBody);
                 Headers requestHeaders = t.getRequestHeaders();
                 body = body + "\n" + copy( requestHeaders ).toString();
                 body = body + "\n\n" + "Boon test";

@@ -1,4 +1,4 @@
-package io.advantageous.boon;
+package io.advantageous.boon.core;
 
 import java.io.Serializable;
 import java.util.Map;

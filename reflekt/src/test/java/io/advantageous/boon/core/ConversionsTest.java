@@ -28,15 +28,12 @@
 
 package io.advantageous.boon.core;
 
-import io.advantageous.boon.Lists;
-import io.advantageous.boon.Maps;
-import io.advantageous.boon.core.Conversions;
 import org.junit.Test;
 
 import java.util.List;
 import java.util.Map;
 
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.die;
 
 /**
  * Created by Richard on 2/25/14.

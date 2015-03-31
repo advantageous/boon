@@ -28,8 +28,6 @@
 
 package io.advantageous.boon.core;
 
-import io.advantageous.boon.Str;
-import io.advantageous.boon.core.Sys;
 import org.junit.Test;
 
 /**

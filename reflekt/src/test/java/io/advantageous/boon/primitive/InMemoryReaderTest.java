@@ -30,7 +30,7 @@ package io.advantageous.boon.primitive;
 
 import org.junit.Test;
 
-import static io.advantageous.boon.Str.puts;
+import static io.advantageous.boon.core.IO.puts;
 
 /**
  * Created by Richard on 3/13/14.

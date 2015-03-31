@@ -36,7 +36,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static io.advantageous.boon.Str.uncapitalize;
+import static io.advantageous.boon.core.Str.uncapitalize;
 
 
 /**

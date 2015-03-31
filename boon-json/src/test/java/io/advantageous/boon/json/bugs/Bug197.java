@@ -9,7 +9,7 @@ import io.advantageous.boon.json.serializers.impl.AbstractCustomObjectSerializer
 import io.advantageous.boon.primitive.CharBuf;
 import org.codehaus.groovy.runtime.GStringImpl;
 
-import static io.advantageous.boon.Str.puts;
+import static io.advantageous.boon.core.IO.puts;
 
 
 /**

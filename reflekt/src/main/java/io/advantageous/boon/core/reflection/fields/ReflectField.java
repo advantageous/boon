@@ -30,7 +30,7 @@ package io.advantageous.boon.core.reflection.fields;
 
 
 
-import io.advantageous.boon.Exceptions;
+import io.advantageous.boon.core.Exceptions;
 
 import java.lang.reflect.Field;
 

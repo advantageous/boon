@@ -28,12 +28,10 @@
 
 package io.advantageous.boon.core;
 
-import io.advantageous.boon.Exceptions;
-
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.die;
 
 public class MultiMapImpl<K, V> implements MultiMap<K,V> {
 

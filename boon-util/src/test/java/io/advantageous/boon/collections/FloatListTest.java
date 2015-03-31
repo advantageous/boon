@@ -31,7 +31,7 @@ package io.advantageous.boon.collections;
 import io.advantageous.boon.primitive.Flt;
 import org.junit.Test;
 
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.die;
 
 /**
  * Created by Richard on 3/19/14.

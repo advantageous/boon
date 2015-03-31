@@ -28,11 +28,11 @@
 
 package io.advantageous.boon.core.reflection;
 
-import io.advantageous.boon.Exceptions;
+import io.advantageous.boon.core.Exceptions;
 import io.advantageous.boon.core.MultiMap;
 import io.advantageous.boon.core.MultiMapImpl;
 import io.advantageous.boon.core.reflection.fields.FieldAccess;
-import io.advantageous.boon.Lists;
+import io.advantageous.boon.core.Lists;
 import io.advantageous.boon.core.Typ;
 import io.advantageous.boon.core.reflection.impl.ConstructorAccessImpl;
 import io.advantageous.boon.core.reflection.impl.MethodAccessImpl;
@@ -44,7 +44,7 @@ import java.lang.reflect.Type;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static io.advantageous.boon.Lists.list;
+import static io.advantageous.boon.core.Lists.list;
 
 
 /**
@@ -120,6 +120,38 @@ public class ClassMeta <T> implements Annotated{
     };
     private final Map<String, AnnotationData> annotationMap;
     private final List<AnnotationData> annotations;
+
+    /**
+     * Gets class name from object.
+     * It is null safe.
+     *
+     * @param object class name
+     * @return class name of object
+     */
+    public static String className(Object object) {
+        return object == null ? "CLASS<NULL>" : object.getClass().getName();
+    }
+
+    /**
+     * Gets class name from object.
+     * It is null safe.
+     *
+     * @param object class name
+     * @return class name of object
+     */
+    public static Class<?> cls(Object object) {
+        return object == null ? null : object.getClass();
+    }
+
+    /**
+     * Gets simple class name from object.
+     *
+     * @param object object to get class name from
+     * @return returns the class name
+     */
+    public static String simpleName(Object object) {
+        return object == null ? "CLASS<NULL>" : object.getClass().getSimpleName();
+    }
 
 
     public Set<String> instanceMethods() {
@@ -552,4 +584,21 @@ public class ClassMeta <T> implements Annotated{
         methodAccess = methodMap.get(methodName);
         return methodAccess.method();
     }
+
+    /**
+     * Checks to see if an object responds to a method.
+     * Helper facade over Reflection library.
+     *
+     * @param object object in question
+     * @param method method name in question.
+     * @return true or false
+     */
+    public static boolean respondsTo(Object object, String method) {
+        if (object instanceof Class) {
+            return Reflection.respondsTo((Class) object, method);
+        } else {
+            return Reflection.respondsTo(object, method);
+        }
+    }
+
 }

@@ -1,6 +1,6 @@
 package io.advantageous.boon.collections;
 
-import io.advantageous.boon.Str;
+import io.advantageous.boon.core.Str;
 import org.junit.Test;
 
 /**

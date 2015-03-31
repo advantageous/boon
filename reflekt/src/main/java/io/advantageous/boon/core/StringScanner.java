@@ -26,7 +26,7 @@
  *               \/           \/          \/         \/        \/  \/
  */
 
-package io.advantageous.boon;
+package io.advantageous.boon.core;
 
 import io.advantageous.boon.core.reflection.FastStringUtils;
 import io.advantageous.boon.primitive.CharScanner;
@@ -178,7 +178,7 @@ public class StringScanner {
      * @return the split up string
      */
     public static String[] splitByCharsNoneEmpty( final String string, int start, int end, final char... delimiters ) {
-        Exceptions.requireNonNull( string );
+        Exceptions.requireNonNull(string);
 
         char[][] comps = CharScanner.splitByCharsNoneEmpty( FastStringUtils.toCharArray( string ), start, end, delimiters );
         return Str.fromCharArrayOfArrayToStringArray( comps );

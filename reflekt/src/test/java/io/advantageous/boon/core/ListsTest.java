@@ -26,10 +26,8 @@
  *               \/           \/          \/         \/        \/  \/
  */
 
-package io.advantageous.boon;
+package io.advantageous.boon.core;
 
-import io.advantageous.boon.core.Fn;
-import io.advantageous.boon.core.Predicate;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -40,12 +38,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 
 
-import static io.advantageous.boon.Lists.reduceBy;
+import static io.advantageous.boon.core.Lists.reduceBy;
 import static io.advantageous.boon.primitive.Arry.reduceBy;
 import static io.advantageous.boon.primitive.Int.reduceBy;
-import static io.advantageous.boon.Str.puts;
-import static io.advantageous.boon.Exceptions.die;
-import static io.advantageous.boon.Lists.*;
+import static io.advantageous.boon.core.IO.puts;
+import static io.advantageous.boon.core.Exceptions.die;
+import static io.advantageous.boon.core.Lists.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 

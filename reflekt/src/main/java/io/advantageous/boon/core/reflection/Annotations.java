@@ -28,8 +28,8 @@
 
 package io.advantageous.boon.core.reflection;
 
-import io.advantageous.boon.Exceptions;
-import io.advantageous.boon.Str;
+import io.advantageous.boon.core.Exceptions;
+import io.advantageous.boon.core.Str;
 import io.advantageous.boon.core.Sys;
 
 import java.beans.BeanInfo;
@@ -44,8 +44,8 @@ import java.lang.reflect.Method;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static io.advantageous.boon.Str.sputs;
-import static io.advantageous.boon.Exceptions.requireNonNull;
+import static io.advantageous.boon.core.Str.sputs;
+import static io.advantageous.boon.core.Exceptions.requireNonNull;
 
 public class Annotations {
 

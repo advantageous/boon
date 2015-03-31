@@ -28,8 +28,7 @@
 
 package io.advantageous.boon.primitive;
 
-import io.advantageous.boon.Exceptions;
-import io.advantageous.boon.Universal;
+import io.advantageous.boon.core.Exceptions;
 import io.advantageous.boon.core.reflection.Invoker;
 
 import java.lang.invoke.ConstantCallSite;
@@ -37,8 +36,8 @@ import java.lang.invoke.MethodHandle;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
-import static io.advantageous.boon.Exceptions.die;
-import static io.advantageous.boon.Exceptions.handle;
+import static io.advantageous.boon.core.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.handle;
 
 
 public class Lng {
@@ -117,26 +116,26 @@ public class Lng {
      * @param array array
      * @return array
      */
-    @Universal
+
     public static long[] array( final long... array ) {
         Exceptions.requireNonNull( array );
         return array;
     }
 
 
-    @Universal
+
     public static int len( long[] array ) {
         return array.length;
     }
 
 
-    @Universal
+
     public static int lengthOf( long[] array ) {
         return array.length;
     }
 
 
-    @Universal
+
     public static long idx( final long[] array, final int index ) {
         final int i = calculateIndex( array, index );
 
@@ -144,7 +143,7 @@ public class Lng {
     }
 
 
-    @Universal
+
     public static long atIndex( final long[] array, final int index ) {
         final int i = calculateIndex( array, index );
 
@@ -152,7 +151,7 @@ public class Lng {
     }
 
 
-    @Universal
+
     public static void idx( final long[] array, int index, long value ) {
         final int i = calculateIndex( array, index );
 
@@ -160,7 +159,7 @@ public class Lng {
     }
 
 
-    @Universal
+
     public static void atIndex( final long[] array, int index, long value ) {
         final int i = calculateIndex( array, index );
 
@@ -168,7 +167,7 @@ public class Lng {
     }
 
 
-    @Universal
+
     public static long[] slc( long[] array, int startIndex, int endIndex ) {
 
         final int start = calculateIndex( array, startIndex );
@@ -188,7 +187,7 @@ public class Lng {
     }
 
 
-    @Universal
+
     public static long[] sliceOf( long[] array, int startIndex, int endIndex ) {
 
         final int start = calculateIndex( array, startIndex );
@@ -208,7 +207,7 @@ public class Lng {
     }
 
 
-    @Universal
+
     public static long[] slc( long[] array, int startIndex ) {
 
         final int start = calculateIndex( array, startIndex );
@@ -227,7 +226,7 @@ public class Lng {
     }
 
 
-    @Universal
+
     public static long[] sliceOf( long[] array, int startIndex ) {
 
         final int start = calculateIndex( array, startIndex );
@@ -245,7 +244,7 @@ public class Lng {
         return newArray;
     }
 
-    @Universal
+
     public static long[] slcEnd( long[] array, int endIndex ) {
 
         final int end = calculateEndIndex( array, endIndex );
@@ -264,7 +263,7 @@ public class Lng {
     }
 
 
-    @Universal
+
     public static long[] endSliceOf( long[] array, int endIndex ) {
 
         final int end = calculateEndIndex( array, endIndex );
@@ -282,7 +281,7 @@ public class Lng {
         return newArray;
     }
 
-    @Universal
+
     public static boolean in( long value, long[] array ) {
         for ( long currentValue : array ) {
             if ( currentValue == value ) {
@@ -293,7 +292,7 @@ public class Lng {
     }
 
 
-    @Universal
+
     public static long[] copy( long[] array ) {
         Exceptions.requireNonNull( array );
         long[] newArray = new long[ array.length ];
@@ -302,7 +301,7 @@ public class Lng {
     }
 
 
-    @Universal
+
     public static long[] add( long[] array, long v ) {
         Exceptions.requireNonNull( array );
         long[] newArray = new long[ array.length + 1 ];
@@ -311,7 +310,7 @@ public class Lng {
         return newArray;
     }
 
-    @Universal
+
     public static long[] add( long[] array, long[] array2 ) {
         Exceptions.requireNonNull( array );
         long[] newArray = new long[ array.length + array2.length ];
@@ -321,7 +320,7 @@ public class Lng {
     }
 
 
-    @Universal
+
     public static long[] insert( final long[] array, final int idx, final long v ) {
         Exceptions.requireNonNull( array );
 
@@ -361,7 +360,7 @@ public class Lng {
     }
 
 
-    @Universal
+
     public static long[] insert( final long[] array, final int fromIndex, final long[] values ) {
         Exceptions.requireNonNull( array );
 

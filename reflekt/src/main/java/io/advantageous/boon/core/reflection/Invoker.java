@@ -29,10 +29,9 @@
 package io.advantageous.boon.core.reflection;
 
 
-import io.advantageous.boon.Boon;
-import io.advantageous.boon.Exceptions;
+import io.advantageous.boon.core.Exceptions;
 import io.advantageous.boon.core.reflection.fields.FieldAccessMode;
-import io.advantageous.boon.Lists;
+import io.advantageous.boon.core.Lists;
 import io.advantageous.boon.core.Conversions;
 import io.advantageous.boon.core.Typ;
 import io.advantageous.boon.core.TypeType;
@@ -45,9 +44,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.*;
 
-import static io.advantageous.boon.Str.puts;
-import static io.advantageous.boon.Exceptions.die;
-import static io.advantageous.boon.Exceptions.handle;
+import static io.advantageous.boon.core.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.handle;
 import static io.advantageous.boon.core.Conversions.coerce;
 import static io.advantageous.boon.core.TypeType.gatherTypes;
 import static io.advantageous.boon.core.reflection.MapObjectConversion.*;
@@ -311,7 +309,7 @@ public class Invoker {
                 buf.multiply('-', 10).add("FINAL ARGUMENTS").multiply('-', 10).addLine();
                 if (finalArgs!=null) {
                     for (Object o : finalArgs) {
-                        buf.puts("argument type    ", Boon.className(o));
+                        buf.puts("argument type    ", ClassMeta.className(o));
                     }
                 }
 
@@ -323,12 +321,6 @@ public class Invoker {
                 }
 
                 buf.multiply('-', 35).addLine();
-
-                if (Boon.debugOn()) {
-                    puts(buf);
-                }
-
-
 
                 return  handle(Object.class, ex, buf.toString(),
                         "\nconstructor parameter types", methodAccess.parameterTypes(),

@@ -28,8 +28,8 @@
 
 package io.advantageous.boon.json.core;
 
-import io.advantageous.boon.Lists;
-import io.advantageous.boon.Maps;
+import io.advantageous.boon.core.Lists;
+import io.advantageous.boon.core.Maps;
 import io.advantageous.boon.core.TypeType;
 import io.advantageous.boon.core.Value;
 import io.advantageous.boon.core.reflection.Mapper;
@@ -41,14 +41,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static io.advantageous.boon.Str.puts;
-import static io.advantageous.boon.Exceptions.die;
-import static io.advantageous.boon.Lists.*;
-import static io.advantageous.boon.Lists.list;
-import static io.advantageous.boon.Maps.idxMap;
-import static io.advantageous.boon.Maps.map;
-import static io.advantageous.boon.Str.lpad;
-import static io.advantageous.boon.Str.rpad;
+import static io.advantageous.boon.core.IO.puts;
+import static io.advantageous.boon.core.Exceptions.die;
+import static io.advantageous.boon.core.Lists.*;
+import static io.advantageous.boon.core.Lists.list;
+import static io.advantageous.boon.core.Maps.idxMap;
+import static io.advantageous.boon.core.Maps.map;
+import static io.advantageous.boon.core.Str.lpad;
+import static io.advantageous.boon.core.Str.rpad;
 import static io.advantageous.boon.json.JsonFactory.fromJson;
 import static io.advantageous.boon.json.JsonFactory.toJson;
 

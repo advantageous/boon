@@ -32,10 +32,10 @@ import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.Date;
 import java.util.Map;
-import io.advantageous.boon.Lists;
+import io.advantageous.boon.core.Lists;
 import org.junit.Test;
 
-import static io.advantageous.boon.Exceptions.die;
+import static io.advantageous.boon.core.Exceptions.die;
 import static io.advantageous.boon.core.reflection.MapObjectConversion.*;
 
 import io.advantageous.boon.core.Dates;

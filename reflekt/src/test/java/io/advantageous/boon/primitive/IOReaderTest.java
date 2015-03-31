@@ -33,7 +33,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.io.StringReader;
 
-import static io.advantageous.boon.Str.puts;
+import static io.advantageous.boon.core.IO.puts;
 
 /**
  * Created by Richard on 3/13/14.

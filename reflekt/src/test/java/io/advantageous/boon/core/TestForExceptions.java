@@ -26,17 +26,18 @@
  *               \/           \/          \/         \/        \/  \/
  */
 
-package io.advantageous.boon;
+package io.advantageous.boon.core;
 
 
+import io.advantageous.boon.core.Exceptions;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import static io.advantageous.boon.Str.puts;
-import static io.advantageous.boon.Exceptions.tryIt;
+import static io.advantageous.boon.core.IO.puts;
+import static io.advantageous.boon.core.Exceptions.tryIt;
 
 public class TestForExceptions {
 
