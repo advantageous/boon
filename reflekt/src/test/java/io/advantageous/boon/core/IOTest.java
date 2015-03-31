@@ -31,10 +31,6 @@ package io.advantageous.boon.core;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import io.advantageous.boon.core.Exceptions;
-import io.advantageous.boon.core.IO;
-import io.advantageous.boon.core.StringScanner;
-import io.advantageous.boon.core.Sys;
 import io.advantageous.boon.primitive.InMemoryInputStream;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,7 +43,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.regex.Pattern;
 
-import static io.advantageous.boon.core.Exceptions.die;
+import static io.advantageous.boon.core.IO.puts;
 import static io.advantageous.boon.core.Lists.idx;
 import static io.advantageous.boon.core.Lists.len;
 import static org.junit.Assert.assertEquals;
@@ -189,9 +185,13 @@ public class IOTest {
         server.setExecutor( null ); // creates a default executor
         server.start();
 
-        Thread.sleep( 10 );
+        Thread.sleep( 100 );
+
+        puts("HELLO");
 
         List<String> lines = IO.readLines( "http://localhost:9666/test" );
+
+        puts(lines);
         assertLines( lines );
 
     }
