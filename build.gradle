@@ -27,9 +27,8 @@ subprojects {
     apply plugin: 'signing'
 
     group = 'io.advantageous.boon'
-    version = '0.5.2-SNAPSHOT'
+    version = '0.5.2'
     archivesBaseName = "boon-$project.name"
-
 
     test.onlyIf { !Boolean.getBoolean('skip.tests') }
 
@@ -83,6 +82,7 @@ subprojects {
                 }
 
                 pom.project {
+                    name archivesBaseName
                     packaging 'jar'
 
                     url 'https://github.com/advantageous/boon'
@@ -150,7 +150,6 @@ project(':json') {
         }
     }
 }
-
 
 project(':util') {
 
