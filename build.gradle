@@ -27,7 +27,7 @@ subprojects {
     apply plugin: 'signing'
 
     group = 'io.advantageous.boon'
-    version = '0.5.1'
+    version = '0.5.2-SNAPSHOT'
     archivesBaseName = "boon-$project.name"
 
 
