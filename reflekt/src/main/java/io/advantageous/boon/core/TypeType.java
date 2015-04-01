@@ -28,6 +28,8 @@
 
 package io.advantageous.boon.core;
 
+import io.advantageous.boon.core.value.ValueMapImpl;
+
 import java.util.*;
 
 public enum TypeType {
@@ -314,16 +316,13 @@ public enum TypeType {
                 case "java.util.List":
                 case "java.util.ArrayList":
                 case "java.util.LinkedList":
-                case "ValueList":
                     return TypeType.LIST;
 
                 case "java.util.Map":
-                case "io.advantageous.boon.core.LazyMap":
                 case "java.util.HashMap":
                 case "java.util.LinkedHashMap":
                 case "java.util.TreeMap":
-                case "io.advantageous.boon.core.value.LazyValueMap":
-                    return TypeType.MAP;
+                      return TypeType.MAP;
 
                 case "java.lang.CharSequence":
                     return TypeType.CHAR_SEQUENCE;
@@ -340,11 +339,18 @@ public enum TypeType {
                     return TypeType.DATE;
 
 
-
                 case "java.util.Calendar":
                     return TypeType.CALENDAR;
 
-                case "ValueMapImpl":
+
+                case "io.advantageous.boon.core.LazyMap":
+                case "io.advantageous.boon.core.value.LazyValueMap":
+                    return TypeType.MAP;
+
+                case "io.advantageous.boon.core.value.ValueList":
+                    return TypeType.LIST;
+
+                case "io.advantageous.boon.core.value.ValueMapImpl":
                     return TypeType.VALUE_MAP;
 
                 case "io.advantageous.boon.core.value.NumberValue":
@@ -369,7 +375,6 @@ public enum TypeType {
 
                 case "java.util.UUID":
                     return TypeType.UUID;
-
 
                 case "java.util.Locale":
                     return TypeType.LOCALE;

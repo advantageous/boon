@@ -53,6 +53,8 @@ public class ValueMapImpl extends AbstractMap<String, Value> implements ValueMap
     /* The current length of the map. */
     private int len = 0;
 
+    public static final String VALUE_MAP_IMPL_CLASS = ValueMapImpl.class.getName();
+
 
     /**
      * Add a MapItemValue to the map.
