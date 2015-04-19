@@ -1108,12 +1108,22 @@ public class CharScanner {
         int index = from;
         boolean negative=false;
 
+        if (buffer[index] == 'N') {
+            if (to - from == 3) {
+                if (buffer[index + 1] == 'a' && buffer[index+2] == 'N') {
+                    return Double.NaN;
+                }
+            }
+        }
+
 
 
         if (buffer[index] == '-') {
             index++;
             negative=true;
         }
+
+
 
         boolean foundDot = false;
         for (;index<to; index++)  {
@@ -1129,7 +1139,8 @@ public class CharScanner {
             else if (ch == 'E' || ch == 'e' || ch == '-' || ch == '+') {
                 simple = false;
             } else {
-                Exceptions.die("unexpected character " + ch);
+
+                return  Double.parseDouble( new String( buffer, from, to-from ) );
             }
         }
 
