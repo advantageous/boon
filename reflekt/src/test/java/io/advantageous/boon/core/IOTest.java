@@ -198,6 +198,13 @@ public class IOTest {
 
 
     @Test
+    public void testSprint() throws Exception {
+
+        final String str = Str.sputs("str", "char_array".toCharArray(), 1, 2);
+        assertEquals("str char_array 1 2\n", str);
+    }
+
+    @Test
     public void testReadEachLineHttp() throws Exception {
 
         HttpServer server = HttpServer.create( new InetSocketAddress( 9668 ), 0 );

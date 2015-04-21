@@ -147,6 +147,7 @@ public class IO {
             print("<NULL>");
         } else if (message instanceof char[]) {
             print(FastStringUtils.noCopyStringFromChars((char[]) message));
+
         } else if (message.getClass().isArray()) {
             print(Lists.toListOrSingletonList(message).toString());
         } else {
@@ -161,10 +162,7 @@ public class IO {
      */
     public static void puts(Object... messages) {
 
-        for (Object message : messages) {
-            print(message);
-        }
-        println();
+        println(Str.sputs(messages));
 
     }
 

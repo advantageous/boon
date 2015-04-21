@@ -974,7 +974,12 @@ public class Str {
 
             if (message == null) {
                 buf.add("<NULL>");
-            } else if (message.getClass().isArray()) {
+            } if (message instanceof char[]) {
+
+                buf.add(((char[]) message));
+            }
+
+            else if (message.getClass().isArray()) {
                 buf.add(toListOrSingletonList(message).toString());
             } else {
                 buf.add(message.toString());
