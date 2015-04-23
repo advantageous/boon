@@ -964,31 +964,24 @@ public class Str {
      * @return string created.
      */
     public static CharBuf sputs(CharBuf buf, Object... messages) {
-
         int index = 0;
         for (Object message : messages) {
             if (index != 0) {
                 buf.add(' ');
             }
             index++;
-
             if (message == null) {
                 buf.add("<NULL>");
-            } if (message instanceof char[]) {
-
+            } else if (message instanceof char[]) {
                 buf.add(((char[]) message));
-            }
-
-            else if (message.getClass().isArray()) {
+            } else if (message.getClass().isArray()) {
                 buf.add(toListOrSingletonList(message).toString());
             } else {
                 buf.add(message.toString());
             }
         }
         buf.add('\n');
-
         return buf;
-
     }
 
     public static StringBuilder sputs(StringBuilder buf, Object... messages) {
