@@ -27,7 +27,7 @@ subprojects {
     apply plugin: 'signing'
 
     group = 'io.advantageous.boon'
-    version = '0.5.4-SNAPSHOT'
+    version = '0.5.4'
     archivesBaseName = "boon-$project.name"
 
     test.onlyIf { !Boolean.getBoolean('skip.tests') }
