@@ -203,7 +203,7 @@ public class Sys {
             Class.forName ( "javax.servlet.http.HttpServlet" );
 
             _inContainer = true;
-        } catch ( ClassNotFoundException e ) {
+        } catch ( Throwable e ) {
             _inContainer = false;
         }
         if ( !_inContainer ) {
@@ -211,7 +211,7 @@ public class Sys {
                 Class.forName ( "javax.ejb.EJBContext" );
 
                 _inContainer = true;
-            } catch ( ClassNotFoundException e ) {
+            } catch ( Throwable e ) {
                 _inContainer = false;
             }
 
