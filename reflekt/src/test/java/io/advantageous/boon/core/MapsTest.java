@@ -29,7 +29,7 @@
 package io.advantageous.boon.core;
 
 
-import io.advantageous.boon.core.*;
+import io.advantageous.boon.core.reflection.BeanUtils;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -49,6 +49,94 @@ import static org.junit.Assert.assertTrue;
 @SuppressWarnings ( "unchecked" )
 public class MapsTest {
 
+
+
+
+
+
+    @Test
+    public void mergeMaps() {
+        Map<String, Object> dest = Maps.map(
+                "foo", (Object)"bar"
+        );
+
+        Map<String, Object> src = Maps.map(
+                "bar", (Object)"foo"
+        );
+
+        BeanUtils.copyPropertiesFromMap(dest, src);
+
+
+        puts(Maps.asPrettyJsonString(dest));
+
+    }
+
+
+    @Test
+    public void mergeMapsNested() {
+        Map<String, Object> dest = Maps.map(
+                "foo", (Object)"bar",
+                "innerMap", Maps.map(
+                        "bar", "baz"
+                )
+        );
+
+        Map<String, Object> src = Maps.map(
+                "bar", (Object)"foo",
+                "innerMap", Maps.map(
+                        "rick", "high"
+                ),
+                "mapTwo", Maps.map(
+                        "rick", "high"
+                )
+
+        );
+
+        BeanUtils.copyPropertiesFromMap(dest, src);
+
+
+        puts(Maps.asPrettyJsonString(dest));
+
+    }
+
+
+
+    @Test
+    public void mergeMapsDeeplyNested() {
+        Map<String, Object> dest = Maps.map(
+                "foo", (Object)"bar",
+                "innerMap", Maps.map(
+                        "bar", "baz",
+                        "innerMap2", Maps.map(
+                                "how", "deep"
+                        )
+
+                )
+        );
+
+        Map<String, Object> src = Maps.map(
+                "bar", (Object)"foo",
+                "innerMap", Maps.map(
+                        "rick", "high",
+                        "innerMap2", Maps.map(
+                                "so", "deep"
+                        )
+                ),
+                "mapTwo", Maps.map(
+                        "rick", "high"
+                )
+
+        );
+
+        /* Merge the maps. */
+        BeanUtils.copyPropertiesFromMap(dest, src);
+
+        String howDeep = BeanUtils.idxStr(dest, "innerMap.innerMap2.so");
+
+        assertEquals("deep", howDeep);
+        puts(Maps.asPrettyJsonString(dest));
+
+    }
 
     @Test
     public void prettyPrintMap() {

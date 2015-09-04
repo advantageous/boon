@@ -91,7 +91,7 @@ public class BeanUtils {
 
     public static  FieldAccess getField( Class clazz, String name ) {
 
-        Map<String, FieldAccess> fields = getPropertyFieldAccessMap( clazz );
+        Map<String, FieldAccess> fields = getPropertyFieldAccessMap(clazz);
         if ( fields != null) {
             return fields.get(name);
         } else {
@@ -711,7 +711,7 @@ public class BeanUtils {
 
         Map<String, FieldAccess> fields = getPropertyFieldAccessMap( root.getClass() );
 
-        FieldAccess field = fields.get( property );
+        FieldAccess field = fields.get(property);
         return field.type();
     }
 
@@ -722,7 +722,7 @@ public class BeanUtils {
 
         String[] properties = propertyPathAsStringArray(path);
 
-        return ( T ) getPropertyValue( object, properties );
+        return ( T ) getPropertyValue(object, properties);
 
 
     }
@@ -766,7 +766,7 @@ public class BeanUtils {
 
         String[] properties = propertyPathAsStringArray(path);
 
-        return getPropertyValue( object, properties );
+        return getPropertyValue(object, properties);
     }
 
 
@@ -959,7 +959,7 @@ public class BeanUtils {
         if ( !fields.containsKey( property ) ) {
             return null;
         } else {
-            return fields.get( property ).getValue( object );
+            return fields.get( property ).getValue(object);
         }
 
     }
@@ -982,15 +982,15 @@ public class BeanUtils {
 
         Object object = baseForGetProperty( root, properties );
 
-        Map<String, FieldAccess> fields = getFieldsFromObject( object );
+        Map<String, FieldAccess> fields = getFieldsFromObject(object);
 
-        FieldAccess field = fields.get( lastProperty );
+        FieldAccess field = fields.get(lastProperty);
 
 
         if ( field.type() == Typ.intgr ) {
             return field.getInt( object );
         } else {
-            return Conversions.toInt( field.getValue( object ) );
+            return Conversions.toInt(field.getValue(object));
         }
 
     }
@@ -1108,7 +1108,7 @@ public class BeanUtils {
 
 
 
-        Object object = baseForGetProperty( root, properties );
+        Object object = baseForGetProperty(root, properties);
 
         Map<String, FieldAccess> fields = getFieldsFromObject( object );
 
@@ -1142,7 +1142,7 @@ public class BeanUtils {
 
         }
 
-        Object object = baseForGetProperty( root, properties );
+        Object object = baseForGetProperty(root, properties);
 
         Map<String, FieldAccess> fields = getFieldsFromObject( object );
 
@@ -1151,7 +1151,7 @@ public class BeanUtils {
         if ( field.type() == Typ.bt ) {
             return field.getByte( object );
         } else {
-            return Conversions.toByte( field.getValue( object ) );
+            return Conversions.toByte(field.getValue(object));
         }
     }
 
@@ -1237,7 +1237,7 @@ public class BeanUtils {
 
         Object object = baseForGetProperty( root, properties );
 
-        Map<String, FieldAccess> fields = getFieldsFromObject( object );
+        Map<String, FieldAccess> fields = getFieldsFromObject(object);
         final String lastProperty = properties[ properties.length - 1 ];
         FieldAccess field = fields.get( lastProperty );
 
@@ -1291,7 +1291,7 @@ public class BeanUtils {
 
         String[] properties = propertyPathAsStringArray(path);
 
-        return getPropertyPathType( object, properties );
+        return getPropertyPathType(object, properties);
     }
 
 
@@ -1300,7 +1300,7 @@ public class BeanUtils {
 
         String[] properties = propertyPathAsStringArray(path);
 
-        return getPropertyPathField( object, properties );
+        return getPropertyPathField(object, properties);
     }
 
 
@@ -1466,6 +1466,37 @@ public class BeanUtils {
             map.put( key, v );
         }
         return map;
+    }
+
+
+
+    public static void copyPropertiesFromMap( final Object dest, final Map<String, Object> src ) {
+
+        Set<Map.Entry<String, Object>> props = src.entrySet();
+        for ( Map.Entry<String, Object> entry : props ) {
+
+            if (entry.getValue() instanceof Map) {
+
+
+                Object newDest;
+                if (dest instanceof Map) {
+                    newDest = ((Map) dest).get(entry.getKey());
+                } else {
+                    newDest = BeanUtils.getPropByPath(dest, entry.getKey());
+                }
+
+                if (newDest == null) {
+                    if (dest instanceof Map) {
+                        newDest = new LinkedHashMap<>();
+                        ((Map) dest).put(entry.getKey(), newDest);
+                    }
+                }
+                final Map<String, Object> newSrc = ((Map) entry.getValue());
+                copyPropertiesFromMap(newDest, newSrc);
+            } else {
+                setPropertyValue(dest, entry.getValue(), entry.getKey());
+            }
+        }
     }
 
 
