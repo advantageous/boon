@@ -151,7 +151,7 @@ public class Annotations {
         List<AnnotationData> annotationDataList = classMap.get ( propertyName );
         if (annotationDataList == null ) {
 
-            annotationDataList = extractValidationAnnotationData( findFieldAnnotations( clazz, propertyName ), allowedPackages );
+            annotationDataList = extractValidationAnnotationData( findFieldAnnotations(clazz, propertyName), allowedPackages );
 
             if (annotationDataList == null) {
                 annotationDataList = Collections.EMPTY_LIST;
@@ -203,7 +203,7 @@ public class Annotations {
 
         final Map<Class<?>, Map<String, AnnotationData>> cache = context ().annotationDataCacheClassAsMap;
 
-         Map<String, AnnotationData> map = cache.get ( clazz );
+         Map<String, AnnotationData> map = cache.get(clazz);
 
         if (map ==  null) {
             final List<AnnotationData> list = getAnnotationDataForClass ( clazz );
@@ -303,7 +303,9 @@ public class Annotations {
              * this class could be a proxy. This seems like a bug
              * waiting to happen. So far it has worked... */
             if ( annotations.length == 0 ) {
-                annotations = findPropertyAnnotations( clazz.getSuperclass(), propertyName, useRead );
+                if (clazz.getSuperclass()!=null) {
+                    annotations = findPropertyAnnotations(clazz.getSuperclass(), propertyName, useRead);
+                }
             }
             return annotations;
         } catch ( Exception ex ) {
