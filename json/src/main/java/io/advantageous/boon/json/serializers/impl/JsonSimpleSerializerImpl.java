@@ -723,7 +723,14 @@ public class JsonSimpleSerializerImpl implements JsonSerializerInternal {
 
         builder.addChar( '[' );
         final int length = Array.getLength( array );
+
         for ( int index = 0; index < length; index++ ) {
+            final Object o = Array.get(array, index);
+            if (o == null) {
+                builder.addNull();
+                builder.addChar ( ',' );
+                continue;
+            }
             serializeObject( Array.get( array, index ), builder );
             builder.addChar ( ',' );
         }
