@@ -60,11 +60,12 @@ public class JsonSerializerFactory {
     private List<FieldFilter> filterProperties = null;
     private List<CustomFieldSerializer> customFieldSerializers = null;
     private Map<Class, CustomObjectSerializer> customObjectSerializers = null;
+    private boolean serializeMapKeys;
 
 
     public JsonSerializer create() {
 
-        if ( !outputType && !includeEmpty && !includeNulls && !useAnnotations &&
+        if ( !outputType && !includeEmpty && !includeNulls && !useAnnotations && !serializeMapKeys &&
                 !jsonFormatForDates && handleSimpleBackReference &&
                 !handleComplexBackReference && !includeDefault && filterProperties == null
                 && customFieldSerializers == null && customObjectSerializers == null &&
@@ -96,7 +97,12 @@ public class JsonSerializerFactory {
 
 
             stringSerializer = new StringSerializerImpl (encodeStrings, asciiOnly);
-            mapSerializer = new MapSerializerImpl (includeNulls);
+
+            if (!serializeMapKeys) {
+                mapSerializer = new MapSerializerImpl(includeNulls);
+            } else {
+                mapSerializer = new MapSerializerThatEncodesKeys(includeNulls);
+            }
 
             if ( useAnnotations || includeNulls || includeEmpty || handleComplexBackReference
                     || !includeDefault || view!=null) {
@@ -182,7 +188,7 @@ public class JsonSerializerFactory {
         if ( customObjectSerializers == null ) {
             customObjectSerializers = new ConcurrentHashMap<> ();
         }
-        customObjectSerializers.put ( type, serializer );
+        customObjectSerializers.put(type, serializer);
         return this;
     }
 
@@ -393,6 +399,11 @@ public class JsonSerializerFactory {
 
     public JsonSerializerFactory setSerializeAsSupport(boolean serializeAsSupport) {
         this.serializeAsSupport = serializeAsSupport;
+        return this;
+    }
+
+    public JsonSerializerFactory setSerializeMapKeys(boolean serializeMapKeys) {
+        this.serializeMapKeys = serializeMapKeys;
         return this;
     }
 }
