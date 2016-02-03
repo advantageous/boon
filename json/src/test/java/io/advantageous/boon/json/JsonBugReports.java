@@ -28,13 +28,12 @@
 
 package io.advantageous.boon.json;
 
-
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.util.Map;
 
 import static io.advantageous.boon.core.IO.puts;
-import static io.advantageous.boon.core.Exceptions.die;
 import static io.advantageous.boon.json.JsonFactory.fromJson;
 import static io.advantageous.boon.json.JsonFactory.toJson;
 
@@ -47,8 +46,7 @@ public class JsonBugReports {
         puts (map);
         puts (toJson(map));
 
-        boolean ok = toJson(map).equals("{\"docId\":111,\"empty\":\"\",\"serviceName\":\"cafe\"}") ||
-                die(toJson(map) );
+        assertTrue(toJson(map).contains("\"empty\":\"\""));
     }
 
 
