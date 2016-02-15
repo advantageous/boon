@@ -38,8 +38,6 @@ import java.util.*;
  */
 public class LazyMap extends AbstractMap<String, Object> {
 
-
-    final static boolean althashingThreshold = System.getProperty("jdk.map.althashing.threshold") != null;
     private final boolean delayMap;
     /* Holds the actual map that will be lazily created. */
     private Map<String, Object> map;
@@ -152,13 +150,7 @@ public class LazyMap extends AbstractMap<String, Object> {
 
     private void buildIfNeeded() {
         if (map == null) {
-
-            /** added to avoid hash collision attack. */
-            if (Sys.is1_7OrLater() && althashingThreshold) {
-                map = new LinkedHashMap<>(size, 0.01f);
-            } else {
-                map = new TreeMap<>();
-            }
+            map = new LinkedHashMap<>(size, 0.01f);
 
             for (int index = 0; index < size; index++) {
                 map.put(keys[index], values[index]);
