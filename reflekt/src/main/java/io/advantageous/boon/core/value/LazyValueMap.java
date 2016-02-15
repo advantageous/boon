@@ -217,7 +217,7 @@ public class LazyValueMap extends AbstractMap<String, Object> implements ValueMa
     }
 
     private final void buildMap() {
-        map = new HashMap<>( items.length );
+        map = new LinkedHashMap<>( items.length );
 
         for ( Entry<String, Value> miv : items ) {
             if ( miv == null ) {
