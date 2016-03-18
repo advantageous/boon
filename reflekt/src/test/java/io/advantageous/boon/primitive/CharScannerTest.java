@@ -37,12 +37,34 @@ import java.util.List;
 import static io.advantageous.boon.core.IO.puts;
 import static io.advantageous.boon.core.Exceptions.die;
 import static io.advantageous.boon.primitive.Chr.chars;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class CharScannerTest {
 
     boolean ok;
+
+
+    @Test
+    public void verifyIsIntForNonDigits() {
+        assertFalse(CharScanner.isInteger("abc".toCharArray()));
+    }
+
+
+    @Test
+    public void verifyIsInt() {
+        assertTrue(CharScanner.isInteger("123".toCharArray()));
+    }
+
+    @Test
+    public void verifyIsLongForNonDigits() {
+        assertFalse(CharScanner.isInteger("abc".toCharArray()));
+    }
+
+
+    @Test
+    public void verifyIsLong() {
+        assertTrue(CharScanner.isInteger("123".toCharArray()));
+    }
 
 
     @Test

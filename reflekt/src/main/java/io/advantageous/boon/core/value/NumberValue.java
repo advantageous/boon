@@ -219,19 +219,16 @@ public class NumberValue extends Number implements Value {
         if ( CharScanner.isInteger(buffer, startIndex, endIndex - startIndex) ){
             return CharScanner.parseInt(buffer, startIndex, endIndex);
         } else {
-            return 0;
+            return Exceptions.die(int.class, "not an int");
         }
     }
 
     @Override
     public long longValue () {
-
-        if ( CharScanner.isInteger(buffer, startIndex, endIndex - startIndex) ){
-            return CharScanner.parseInt(buffer, startIndex, endIndex);
-        } else if( CharScanner.isLong(buffer, startIndex, endIndex - startIndex)){
+        if( CharScanner.isLong(buffer, startIndex, endIndex - startIndex)){
             return CharScanner.parseLong(buffer, startIndex, endIndex);
         } else {
-            return 0L;
+            return Exceptions.die(int.class, "not a long");
         }
     }
 
