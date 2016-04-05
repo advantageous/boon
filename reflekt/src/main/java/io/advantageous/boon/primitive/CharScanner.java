@@ -145,7 +145,11 @@ public class CharScanner {
     }
 
     public static boolean isDigits( final char[] inputArray ) {
-        for ( int index = 0; index < inputArray.length; index++ ) {
+        return isDigits(inputArray, 0, inputArray.length);
+    }
+
+    public static boolean isDigits( final char[] inputArray, int offset, int len) {
+        for ( int index = offset; index < (offset + len); index++ ) {
             char a = inputArray[ index ];
             if ( !isDigit( a ) ) {
                 return false;
@@ -773,20 +777,21 @@ public class CharScanner {
         return isLong ( digitChars, 0, digitChars.length );
     }
 
-    public static boolean isLong( char[] digitChars, int offset, int len
-                                   ) {
+    public static boolean isLong( char[] digitChars, int offset, int len ) {
         String cmpStr = digitChars[offset]=='-' ? MIN_LONG_STR_NO_SIGN : MAX_LONG_STR;
         int cmpLen = cmpStr.length();
-        if ( len < cmpLen ) return true;
+
         if ( len > cmpLen ) return false;
 
-        for ( int i = 0; i < cmpLen; ++i ) {
-            int diff = digitChars[ offset + i ] - cmpStr.charAt( i );
-            if ( diff != 0 ) {
-                return ( diff < 0 );
-            }
+
+        if (verifyValueFitsInNumber(digitChars, offset, len, cmpStr, cmpLen)) return false;
+
+        if (digitChars[offset]=='-') {
+            return isDigits(digitChars, ++offset, --len);
+        } else {
+            return isDigits(digitChars, offset, len);
         }
-        return true;
+
     }
 
 
@@ -801,16 +806,29 @@ public class CharScanner {
 
         String cmpStr = (digitChars[offset] == '-') ? MIN_INT_STR_NO_SIGN : MAX_INT_STR;
         int cmpLen = cmpStr.length();
-        if ( len < cmpLen ) return true;
         if ( len > cmpLen ) return false;
 
-        for ( int i = 0; i < cmpLen; ++i ) {
-            int diff = digitChars[ offset + i ] - cmpStr.charAt( i );
-            if ( diff != 0 ) {
-                return ( diff < 0 );
+        if (verifyValueFitsInNumber(digitChars, offset, len, cmpStr, cmpLen)) return false;
+
+        if (digitChars[offset]=='-') {
+            return isDigits(digitChars, ++offset, --len);
+        }  else {
+            return isDigits(digitChars, offset, len);
+        }
+    }
+
+    private static boolean verifyValueFitsInNumber(char[] digitChars, int offset, int len, String cmpStr, int cmpLen) {
+        if (len == cmpLen) {
+            for (int i = 0; i < cmpLen; ++i) {
+                int diff = digitChars[offset + i] - cmpStr.charAt(i);
+                if (diff != 0) {
+                    if (diff > 0) {
+                        return true;
+                    }
+                }
             }
         }
-        return true;
+        return false;
     }
 
     public static int parseInt( char[] digitChars ) {

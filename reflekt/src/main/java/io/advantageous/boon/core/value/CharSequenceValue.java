@@ -302,10 +302,10 @@ public class CharSequenceValue implements Value, CharSequence {
 
     @Override
     public long longValue () {
-        if ( CharScanner.isInteger(buffer, startIndex, endIndex - startIndex) ){
-            return CharScanner.parseInt(buffer, startIndex, endIndex);
+        if ( CharScanner.isLong(buffer, startIndex, endIndex - startIndex) ){
+            return CharScanner.parseLong(buffer, startIndex, endIndex);
         } else {
-           return CharScanner.parseLong(buffer, startIndex, endIndex);
+            return Exceptions.die(int.class, "not a long");
         }
     }
 
