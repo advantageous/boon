@@ -40,11 +40,13 @@ import java.util.List;
  */
 public interface MethodAccess extends BaseAccess, Comparable<MethodAccess>{
 
-    public Object invokeDynamic(Object object, Object... args);
-    public Object invoke(Object object, Object... args);
+    Object invokeDynamic(Object object, Object... args);
+    Object invoke(Object object, Object... args);
     boolean isStatic();
     boolean isPublic();
     boolean isPrivate();
+
+    MethodReturnAccess returnAccess();
 
     String name();
 
@@ -81,6 +83,8 @@ public interface MethodAccess extends BaseAccess, Comparable<MethodAccess>{
     Object invokeDynamicObject(Object object, Object args);
 
     List<List<AnnotationData>> annotationDataForParams();
+
+    List<MethodParamAccess> parameters();
 
 
 }

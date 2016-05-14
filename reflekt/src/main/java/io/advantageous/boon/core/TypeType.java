@@ -415,9 +415,14 @@ public enum TypeType {
             case COLLECTION:
                 return true;
             default:
-                return false;
+                if (baseTypeOrWrapper == null) {
+                    return false;
+                } else {
+                    return baseTypeOrWrapper.isCollection();
+                }
         }
     }
+
 
 
 
@@ -479,6 +484,11 @@ public enum TypeType {
     }
 
 
+    public TypeType baseType() {
+        return baseTypeOrWrapper;
+    }
+
+
     public TypeType componentType() {
         return baseTypeOrWrapper == null ? OBJECT : baseTypeOrWrapper;
     }
@@ -491,5 +501,13 @@ public enum TypeType {
 
     public boolean isPrimitive() {
         return primitive;
+    }
+
+    public boolean isMap() {
+        if (this == MAP || this.baseTypeOrWrapper == MAP) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

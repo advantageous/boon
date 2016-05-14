@@ -4,6 +4,8 @@ import io.advantageous.boon.core.Exceptions;
 import io.advantageous.boon.core.TypeType;
 import io.advantageous.boon.core.reflection.AnnotationData;
 import io.advantageous.boon.core.reflection.MethodAccess;
+import io.advantageous.boon.core.reflection.MethodParamAccess;
+import io.advantageous.boon.core.reflection.MethodReturnAccess;
 import io.advantageous.boon.primitive.Arry;
 
 import java.lang.invoke.ConstantCallSite;
@@ -461,6 +463,11 @@ public class OverloadedMethod implements MethodAccess {
     }
 
     @Override
+    public MethodReturnAccess returnAccess() {
+        return null;
+    }
+
+    @Override
     public String name() {
         return null;
     }
@@ -543,6 +550,11 @@ public class OverloadedMethod implements MethodAccess {
     @Override
     public List<List<AnnotationData>> annotationDataForParams() {
         return null;
+    }
+
+    @Override
+    public List<MethodParamAccess> parameters() {
+        return Collections.emptyList();
     }
 
     public Object invokeDynamicList(final Object object, List<?> args) {

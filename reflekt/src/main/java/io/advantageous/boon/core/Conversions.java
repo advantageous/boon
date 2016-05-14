@@ -378,6 +378,11 @@ public class Conversions {
         if (value == null) {
             return Reflection.newInstance(clz);
         }
+
+        if (clz.isInstance(value)) {
+            return (T) value;
+        }
+
         ClassMeta meta = ClassMeta.classMeta(clz);
         List<ConstructorAccess> constructors = meta.oneArgumentConstructors();
 
@@ -422,6 +427,7 @@ public class Conversions {
                 return (T) (Number) 0;
             }
         }
+
 
         switch (coerceTo) {
             case STRING:

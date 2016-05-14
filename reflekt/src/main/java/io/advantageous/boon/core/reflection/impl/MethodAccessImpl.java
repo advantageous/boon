@@ -28,99 +28,149 @@
 
 package io.advantageous.boon.core.reflection.impl;
 
-import io.advantageous.boon.core.Exceptions;
 import io.advantageous.boon.core.Conversions;
-import io.advantageous.boon.core.reflection.AnnotationData;
-import io.advantageous.boon.core.reflection.Annotations;
-import io.advantageous.boon.core.reflection.Invoker;
-import io.advantageous.boon.core.reflection.MethodAccess;
+import io.advantageous.boon.core.Exceptions;
 import io.advantageous.boon.core.Lists;
 import io.advantageous.boon.core.TypeType;
+import io.advantageous.boon.core.reflection.*;
 import io.advantageous.boon.primitive.Arry;
 
 import java.lang.invoke.ConstantCallSite;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.*;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 
-/**
- * Created by Richard on 2/17/14.
- */
 public class MethodAccessImpl implements MethodAccess {
 
     final public Method method;
     final List<AnnotationData> annotationData;
-
     final List<List<AnnotationData>> annotationDataForParams;
     final Map<String, AnnotationData> annotationMap;
-
-
-    final List<TypeType> paramTypeEnumList = new ArrayList<>();
-
-
+    final List<TypeType> paramTypeEnumList;
+    final List<MethodParamAccess> methodParamList;
     final MethodHandles.Lookup lookup = MethodHandles.lookup();
+    private final MethodReturnAccess returnAccess;
     MethodHandle methodHandle;
-
     Object instance;
     private int score;
 
     public MethodAccessImpl() {
-        method=null;
-        annotationData=null;
-        annotationMap=null;
+        method = null;
+        annotationData = null;
+        annotationMap = null;
         methodHandle = null;
         this.annotationDataForParams = null;
+        this.paramTypeEnumList = null;
+        this.methodParamList = null;
+        this.returnAccess = null;
+    }
+
+    public MethodAccessImpl(Method method) {
+        this.method = method;
+        this.method.setAccessible(true);
+        this.annotationData = Annotations.getAnnotationDataForMethod(method);
+        this.annotationDataForParams = Annotations.getAnnotationDataForMethodParams(method);
+        final Class<?>[] parameterTypes = method.getParameterTypes();
+        final Type[] genericParameterTypes = method.getGenericParameterTypes();
+
+
+        final List<MethodParamAccess> methodParamList = new ArrayList<>(method.getParameterCount());
+        final List<TypeType> paramTypeEnumList = new ArrayList<>(method.getParameterCount());
+
+        for (int index = 0; index < parameterTypes.length; index++) {
+            final Class<?> paramClass = parameterTypes[index];
+            final Type type = genericParameterTypes[index];
+            final TypeType paramType = TypeType.getType(paramClass);
+            if (type instanceof ParameterizedType) {
+                final ParameterizedType parameterizedType = ((ParameterizedType) type);
+                final Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
+                final List<Class<?>> genericList = new ArrayList<>(actualTypeArguments.length);
+                for (int i = 0; i < actualTypeArguments.length; i++) {
+                    final Class<?> componentType = getClassFromParameterizedType(i, parameterizedType);
+                    genericList.add(componentType);
+                }
+                methodParamList.add(new MethodParamAccessImpl(true, paramType, paramClass, genericList));
+            } else {
+                methodParamList.add(new MethodParamAccessImpl(false, paramType, paramClass, Collections.emptyList()));
+            }
+            paramTypeEnumList.add(paramType);
+        }
+
+        final Type genericReturnType = method.getGenericReturnType();
+        final MethodReturnAccess returnAccess;
+
+        if (genericReturnType instanceof ParameterizedType) {
+            final ParameterizedType parameterizedType = ((ParameterizedType) genericReturnType);
+            final Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
+            final List<Class<?>> genericList = new ArrayList<>(actualTypeArguments.length);
+            for (int i = 0; i < actualTypeArguments.length; i++) {
+                final Class<?> componentType = getClassFromParameterizedType(i, parameterizedType);
+                genericList.add(componentType);
+            }
+            returnAccess = new MethodReturnAccessImpl(true, TypeType.getType(method.getReturnType()),
+                    method.getReturnType(), genericList);
+        } else {
+            returnAccess = new MethodReturnAccessImpl(false, TypeType.getType(method.getReturnType()),
+                    method.getReturnType(), Collections.emptyList());
+        }
+
+        this.returnAccess = returnAccess;
+
+        this.methodParamList = Collections.unmodifiableList(methodParamList);
+        this.paramTypeEnumList = Collections.unmodifiableList(paramTypeEnumList);
+
+        annotationMap = new ConcurrentHashMap<>();
+        for (AnnotationData data : annotationData) {
+            annotationMap.put(data.getName(), data);
+            annotationMap.put(data.getSimpleClassName(), data);
+            annotationMap.put(data.getFullClassName(), data);
+        }
+        score(method);
+
     }
 
     public List<List<AnnotationData>> annotationDataForParams() {
         return annotationDataForParams;
     }
 
+    private Class<?> getClassFromParameterizedType(int index, ParameterizedType parameterizedType) {
 
-    public MethodAccessImpl( Method method ) {
-        this.method = method;
-        this.method.setAccessible( true );
-        this.annotationData = Annotations.getAnnotationDataForMethod(method);
-        this.annotationDataForParams = Annotations.getAnnotationDataForMethodParams(method);
-
-
-
-        for (Class<?> cls : method.getParameterTypes()) {
-            paramTypeEnumList.add(TypeType.getType(cls));
-
+        final Type type1 = parameterizedType.getActualTypeArguments()[index];
+        if (type1 instanceof Class) {
+            return (Class) type1;
+        } else if (type1 instanceof WildcardType) {
+            /** This was needed to work with Kotlin but not Java or Scala. */
+            final Type[] upperBounds = ((WildcardType) type1).getUpperBounds();
+            if (upperBounds.length == 1) {
+                if (upperBounds[0] instanceof Class) {
+                    return (Class) upperBounds[0];
+                } else {
+                    return Object.class;
+                }
+            } else {
+                return Object.class;
+            }
+        } else {
+            return Object.class;
         }
-
-
-        annotationMap = new ConcurrentHashMap<>(  );
-        for (AnnotationData data : annotationData) {
-            annotationMap.put( data.getName(), data );
-            annotationMap.put( data.getSimpleClassName(), data );
-            annotationMap.put( data.getFullClassName(), data );
-        }
-
-        score(method);
 
     }
 
     private void score(Method method) {
         final Class<?>[] parameterTypes = method.getParameterTypes();
-        int index=0;
+        int index = 0;
 
         for (Class<?> paramType : parameterTypes) {
 
 
             if (paramType.isPrimitive()) {
-                score+=100;
+                score += 100;
                 continue;
             }
             final TypeType type = this.paramTypeEnumList.get(index);
@@ -128,47 +178,47 @@ public class MethodAccessImpl implements MethodAccess {
             switch (type) {
 
                 case LONG_WRAPPER:
-                    score+=85;
+                    score += 85;
                     break;
 
                 case INTEGER_WRAPPER:
-                    score+=75;
+                    score += 75;
                     break;
 
                 case SHORT_WRAPPER:
                 case BYTE_WRAPPER:
-                    score+=65;
+                    score += 65;
                     break;
 
                 case BOOLEAN_WRAPPER:
-                    score+=60;
+                    score += 60;
                     break;
 
 
                 case FLOAT_WRAPPER:
-                    score+=55;
+                    score += 55;
                     break;
 
                 case DOUBLE_WRAPPER:
-                    score+=50;
+                    score += 50;
                     break;
 
                 case BIG_INT:
-                    score+=45;
+                    score += 45;
                     break;
 
 
                 case BIG_DECIMAL:
-                    score+=40;
+                    score += 40;
                     break;
 
                 case STRING:
-                    score+=30;
+                    score += 30;
                     break;
 
 
                 case INSTANCE:
-                    score+=25;
+                    score += 25;
                     break;
 
 
@@ -193,7 +243,7 @@ public class MethodAccessImpl implements MethodAccess {
     public Object invokeDynamicObject(final Object object, final Object args) {
 
         if (args instanceof List) {
-            return invokeDynamicList(object, (List)args);
+            return invokeDynamicList(object, (List) args);
         } else {
             return invokeDynamic(object, args);
         }
@@ -203,78 +253,87 @@ public class MethodAccessImpl implements MethodAccess {
     public Object invokeDynamic(final Object object, final Object... args) {
 
         final Class<?>[] parameterTypes = parameterTypes();
-        final int paramLength = parameterTypes.length;
+        final int paramLength = method.getParameterCount();
         final int argsLength = args.length;
 
 
             /* If there are no parameters, just invoke it. */
         if (paramLength == 0) {
             return invoke(object);
-
         }
 
         if (paramLength == argsLength) {
+            Object[] newArgs = new Object[argsLength];
+            for (int index = 0; index < argsLength; index++) {
+                final Object arg = args[index];
+                final MethodParamAccess methodParamAccess = methodParamList.get(index);
+                switch (methodParamAccess.typeEnum()) {
+                    case SET:
+                        if (arg instanceof Collection) {
+                            Collection<Object> argCollection = ((Collection<Object>) arg);
+                            newArgs[index] = argCollection.stream().map((Function<Object, Object>) original -> Conversions.coerce(methodParamAccess.componentType(),
+                                    methodParamAccess.getComponentClass(), original)).collect(Collectors.toSet());
 
-            if (argsLength == 1) {
+                        }
+                        break;
+                    case LIST:
+                        if (arg instanceof Collection) {
+                            Collection<Object> argCollection = ((Collection) arg);
+                            newArgs[index] = argCollection.stream().map((Function<Object, Object>) original -> Conversions.coerce(methodParamAccess.componentType(),
+                                    methodParamAccess.getComponentClass(), original)).collect(Collectors.toList());
+                        }
+                        break;
+                    case MAP:
+                        if (arg instanceof Map) {
+                            Map<Object, Object> argMap = ((Map) arg);
+                            Map<Object, Object> convertedMap = new HashMap<>(argMap.size());
+                            argMap.forEach((oKey, oValue) -> {
+                                Object newKey = Conversions.coerce(methodParamAccess.componentKeyType(),
+                                        methodParamAccess.getComponentKeyClass(), oKey);
 
-                Object arg = args[0];
-                Class<?> paramType = parameterTypes[0];
-                if (!paramType.isInstance(arg)) {
-                    TypeType type = paramTypeEnumList.get(0);
-                    arg = Conversions.coerce(type, paramType, arg);
+
+                                Object newValue = Conversions.coerce(methodParamAccess.componentValueType(),
+                                        methodParamAccess.getComponentValueClass(), oValue);
+
+                                convertedMap.put(newKey, newValue);
+                            });
+                            newArgs[index] = convertedMap;
+                        }
+                        break;
+                    case INSTANCE:
+                        newArgs[index] = Conversions.coerce(methodParamAccess.typeEnum(), methodParamAccess.getType(), arg);
+                        break;
+                    default:
+                        if (!methodParamAccess.getType().isInstance(arg)) {
+                            TypeType type = paramTypeEnumList.get(index);
+                            newArgs[index] = Conversions.coerce(type, methodParamAccess.getType(), arg);
+                        } else {
+                            newArgs[index] = arg;
+                        }
+
                 }
-
-                return invoke(object, arg);
             }
-            /* If the paramLength and argument are greater than one and
-            sizes match then invoke using invokeFromList. */
-            else  {
-
-                Object[] newArgs = new Object[argsLength];
-
-                for (int index = 0; index < argsLength; index++) {
-
-                    Object arg = args[index];
-                    Class<?> paramType = parameterTypes[index];
-
-                    if (!paramType.isInstance(arg)) {
-                        TypeType type = paramTypeEnumList.get(index);
-                        newArgs[index] = Conversions.coerce(type, paramType, arg);
-                    } else {
-                        newArgs[index] = arg;
-                    }
-
-                }
-
-
-                return invoke(object, newArgs);
-
-            }
-        }else {
+            return this.invoke(object, newArgs);
+        } else {
             if (method.isVarArgs() && paramLength == 1) {
-
-                return this.invoke(object, (Object)args);
+                return this.invoke(object, (Object) args);
             } else {
                 return Invoker.invokeOverloadedFromList(object, name(), Lists.list(args));
             }
-
         }
-
     }
 
     public Object invoke(Object object, Object... args) {
         try {
 
-            return method.invoke( object, args );
+            return method.invoke(object, args);
         } catch (InvocationTargetException invocationTargetException) {
 
             return Exceptions.handle(Object.class, invocationTargetException.getTargetException(), "unable to invoke method", method,
                     " on object ", object, "with arguments", args,
                     "\nparameter types", parameterTypes(), "\nargument types are", args);
 
-        }
-
-        catch ( Throwable ex ) {
+        } catch (Throwable ex) {
 
             return Exceptions.handle(Object.class, ex, "unable to invoke method", method,
                     " on object ", object, "with arguments", args,
@@ -286,8 +345,8 @@ public class MethodAccessImpl implements MethodAccess {
 
     public Object invokeBound(Object... args) {
         try {
-            return method.invoke( instance, args );
-        } catch ( Throwable ex ) {
+            return method.invoke(instance, args);
+        } catch (Throwable ex) {
 
             return Exceptions.handle(Object.class, ex, "unable to invoke method", method,
                     " on object with arguments", args,
@@ -301,7 +360,7 @@ public class MethodAccessImpl implements MethodAccess {
         try {
 
             return method.invoke(null, args);
-        } catch ( Throwable ex ) {
+        } catch (Throwable ex) {
             return Exceptions.handle(Object.class, ex, "unable to invoke method", method,
                     " with arguments", args);
 
@@ -327,7 +386,7 @@ public class MethodAccessImpl implements MethodAccess {
             Exceptions.handle(e);
         }
 
-        return  m;
+        return m;
     }
 
     @Override
@@ -335,7 +394,7 @@ public class MethodAccessImpl implements MethodAccess {
         if (methodHandle == null) {
             methodHandle = methodHandle();
         }
-        return new MethodAccessImpl(this.method){
+        return new MethodAccessImpl(this.method) {
 
 
             @Override
@@ -371,7 +430,7 @@ public class MethodAccessImpl implements MethodAccess {
         } catch (IllegalAccessException e) {
             Exceptions.handle(e, "Illegal access to method", this.name());
         }
-        return  null;
+        return null;
     }
 
     @Override
@@ -396,8 +455,8 @@ public class MethodAccessImpl implements MethodAccess {
     }
 
     @Override
-    public boolean hasAnnotation( String annotationName ) {
-        return this.annotationMap.containsKey( annotationName );
+    public boolean hasAnnotation(String annotationName) {
+        return this.annotationMap.containsKey(annotationName);
     }
 
     @Override
@@ -423,6 +482,11 @@ public class MethodAccessImpl implements MethodAccess {
     }
 
     @Override
+    public MethodReturnAccess returnAccess() {
+        return returnAccess;
+    }
+
+    @Override
     public String name() {
         return method.getName();
     }
@@ -444,7 +508,7 @@ public class MethodAccessImpl implements MethodAccess {
         Class<?>[] parameterTypes = method.getParameterTypes();
 
 
-        if ( parameterTypes.length != parametersToMatch.length ) {
+        if (parameterTypes.length != parametersToMatch.length) {
             return false;
         }
 
@@ -454,22 +518,21 @@ public class MethodAccessImpl implements MethodAccess {
             Class<?> matchToType = parametersToMatch[index];
             if (type.isPrimitive()) {
 
-                if (!(type == int.class &&  ( matchToType == Integer.class || matchToType == int.class) ||
-                        type == boolean.class &&  ( matchToType == Boolean.class || matchToType == boolean.class) ||
-                        type == long.class &&  ( matchToType == Long.class  || matchToType == long.class) ||
-                        type == float.class &&  ( matchToType == Float.class   || matchToType == float.class) ||
-                        type == double.class &&  ( matchToType == Double.class   || matchToType == double.class) ||
-                        type == short.class &&  ( matchToType == Short.class   || matchToType == short.class) ||
-                        type == byte.class &&  ( matchToType == Byte.class   || matchToType == byte.class) ||
-                        type == char.class &&  ( matchToType == Character.class || matchToType == char.class) )
-                )
-                {
+                if (!(type == int.class && (matchToType == Integer.class || matchToType == int.class) ||
+                        type == boolean.class && (matchToType == Boolean.class || matchToType == boolean.class) ||
+                        type == long.class && (matchToType == Long.class || matchToType == long.class) ||
+                        type == float.class && (matchToType == Float.class || matchToType == float.class) ||
+                        type == double.class && (matchToType == Double.class || matchToType == double.class) ||
+                        type == short.class && (matchToType == Short.class || matchToType == short.class) ||
+                        type == byte.class && (matchToType == Byte.class || matchToType == byte.class) ||
+                        type == char.class && (matchToType == Character.class || matchToType == char.class))
+                        ) {
                     match = false;
                     break;
                 }
 
 
-            } else if (!type.isAssignableFrom( matchToType )) {
+            } else if (!type.isAssignableFrom(matchToType)) {
                 match = false;
                 break;
             }
@@ -482,13 +545,11 @@ public class MethodAccessImpl implements MethodAccess {
     public boolean respondsTo(Object... args) {
 
 
-
         boolean match = true;
         Class<?>[] parameterTypes = method.getParameterTypes();
 
 
-
-        if ( parameterTypes.length != args.length ) {
+        if (parameterTypes.length != args.length) {
             return false;
         }
 
@@ -503,16 +564,15 @@ public class MethodAccessImpl implements MethodAccess {
                     match = false;
                     break;
                 }
-                if (!(type == int.class &&  matchToType == Integer.class ||
-                        type == boolean.class &&  matchToType == Boolean.class ||
-                        type == long.class &&  matchToType == Long.class   ||
-                        type == float.class &&  matchToType == Float.class   ||
-                        type == double.class &&  matchToType == Double.class   ||
-                        type == short.class &&  matchToType == Short.class   ||
-                        type == byte.class &&  matchToType == Byte.class   ||
-                        type == char.class &&  matchToType == Character.class
-                ))
-                {
+                if (!(type == int.class && matchToType == Integer.class ||
+                        type == boolean.class && matchToType == Boolean.class ||
+                        type == long.class && matchToType == Long.class ||
+                        type == float.class && matchToType == Float.class ||
+                        type == double.class && matchToType == Double.class ||
+                        type == short.class && matchToType == Short.class ||
+                        type == byte.class && matchToType == Byte.class ||
+                        type == char.class && matchToType == Character.class
+                )) {
                     match = false;
                     break;
                 }
@@ -520,7 +580,7 @@ public class MethodAccessImpl implements MethodAccess {
 
             } else if (arg == null) {
 
-            } else if (!type.isInstance( arg )) {
+            } else if (!type.isInstance(arg)) {
                 match = false;
                 break;
             }
@@ -581,7 +641,7 @@ public class MethodAccessImpl implements MethodAccess {
 
         if (this.score() > o2.score()) {
             return -1;
-        } else if (this.score() < o2.score()){
+        } else if (this.score() < o2.score()) {
             return 1;
         } else {
             return 0;
@@ -591,5 +651,10 @@ public class MethodAccessImpl implements MethodAccess {
 
     public List<TypeType> paramTypeEnumList() {
         return paramTypeEnumList;
+    }
+
+    @Override
+    public List<MethodParamAccess> parameters() {
+        return methodParamList;
     }
 }
