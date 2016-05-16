@@ -250,7 +250,10 @@ public class Conversions {
         } else if (obj instanceof Number || obj.getClass().isPrimitive()) {
             int value = toInt(obj);
             return value != 0 ? true : false;
-        } else if (obj instanceof String || obj instanceof CharSequence) {
+        } else if (obj instanceof Value) {
+            return ((Value) obj).booleanValue();
+        }
+        else if (obj instanceof String || obj instanceof CharSequence) {
             String str = Conversions.toString(obj);
             if (str.length() == 0) {
                 return false;
