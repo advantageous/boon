@@ -929,10 +929,10 @@ public class Dates {
         final int length = charArray.length;
 
         if ( length == JSON_TIME_LENGTH || length == LONG_ISO_8601_TIME_LENGTH
-                || length == SHORT_ISO_8601_TIME_LENGTH || ( length >= 16 && ( charArray[   16 ] == ':' ) )
+                || length == SHORT_ISO_8601_TIME_LENGTH || ( length >= 17 && ( charArray[   16 ] == ':' ) )
                 ) {
 
-            if ( length >= 16 && ( charArray[  16 ] == ':' ) ) {
+            if ( length >= 17 && ( charArray[  16 ] == ':' ) ) {
                 return true;
             }
         }
@@ -971,4 +971,11 @@ public class Dates {
         return valid;
     }
 
+    public static boolean isLocalDateTime(char[] chars) {
+        if (chars.length > 13) {
+            return chars[13] == ':';
+        } else {
+            return false;
+        }
+    }
 }

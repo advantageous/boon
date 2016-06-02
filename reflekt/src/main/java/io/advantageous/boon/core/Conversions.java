@@ -36,6 +36,9 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
@@ -252,8 +255,7 @@ public class Conversions {
             return value != 0 ? true : false;
         } else if (obj instanceof Value) {
             return ((Value) obj).booleanValue();
-        }
-        else if (obj instanceof String || obj instanceof CharSequence) {
+        } else if (obj instanceof String || obj instanceof CharSequence) {
             String str = Conversions.toString(obj);
             if (str.length() == 0) {
                 return false;
@@ -273,7 +275,7 @@ public class Conversions {
 
                 }
                 return Lists.len(list) > 0;
-            }else {
+            } else {
                 return false;
             }
         } else {
@@ -438,10 +440,9 @@ public class Conversions {
                 return (T) value.toString();
 
 
-
             case NUMBER:
                 if (value instanceof Number) {
-                    return (T)value;
+                    return (T) value;
                 } else {
                     Double d = toDouble(value);
                     return (T) d;
@@ -489,6 +490,14 @@ public class Conversions {
             case DATE:
                 return (T) toDate(value);
 
+
+            case CALENDAR:
+                return (T) toCalendar(toDate(value));
+
+
+            case LOCALE_DATE_TIME:
+                return (T) toLocalDateTime(toDate(value));
+
             case BIG_DECIMAL:
                 return (T) toBigDecimal(value);
 
@@ -496,8 +505,6 @@ public class Conversions {
             case BIG_INT:
                 return (T) toBigInteger(value);
 
-            case CALENDAR:
-                return (T) toCalendar(toDate(value));
 
             case BOOLEAN:
             case BOOLEAN_WRAPPER:
@@ -527,7 +534,7 @@ public class Conversions {
             case INSTANCE:
 
                 if (value instanceof Value) {
-                    value = ((Value)value).toValue();
+                    value = ((Value) value).toValue();
                 }
                 if (value instanceof Map) {
                     return MapObjectConversion.fromMap((Map<String, Object>) value, clz);
@@ -551,8 +558,7 @@ public class Conversions {
                 return (T) toClass(value);
 
             case TIME_ZONE:
-                return (T) toTimeZone( value);
-
+                return (T) toTimeZone(value);
 
 
             case UUID:
@@ -565,10 +571,13 @@ public class Conversions {
                 return (T) value;
 
 
-
             default:
                 return createFromArg(clz, value);
         }
+    }
+
+    private static LocalDateTime toLocalDateTime(Date date) {
+        return LocalDateTime.ofInstant(Instant.ofEpochMilli(date.getTime()), ZoneId.systemDefault());
     }
 
     private static UUID toUUID(Object value) {
@@ -576,12 +585,12 @@ public class Conversions {
     }
 
 
-    public static <T> T coerceWithFlag(Class<T> clz, boolean [] flag, Object value) {
+    public static <T> T coerceWithFlag(Class<T> clz, boolean[] flag, Object value) {
 
         return coerceWithFlag(TypeType.getType(clz), clz, flag, value);
     }
 
-    public static <T> T coerceWithFlag(TypeType coerceTo, Class<T> clz, boolean [] flag, Object value) {
+    public static <T> T coerceWithFlag(TypeType coerceTo, Class<T> clz, boolean[] flag, Object value) {
 
         flag[0] = true;
         if (value == null) {
@@ -613,7 +622,6 @@ public class Conversions {
                     flag[0] = false;
                 }
                 return (T) s;
-
 
 
             case BYTE:
@@ -916,7 +924,7 @@ public class Conversions {
         } else {
 
             if (value instanceof Collection) {
-               return  toEnum(cls, ((Collection) value).iterator().next());
+                return toEnum(cls, ((Collection) value).iterator().next());
             }
             Exceptions.die("Can't convert  value " + value + " into enum of type " + cls);
             return null;
@@ -1133,9 +1141,8 @@ public class Conversions {
         } else if (value == null) {
             return new ArrayList();
         } else if (value instanceof Map) {
-            return new ArrayList(((Map)value).entrySet());
-        }
-        else {
+            return new ArrayList(((Map) value).entrySet());
+        } else {
             ArrayList list = new ArrayList(len(value));
             Iterator<Object> iterator = iterator(Typ.object, value);
             while (iterator.hasNext()) {
@@ -1152,9 +1159,8 @@ public class Conversions {
         } else if (value == null) {
             return new ArrayList();
         } else if (value instanceof Map) {
-            return ((Map)value).entrySet();
-        }
-        else {
+            return ((Map) value).entrySet();
+        } else {
             ArrayList list = new ArrayList(len(value));
             Iterator<Object> iterator = iterator(Typ.object, value);
             while (iterator.hasNext()) {
@@ -1200,7 +1206,6 @@ public class Conversions {
     public static Map<String, Object> toMap(Object value) {
         return MapObjectConversion.toMap(value);
     }
-
 
 
     public static Number toWrapper(long l) {
@@ -1311,10 +1316,12 @@ public class Conversions {
             return ((Calendar) object).getTime();
         } else if (object instanceof Long) {
             return new Date((long) object);
-        } else if (object instanceof String) {
-            String val = (String) object;
+        } else if (object instanceof CharSequence) {
+            String val = object.toString();
             char[] chars = FastStringUtils.toCharArray(val);
             if (Dates.isISO8601QuickCheck(chars)) {
+                return Dates.fromISO8601DateLoose(chars);
+            } else if (Dates.isLocalDateTime(chars)) {
                 return Dates.fromISO8601DateLoose(chars);
             } else {
                 return toDateUS(val);
@@ -1431,7 +1438,6 @@ public class Conversions {
     }
 
 
-
     public static <TO, FROM> List<TO> mapFilterNulls(Function<FROM, TO> converter,
                                                      Collection<FROM> fromCollection) {
 
@@ -1454,13 +1460,14 @@ public class Conversions {
 
     /**
      * This flattens a list.
-     * @param o object that might be a list
+     *
+     * @param o    object that might be a list
      * @param list list to add o to or all of o's items to.
      * @return an object or a list
      */
     public static Object unifyListOrArray(Object o, List list) {
 
-        if (o==null) {
+        if (o == null) {
             return null;
         }
 
@@ -1476,7 +1483,7 @@ public class Conversions {
 
 
         if (isArray) {
-            int length = Array.getLength( o );
+            int length = Array.getLength(o);
 
             for (int index = 0; index < length; index++) {
 
@@ -1490,7 +1497,6 @@ public class Conversions {
         } else if (o instanceof Collection) {
 
             Collection i = ((Collection) o);
-
 
 
             for (Object item : i) {
@@ -1515,20 +1521,20 @@ public class Conversions {
     }
 
 
-
     public static Object unifyList(List list) {
         return unifyListOrArray(list, null);
     }
 
     /**
      * This flattens a list.
-     * @param o object that might be a list
+     *
+     * @param o    object that might be a list
      * @param list list to add o to or all of o's items to.
      * @return an object or a list
      */
     public static Object unifyList(Object o, List list) {
 
-        if (o==null) {
+        if (o == null) {
             return null;
         }
 
@@ -1543,10 +1549,9 @@ public class Conversions {
 
             for (Object item : i) {
 
-               unifyListOrArray(item, list);
+                unifyListOrArray(item, list);
 
             }
-
 
 
         } else {
@@ -1568,24 +1573,6 @@ public class Conversions {
         return (Comparable) comparable;
     }
 
-
-    public Number coerceNumber(Object inputArgument, Class<?> paraType) {
-        Number number = (Number) inputArgument;
-        if (paraType == int.class || paraType == Integer.class) {
-            return number.intValue();
-        } else if (paraType == double.class || paraType == Double.class) {
-            return number.doubleValue();
-        } else if (paraType == float.class || paraType == Float.class) {
-            return number.floatValue();
-        } else if (paraType == short.class || paraType == Short.class) {
-            return number.shortValue();
-        } else if (paraType == byte.class || paraType == Byte.class) {
-            return number.byteValue();
-        }
-        return null;
-    }
-
-
     public static int lengthOf(Object obj) {
         return len(obj);
     }
@@ -1606,8 +1593,6 @@ public class Conversions {
         }
 
     }
-
-
 
     public static Class<?> toClass(Object value) {
 
@@ -1632,10 +1617,24 @@ public class Conversions {
 
     }
 
-
-
     public static String toString(Object obj) {
         return (obj == null) ? "" : obj.toString();
 
+    }
+
+    public Number coerceNumber(Object inputArgument, Class<?> paraType) {
+        Number number = (Number) inputArgument;
+        if (paraType == int.class || paraType == Integer.class) {
+            return number.intValue();
+        } else if (paraType == double.class || paraType == Double.class) {
+            return number.doubleValue();
+        } else if (paraType == float.class || paraType == Float.class) {
+            return number.floatValue();
+        } else if (paraType == short.class || paraType == Short.class) {
+            return number.shortValue();
+        } else if (paraType == byte.class || paraType == Byte.class) {
+            return number.byteValue();
+        }
+        return null;
     }
 }

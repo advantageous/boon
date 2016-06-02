@@ -28,8 +28,6 @@
 
 package io.advantageous.boon.core;
 
-import io.advantageous.boon.core.value.ValueMapImpl;
-
 import java.util.*;
 
 public enum TypeType {
@@ -37,7 +35,7 @@ public enum TypeType {
 
     //PRIMITIVE
     BOOLEAN(false, true), BYTE(false, true), SHORT(false, true), CHAR(false, true),
-    INT(false, true),  FLOAT(false, true), LONG(false, true), DOUBLE(false, true),
+    INT(false, true), FLOAT(false, true), LONG(false, true), DOUBLE(false, true),
 
     //Wrappers
     LONG_WRAPPER(LONG), INTEGER_WRAPPER(INT), SHORT_WRAPPER(SHORT),
@@ -54,7 +52,7 @@ public enum TypeType {
 
 
     //BASIC TYPES 1st Class
-    STRING(CHAR_SEQUENCE), CALENDAR, DATE,
+    STRING(CHAR_SEQUENCE), CALENDAR, DATE, LOCALE_DATE_TIME,
 
 
     //SECOND TIER BASIC TYPES
@@ -63,9 +61,8 @@ public enum TypeType {
     FILE(BASIC_TYPE), PATH(BASIC_TYPE), UUID(BASIC_TYPE),
 
 
-
-     //Numeric
-     BIG_INT(NUMBER), BIG_DECIMAL(NUMBER),
+    //Numeric
+    BIG_INT(NUMBER), BIG_DECIMAL(NUMBER),
 
     //COLLECTIONS
     COLLECTION, LIST(COLLECTION), SET(COLLECTION),
@@ -83,7 +80,6 @@ public enum TypeType {
     ARRAY_OBJECT(true, OBJECT),
 
 
-
     //BOON
     VALUE_MAP, VALUE;
 
@@ -93,31 +89,31 @@ public enum TypeType {
     private final boolean primitive;
 
     TypeType() {
-        baseTypeOrWrapper =null;
-        array=false;
-        primitive=false;
+        baseTypeOrWrapper = null;
+        array = false;
+        primitive = false;
     }
 
 
     TypeType(TypeType type) {
-        baseTypeOrWrapper =type;
-        array=false;
-        primitive=false;
+        baseTypeOrWrapper = type;
+        array = false;
+        primitive = false;
 
     }
 
     TypeType(boolean isarray) {
         this.array = isarray;
-        baseTypeOrWrapper=null;
-        primitive=false;
+        baseTypeOrWrapper = null;
+        primitive = false;
 
     }
 
 
     TypeType(boolean isarray, TypeType type) {
         this.array = isarray;
-        baseTypeOrWrapper=type;
-        primitive=false;
+        baseTypeOrWrapper = type;
+        primitive = false;
 
     }
 
@@ -127,32 +123,31 @@ public enum TypeType {
         baseTypeOrWrapper = null;
     }
 
-    public  static TypeType getInstanceType ( Object object ) {
+    public static TypeType getInstanceType(Object object) {
 
 
-             if (object == null) {
-                 return NULL;
-             } else {
-                 return getType(object.getClass (), object);
-             }
+        if (object == null) {
+            return NULL;
+        } else {
+            return getType(object.getClass(), object);
+        }
     }
 
 
-
-    public static TypeType getType ( Class<?> clazz ) {
+    public static TypeType getType(Class<?> clazz) {
         return getType(clazz, null);
     }
 
-    public static TypeType getType ( Class<?> clazz, Object object ) {
+    public static TypeType getType(Class<?> clazz, Object object) {
 
         final String className = clazz.getName();
-        TypeType type =  getType( className );
+        TypeType type = getType(className);
 
         if (type != UNKNOWN) {
             return type;
         }
 
-        if ( clazz.isInterface() ) {
+        if (clazz.isInterface()) {
             type = INTERFACE;
         } else if (clazz.isEnum()) {
             type = ENUM;
@@ -160,26 +155,25 @@ public enum TypeType {
             type = getArrayType(clazz);
         } else if (Typ.isAbstract(clazz)) {
             type = ABSTRACT;
-        } else if ( className.startsWith("java")) {
-            if ( Typ.isCharSequence ( clazz ) ) {
+        } else if (className.startsWith("java")) {
+            if (Typ.isCharSequence(clazz)) {
                 type = CHAR_SEQUENCE;
-            } else if (Typ.isCollection ( clazz )) {
-                if (Typ.isList ( clazz )) {
+            } else if (Typ.isCollection(clazz)) {
+                if (Typ.isList(clazz)) {
                     type = LIST;
-                } else if (Typ.isSet ( clazz )) {
+                } else if (Typ.isSet(clazz)) {
                     type = SET;
                 } else {
                     type = COLLECTION;
                 }
-            } else if (Typ.isMap ( clazz )) {
+            } else if (Typ.isMap(clazz)) {
                 type = MAP;
-            }
-            else {
+            } else {
                 type = SYSTEM;
             }
         } else if (className.startsWith("com.sun") || className.startsWith("sun.")) {
             type = SYSTEM;
-        } else if (object !=null) {
+        } else if (object != null) {
 
 
             if (object instanceof Map) {
@@ -203,13 +197,12 @@ public enum TypeType {
         return type;
 
 
-
     }
 
     private static TypeType getArrayType(Class<?> clazz) {
         TypeType type;
         final TypeType componentType = getType(clazz.getComponentType());
-        switch(componentType) {
+        switch (componentType) {
 
 
             case BYTE:
@@ -252,189 +245,152 @@ public enum TypeType {
         return type;
     }
 
-    public static TypeType getType ( String typeName ) {
+    public static TypeType getType(String typeName) {
 
-            switch ( typeName ) {
-                case "int":
-                    return TypeType.INT;
-                case "short":
-                    return TypeType.SHORT;
-                case "byte":
-                    return TypeType.BYTE;
-                case "float":
-                    return TypeType.FLOAT;
-                case "double":
-                    return TypeType.DOUBLE;
-                case "boolean":
-                    return TypeType.BOOLEAN;
-                case "char":
-                    return TypeType.CHAR;
-                case "long":
-                    return TypeType.LONG;
+        switch (typeName) {
+            case "int":
+                return TypeType.INT;
+            case "short":
+                return TypeType.SHORT;
+            case "byte":
+                return TypeType.BYTE;
+            case "float":
+                return TypeType.FLOAT;
+            case "double":
+                return TypeType.DOUBLE;
+            case "boolean":
+                return TypeType.BOOLEAN;
+            case "char":
+                return TypeType.CHAR;
+            case "long":
+                return TypeType.LONG;
 
-                case "java.lang.String":
-                    return TypeType.STRING;
-                case "java.lang.Boolean":
-                    return TypeType.BOOLEAN_WRAPPER;
-                case "java.lang.Byte":
-                    return TypeType.BYTE_WRAPPER;
-                case "java.lang.Short":
-                    return TypeType.SHORT_WRAPPER;
-                case "java.lang.Integer":
-                    return TypeType.INTEGER_WRAPPER;
-                case "java.lang.Double":
-                    return TypeType.DOUBLE_WRAPPER;
-                case "java.lang.Float":
-                    return TypeType.FLOAT_WRAPPER;
-                case "java.lang.Character":
-                    return TypeType.CHAR_WRAPPER;
-                case "java.lang.Number":
-                    return TypeType.NUMBER;
+            case "java.lang.String":
+                return TypeType.STRING;
+            case "java.lang.Boolean":
+                return TypeType.BOOLEAN_WRAPPER;
+            case "java.lang.Byte":
+                return TypeType.BYTE_WRAPPER;
+            case "java.lang.Short":
+                return TypeType.SHORT_WRAPPER;
+            case "java.lang.Integer":
+                return TypeType.INTEGER_WRAPPER;
+            case "java.lang.Double":
+                return TypeType.DOUBLE_WRAPPER;
+            case "java.lang.Float":
+                return TypeType.FLOAT_WRAPPER;
+            case "java.lang.Character":
+                return TypeType.CHAR_WRAPPER;
+            case "java.lang.Number":
+                return TypeType.NUMBER;
 
-                case "java.lang.Class":
-                    return TypeType.CLASS;
-
-
+            case "java.lang.Class":
+                return TypeType.CLASS;
 
 
-                case "java.lang.Void":
-                    return TypeType.VOID;
+            case "java.lang.Void":
+                return TypeType.VOID;
 
 
+            case "java.lang.Long":
+                return TypeType.LONG_WRAPPER;
 
 
+            case "java.util.Set":
+            case "java.util.HashSet":
+            case "java.util.TreeSet":
+                return TypeType.SET;
 
-                case "java.lang.Long":
-                    return TypeType.LONG_WRAPPER;
+            case "java.util.List":
+            case "java.util.ArrayList":
+            case "java.util.LinkedList":
+                return TypeType.LIST;
 
+            case "java.util.Map":
+            case "java.util.HashMap":
+            case "java.util.LinkedHashMap":
+            case "java.util.TreeMap":
+                return TypeType.MAP;
 
-                case "java.util.Set":
-                case "java.util.HashSet":
-                case "java.util.TreeSet":
-                    return TypeType.SET;
+            case "java.lang.CharSequence":
+                return TypeType.CHAR_SEQUENCE;
 
-                case "java.util.List":
-                case "java.util.ArrayList":
-                case "java.util.LinkedList":
-                    return TypeType.LIST;
+            case "java.math.BigDecimal":
+                return TypeType.BIG_DECIMAL;
+            case "java.math.BigInteger":
+                return TypeType.BIG_INT;
 
-                case "java.util.Map":
-                case "java.util.HashMap":
-                case "java.util.LinkedHashMap":
-                case "java.util.TreeMap":
-                      return TypeType.MAP;
-
-                case "java.lang.CharSequence":
-                    return TypeType.CHAR_SEQUENCE;
-
-                case "java.math.BigDecimal":
-                    return TypeType.BIG_DECIMAL;
-                case "java.math.BigInteger":
-                    return TypeType.BIG_INT;
-
-                case "java.util.Date":
-                case "java.sql.Date":
-                case "java.sql.Time":
-                case "java.sql.Timestamp":
-                    return TypeType.DATE;
+            case "java.util.Date":
+            case "java.sql.Date":
+            case "java.sql.Time":
+            case "java.sql.Timestamp":
+                return TypeType.DATE;
 
 
-                case "java.util.Calendar":
-                    return TypeType.CALENDAR;
+            case "java.util.Calendar":
+                return TypeType.CALENDAR;
 
 
-                case "io.advantageous.boon.core.LazyMap":
-                case "io.advantageous.boon.core.value.LazyValueMap":
-                    return TypeType.MAP;
-
-                case "io.advantageous.boon.core.value.ValueList":
-                    return TypeType.LIST;
-
-                case "io.advantageous.boon.core.value.ValueMapImpl":
-                    return TypeType.VALUE_MAP;
-
-                case "io.advantageous.boon.core.value.NumberValue":
-                case "io.advantageous.boon.core.value.CharSequenceValue":
-                    return TypeType.VALUE;
+            case "java.time.LocalDateTime":
+                return TypeType.LOCALE_DATE_TIME;
 
 
-                case "java.lang.Object":
-                    return TypeType.OBJECT;
+            case "io.advantageous.boon.core.LazyMap":
+            case "io.advantageous.boon.core.value.LazyValueMap":
+                return TypeType.MAP;
 
-                case "java.io.File":
-                    return TypeType.FILE;
+            case "io.advantageous.boon.core.value.ValueList":
+                return TypeType.LIST;
 
-                case "java.net.URI":
-                    return TypeType.URI;
+            case "io.advantageous.boon.core.value.ValueMapImpl":
+                return TypeType.VALUE_MAP;
 
-                case "java.net.URL":
-                    return TypeType.URL;
-
-                case "java.nio.file.Path":
-                    return TypeType.PATH;
-
-                case "java.util.UUID":
-                    return TypeType.UUID;
-
-                case "java.util.Locale":
-                    return TypeType.LOCALE;
+            case "io.advantageous.boon.core.value.NumberValue":
+            case "io.advantageous.boon.core.value.CharSequenceValue":
+                return TypeType.VALUE;
 
 
-                case "java.util.TimeZone":
-                    return TypeType.TIME_ZONE;
+            case "java.lang.Object":
+                return TypeType.OBJECT;
 
-                case "java.util.Currency":
-                    return TypeType.CURRENCY;
+            case "java.io.File":
+                return TypeType.FILE;
 
-            }
-            return TypeType.UNKNOWN;
+            case "java.net.URI":
+                return TypeType.URI;
 
-    }
+            case "java.net.URL":
+                return TypeType.URL;
+
+            case "java.nio.file.Path":
+                return TypeType.PATH;
+
+            case "java.util.UUID":
+                return TypeType.UUID;
+
+            case "java.util.Locale":
+                return TypeType.LOCALE;
 
 
-    public boolean  hasLength (  ) {
+            case "java.util.TimeZone":
+                return TypeType.TIME_ZONE;
 
-        switch ( this ) {
-            case LIST:
-            case MAP:
-            case STRING:
-            case CHAR_SEQUENCE:
-            case SET:
-            case COLLECTION:
-                return true;
-            default:
-                return this.isArray() || this.isCollection();
+            case "java.util.Currency":
+                return TypeType.CURRENCY;
+
         }
+        return TypeType.UNKNOWN;
+
     }
 
-    public  boolean isCollection (  ) {
-
-        switch ( this ) {
-            case LIST:
-            case SET:
-            case COLLECTION:
-                return true;
-            default:
-                if (baseTypeOrWrapper == null) {
-                    return false;
-                } else {
-                    return baseTypeOrWrapper.isCollection();
-                }
-        }
-    }
-
-
-
-
-    public  static List<Object> gatherTypes ( List<?> list ) {
+    public static List<Object> gatherTypes(List<?> list) {
 
         List<Object> types = new ArrayList<>();
 
         for (Object o : list) {
             if (o instanceof List) {
                 types.add(gatherTypes((List) o));
-            }
-            else {
+            } else {
                 types.add(TypeType.getInstanceType(o));
             }
         }
@@ -442,17 +398,14 @@ public enum TypeType {
         return types;
     }
 
-
-
-    public  static List<Object> gatherActualTypes ( List<?> list ) {
+    public static List<Object> gatherActualTypes(List<?> list) {
 
         List<Object> types = new ArrayList<>();
 
         for (Object o : list) {
             if (o instanceof List) {
                 types.add(gatherActualTypes((List) o));
-            }
-            else {
+            } else {
                 types.add(TypeType.getActualType(o));
             }
         }
@@ -468,15 +421,46 @@ public enum TypeType {
         }
     }
 
-    public  static List<TypeType> gatherTypes ( Object... list ) {
+    public static List<TypeType> gatherTypes(Object... list) {
 
         List<TypeType> types = new ArrayList();
 
         for (Object o : list) {
-            types.add(TypeType.getInstanceType(o)) ;
+            types.add(TypeType.getInstanceType(o));
         }
 
         return types;
+    }
+
+    public boolean hasLength() {
+
+        switch (this) {
+            case LIST:
+            case MAP:
+            case STRING:
+            case CHAR_SEQUENCE:
+            case SET:
+            case COLLECTION:
+                return true;
+            default:
+                return this.isArray() || this.isCollection();
+        }
+    }
+
+    public boolean isCollection() {
+
+        switch (this) {
+            case LIST:
+            case SET:
+            case COLLECTION:
+                return true;
+            default:
+                if (baseTypeOrWrapper == null) {
+                    return false;
+                } else {
+                    return baseTypeOrWrapper.isCollection();
+                }
+        }
     }
 
     public TypeType wraps() {
