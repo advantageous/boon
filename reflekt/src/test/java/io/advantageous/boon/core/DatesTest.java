@@ -28,7 +28,6 @@
 
 package io.advantageous.boon.core;
 
-import io.advantageous.boon.core.Dates;
 import org.junit.Test;
 
 import java.util.Calendar;
@@ -40,6 +39,14 @@ import static org.junit.Assert.assertTrue;
 
 public class DatesTest {
 
+
+    @Test
+    public void testISODateWithMilis() {
+
+        System.out.println(Conversions.coerce(Date.class, "2016-06-21T21:10:45.3271564Z"));
+        System.out.println(Conversions.coerce(Date.class, "2016-06-21T21:10:46.5271564Z"));
+        System.out.println(Conversions.coerce(Date.class, "2016-06-21T21:10:45"));
+    }
 
     @Test
     public void testIsoShortDate() {

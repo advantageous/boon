@@ -43,7 +43,7 @@ public class ProcessRunnerTest {
 
     @Test
     public void run() {
-        //Runner.runShell( "ls -l" );
+        Runner.runShell( "ls -l" );
     }
 
     @Test

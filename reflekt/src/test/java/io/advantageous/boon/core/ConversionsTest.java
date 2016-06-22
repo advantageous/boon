@@ -98,6 +98,7 @@ public class ConversionsTest {
 
 
 
+
     @Test
     public void convertEmployeeFromInt() {
         Employee e = Conversions.coerce(Employee.class, 11);

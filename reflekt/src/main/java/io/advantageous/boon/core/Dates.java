@@ -297,7 +297,7 @@ public class Dates {
         calendar.set( Calendar.HOUR_OF_DAY, hour );
         calendar.set( Calendar.MINUTE, minute );
         calendar.set( Calendar.SECOND, second );
-        calendar.set( Calendar.MILLISECOND, miliseconds );
+        calendar.set( Calendar.MILLISECOND, miliseconds / 1_000_000);
 
         calendar.setTimeZone( tz );
 
