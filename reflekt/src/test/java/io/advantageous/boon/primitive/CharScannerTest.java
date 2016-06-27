@@ -56,16 +56,108 @@ public class CharScannerTest {
     }
 
     @Test
-    public void verifyIsLongForNonDigits() {
-        assertFalse(CharScanner.isInteger("abc".toCharArray()));
+    public void verifyFittingIntWithSameLengthAsMaxInt() {
+        assertTrue(CharScanner.isInteger(String.valueOf(Integer.MAX_VALUE - 1).toCharArray()));
     }
 
+    @Test
+    public void verifyMaxInt() {
+        assertTrue(CharScanner.isInteger(String.valueOf(Integer.MAX_VALUE).toCharArray()));
+    }
+
+    @Test
+    public void verifyNonFittingIntWithSameLengthAsMaxInt() {
+        // Integer.MAX_VALUE + 1
+        assertFalse(CharScanner.isInteger("2147483648".toCharArray()));
+    }
+
+    @Test
+    public void verifyLargerLengthThanMaxInt() {
+        assertFalse(CharScanner.isInteger("12147483647".toCharArray()));
+    }
+
+    @Test
+    public void verifyNegativeInt() {
+        assertTrue(CharScanner.isInteger("-123".toCharArray()));
+    }
+
+    @Test
+    public void verifyFittingNegativeIntWithSameLengthAsMinInt() {
+        assertTrue(CharScanner.isInteger(String.valueOf(Integer.MIN_VALUE + 1).toCharArray()));
+    }
+
+    @Test
+    public void verifyMinInt() {
+        assertTrue(CharScanner.isInteger(String.valueOf(Integer.MIN_VALUE).toCharArray()));
+    }
+
+    @Test
+    public void verifyNonFittingNegativeIntWithSameLengthAsMinInt() {
+        // Int.MIN_VALUE - 1
+        assertFalse(CharScanner.isInteger("-2147483649".toCharArray()));
+    }
+
+    @Test
+    public void verifyLargerLengthThanMinInt() {
+        assertFalse(CharScanner.isInteger("-12147483648".toCharArray()));
+    }
+
+    @Test
+    public void verifyIsLongForNonDigits() {
+        assertFalse(CharScanner.isLong("abc".toCharArray()));
+    }
 
     @Test
     public void verifyIsLong() {
-        assertTrue(CharScanner.isInteger("123".toCharArray()));
+        assertTrue(CharScanner.isLong("123".toCharArray()));
     }
 
+    @Test
+    public void verifyFittingLongWithSameLengthAsMaxLong() {
+        assertTrue(CharScanner.isLong(String.valueOf(Long.MAX_VALUE - 1).toCharArray()));
+    }
+
+    @Test
+    public void verifyMaxLong() {
+        assertTrue(CharScanner.isLong(String.valueOf(Long.MAX_VALUE).toCharArray()));
+    }
+
+    @Test
+    public void verifyNonFittingLongWithSameLengthAsMaxLong() {
+        // Long.MAX_VALUE + 1
+        assertFalse(CharScanner.isLong("9223372036854775808".toCharArray()));
+    }
+
+    @Test
+    public void verifyLargerLengthThanMaxLong() {
+        assertFalse(CharScanner.isLong("19223372036854775808".toCharArray()));
+    }
+
+    @Test
+    public void verifyNegativeLong() {
+        assertTrue(CharScanner.isLong("-123".toCharArray()));
+    }
+
+    @Test
+    public void verifyFittingNegativeLongWithSameLengthAsMinLong() {
+        assertTrue(CharScanner.isLong(String.valueOf(Long.MIN_VALUE + 1).toCharArray()));
+    }
+
+    @Test
+    public void verifyMinLong() {
+        assertTrue(CharScanner.isLong(String.valueOf(Long.MIN_VALUE).toCharArray()));
+    }
+
+    @Test
+    public void verifyNonFittingNegativeLongWithSameLengthAsMinLong() {
+        // Long.MIN_VALUE - 1
+        assertFalse(CharScanner.isLong("-9223372036854775809".toCharArray()));
+    }
+
+    @Test
+    public void verifyLargerLengthThanMinLong() {
+        assertFalse(CharScanner.isLong("-19223372036854775808".toCharArray()));
+    }
 
     @Test
     public void testBug() {

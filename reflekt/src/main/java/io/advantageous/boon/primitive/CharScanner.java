@@ -34,11 +34,6 @@ import io.advantageous.boon.core.reflection.FastStringUtils;
 
 import java.util.Arrays;
 
-
-import static io.advantageous.boon.core.Exceptions.die;
-import static io.advantageous.boon.core.Exceptions.handle;
-
-
 /**
  * This class uses int, float and double parsing that I saw in Jackson for int parsing.
  * I have mentioned this many times on my blog and to Tatu on a few occasions.
@@ -762,11 +757,11 @@ public class CharScanner {
     }
 
 
-    final static String MIN_LONG_STR_NO_SIGN = String.valueOf( Long.MIN_VALUE );
+    final static String MIN_LONG_STR_NO_SIGN = String.valueOf( Long.MIN_VALUE ).substring(1);
     final static String MAX_LONG_STR = String.valueOf( Long.MAX_VALUE );
 
 
-    final static String MIN_INT_STR_NO_SIGN = String.valueOf( Integer.MIN_VALUE );
+    final static String MIN_INT_STR_NO_SIGN = String.valueOf( Integer.MIN_VALUE ).substring(1);
     final static String MAX_INT_STR = String.valueOf( Integer.MAX_VALUE );
 
 
@@ -778,24 +773,18 @@ public class CharScanner {
     }
 
     public static boolean isLong( char[] digitChars, int offset, int len ) {
-        String cmpStr = digitChars[offset]=='-' ? MIN_LONG_STR_NO_SIGN : MAX_LONG_STR;
-        int cmpLen = cmpStr.length();
 
-        if ( len > cmpLen ) return false;
-
-
-        if (verifyValueFitsInNumber(digitChars, offset, len, cmpStr, cmpLen)) return false;
+        String cmpStr = MAX_LONG_STR;
 
         if (digitChars[offset]=='-') {
-            return isDigits(digitChars, ++offset, --len);
-        } else {
-            return isDigits(digitChars, offset, len);
+            cmpStr = MIN_LONG_STR_NO_SIGN;
+            offset++;
+            len--;
         }
 
+        return verifyValueFitsInNumber(digitChars, offset, len, cmpStr)
+                && isDigits(digitChars, offset, len);
     }
-
-
-
 
     public static boolean isInteger( char[] digitChars ) {
            return isInteger ( digitChars, 0, digitChars.length );
@@ -803,32 +792,38 @@ public class CharScanner {
 
     public static boolean isInteger( char[] digitChars, int offset, int len) {
 
-
-        String cmpStr = (digitChars[offset] == '-') ? MIN_INT_STR_NO_SIGN : MAX_INT_STR;
-        int cmpLen = cmpStr.length();
-        if ( len > cmpLen ) return false;
-
-        if (verifyValueFitsInNumber(digitChars, offset, len, cmpStr, cmpLen)) return false;
+        String cmpStr = MAX_INT_STR;
 
         if (digitChars[offset]=='-') {
-            return isDigits(digitChars, ++offset, --len);
-        }  else {
-            return isDigits(digitChars, offset, len);
+            cmpStr = MIN_INT_STR_NO_SIGN;
+            offset++;
+            len--;
         }
+
+        return verifyValueFitsInNumber(digitChars, offset, len, cmpStr)
+                && isDigits(digitChars, offset, len);
     }
 
-    private static boolean verifyValueFitsInNumber(char[] digitChars, int offset, int len, String cmpStr, int cmpLen) {
+    private static boolean verifyValueFitsInNumber(char[] digitChars, int offset, int len, String cmpStr) {
+
+        int cmpLen = cmpStr.length();
+
         if (len == cmpLen) {
+            boolean isCpm = true;
+
             for (int i = 0; i < cmpLen; ++i) {
                 int diff = digitChars[offset + i] - cmpStr.charAt(i);
-                if (diff != 0) {
-                    if (diff > 0) {
-                        return true;
-                    }
+                if (diff < 0) {
+                    return true;
                 }
+                isCpm = diff == 0;
             }
+
+            return isCpm;
+
+        } else {
+            return len < cmpLen;
         }
-        return false;
     }
 
     public static int parseInt( char[] digitChars ) {
