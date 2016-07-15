@@ -496,7 +496,7 @@ public class Conversions {
 
 
             case LOCALE_DATE_TIME:
-                return (T) toLocalDateTime(toDate(value));
+                return (T) toLocalDateTime(value);
 
             case BIG_DECIMAL:
                 return (T) toBigDecimal(value);
@@ -576,9 +576,7 @@ public class Conversions {
         }
     }
 
-    private static LocalDateTime toLocalDateTime(Date date) {
-        return LocalDateTime.ofInstant(Instant.ofEpochMilli(date.getTime()), ZoneId.systemDefault());
-    }
+
 
     private static UUID toUUID(Object value) {
         return UUID.fromString(value.toString());
@@ -1306,6 +1304,27 @@ public class Conversions {
         return Conversions.toArray(type, array);
     }
 
+
+
+    private static LocalDateTime toLocalDateTime(Object object) {
+        if (object instanceof CharSequence) {
+            String val = object.toString();
+            char[] chars = FastStringUtils.toCharArray(val);
+            if (Dates.isLocalDateTime(chars)) {
+                return Dates.parseLocalDateTime(chars);
+            } else {
+                return toLocalDateTime(toDate(chars));
+            }
+        } else {
+            return toLocalDateTime(toDate(object));
+        }
+    }
+
+    private static LocalDateTime toLocalDateTime(Date date) {
+        return LocalDateTime.ofInstant(Instant.ofEpochMilli(date.getTime()), ZoneId.systemDefault());
+    }
+
+
     public static Date toDate(Object object) {
 
         if (object instanceof Date) {
@@ -1321,10 +1340,19 @@ public class Conversions {
             char[] chars = FastStringUtils.toCharArray(val);
             if (Dates.isISO8601QuickCheck(chars)) {
                 return Dates.fromISO8601DateLoose(chars);
-            } else if (Dates.isLocalDateTime(chars)) {
+            } else if (Dates.isShortDate(chars)) {
                 return Dates.fromISO8601DateLoose(chars);
             } else {
                 return toDateUS(val);
+            }
+        } else if (object instanceof char[]) {
+            char [] chars = (char[])object;
+            if (Dates.isISO8601QuickCheck(chars)) {
+                return Dates.fromISO8601DateLoose(chars);
+            } else if (Dates.isShortDate(chars)) {
+                return Dates.fromISO8601DateLoose(chars);
+            } else {
+                return toDateUS(FastStringUtils.noCopyStringFromChars(chars));
             }
         }
         return null;
