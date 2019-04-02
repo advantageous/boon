@@ -816,7 +816,9 @@ public class CharScanner {
                 if (diff < 0) {
                     return true;
                 }
-                isCpm = diff == 0;
+                if (diff > 0) {
+                    return false;
+                }
             }
 
             return isCpm;
